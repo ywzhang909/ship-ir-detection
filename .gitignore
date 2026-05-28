@@ -1,0 +1,43 @@
+# ─── Data ────────────────────────────────────────────────
+datasets/
+data/  # yolo-training/data (all processed)
+
+# ─── Training / Inference Outputs ────────────────────────
+runs/
+yolo-training/runs/
+
+# ─── Python ──────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+*.egg
+dist/
+build/
+
+# ─── Virtual Environment ─────────────────────────────────
+.venv/
+venv/
+env/
+
+# ─── Model Weights ───────────────────────────────────────
+*.pt
+*.onnx
+*.engine
+*.torchscript
+
+# ─── OS ──────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ─── IDE ─────────────────────────────────────────────────
+.idea/
+.vscode/
+*.sublime-*
+
+# ─── Logs ────────────────────────────────────────────────
+*.log

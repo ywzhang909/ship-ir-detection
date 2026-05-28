@@ -1,0 +1,55 @@
+# YOLO Training Configuration — NSLSR Ship Detection
+# Optimized for single-class (ship) detection on ~640x512 IR images
+# Dataset: ~803 train images, single class — gentler augments, fewer epochs
+
+# Task and mode
+task: detect
+mode: train
+
+# Model
+model: yolo11m.pt
+
+# Training hyperparameters (adjusted for smaller NSLSR dataset)
+epochs: 100        # Fewer epochs since small dataset
+patience: 10       # Aggressive early stopping (no improvement for 10 epochs)
+batch: 16
+imgsz: 640         # Native resolution, no need to upscale
+
+# Optimizer
+optimizer: AdamW
+lr0: 0.001
+lrf: 0.01
+cos_lr: True       # Cosine annealing LR schedule
+momentum: 0.937
+weight_decay: 0.0005
+warmup_epochs: 3.0
+warmup_momentum: 0.8
+warmup_bias_lr: 0.1
+
+# Loss coefficients (keep same)
+box: 7.5
+cls: 0.5
+dfl: 1.5
+
+# Augmentation (milder since dataset is smaller)
+mosaic: 1.0
+close_mosaic: 10
+mixup: 0.2
+copy_paste: 0.2
+scale: 0.5
+fliplr: 0.5
+flipud: 0.1
+degrees: 10.0
+translate: 0.1
+shear: 5.0
+perspective: 0.0
+hsv_h: 0.05
+hsv_s: 0.5
+hsv_v: 0.3
+
+# Checkpointing
+save: True
+save_period: 10
+exist_ok: True
+pretrained: True
+verbose: True

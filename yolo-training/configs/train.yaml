@@ -1,0 +1,53 @@
+# YOLO Training Configuration — Small Ship Detection
+# Optimized for detecting small objects (5-30 px) in 1024x512 grayscale images
+
+# Task and mode
+task: detect
+mode: train
+
+# Model
+model: yolo11m.pt
+
+# Training hyperparameters
+epochs: 200
+patience: 30
+batch: 16
+imgsz: 1280
+
+# Optimizer
+optimizer: AdamW
+lr0: 0.001
+lrf: 0.01
+momentum: 0.937
+weight_decay: 0.0005
+warmup_epochs: 3.0
+warmup_momentum: 0.8
+warmup_bias_lr: 0.1
+
+# Loss coefficients
+box: 7.5
+cls: 0.5
+dfl: 1.5
+
+# Augmentation
+mosaic: 1.0
+close_mosaic: 15
+mixup: 0.3
+copy_paste: 0.3
+scale: 0.8
+fliplr: 0.5
+flipud: 0.2
+degrees: 10.0
+translate: 0.2
+shear: 5.0
+perspective: 0.0
+hsv_h: 0.05
+hsv_s: 0.5
+hsv_v: 0.3
+
+# Checkpointing
+save: True
+save_period: 10
+exist_ok: True
+pretrained: True
+verbose: True

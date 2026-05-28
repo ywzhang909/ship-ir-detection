@@ -1,0 +1,79 @@
+# Wandb Sweep Configuration — NSLSR Ship Detection
+# Hyperparameter search for single-class (ship) detection on IR imagery
+#
+# Usage:
+#   1. Initialize sweep:
+#      uv run wandb sweep configs/sweep_nslsr.yaml
+#
+#   2. Start sweep agent (one or more workers):
+#      uv run wandb agent <SWEEP_ID>
+#
+#   Or run a single trial with current best config:
+#      uv run python train.py --dataset nslsr-swir --wandb --run-name nslsr-swir-v1
+
+program: scripts/sweep_train.py
+method: bayes
+metric:
+  name: metrics/mAP50-95
+  goal: maximize
+early_terminate:
+  type: hyperband
+  min_iter: 10
+  s: 2
+parameters:
+  dataset:
+    value: nslsr-swir
+  model:
+    values: ["yolo11n.pt", "yolo11s.pt", "yolo11m.pt"]
+  epochs:
+    value: 100
+  batch:
+    values: [16, 32]
+  imgsz:
+    value: 640
+  cos_lr:
+    values: [True, False]
+  patience:
+    value: 10
+  optimizer:
+    values: ["AdamW", "SGD"]
+  lr0:
+    distribution: log_uniform_values
+    min: 0.0001
+    max: 0.01
+  lrf:
+    distribution: uniform
+    min: 0.001
+    max: 0.1
+  momentum:
+    distribution: uniform
+    min: 0.85
+    max: 0.98
+  weight_decay:
+    distribution: uniform
+    min: 0.0
+    max: 0.001
+  warmup_epochs:
+    distribution: int_uniform
+    min: 1
+    max: 5
+  warmup_momentum:
+    distribution: uniform
+    min: 0.7
+    max: 0.9
+  mosaic:
+    distribution: uniform
+    min: 0.5
+    max: 1.0
+  mixup:
+    distribution: uniform
+    min: 0.0
+    max: 0.5
+  copy_paste:
+    distribution: uniform
+    min: 0.0
+    max: 0.5
+  degrees:
+    distribution: uniform
+    min: 0.0
+    max: 15.0
