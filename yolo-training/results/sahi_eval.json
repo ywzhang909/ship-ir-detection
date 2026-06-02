@@ -1,0 +1,127 @@
+{
+  "Run1_tophat": {
+    "description": "Run 1: Top-hat + CLAHE (空域杂波抑制)",
+    "mode": "SAHI",
+    "metrics": {
+      "mAP50": 30.84,
+      "mAP50-95": 16.59,
+      "Precision": 57.41,
+      "Recall": 33.57,
+      "num_images": 0
+    }
+  },
+  "Run2_butterworth": {
+    "description": "Run 2: Butterworth BPF + CLAHE (频域杂波抑制)",
+    "mode": "SAHI",
+    "metrics": {
+      "mAP50": 61.34,
+      "mAP50-95": 32.79,
+      "Precision": 18.59,
+      "Recall": 71.48,
+      "num_images": 0
+    }
+  },
+  "Run3_fusion_base": {
+    "description": "Run 3: Fusion baseline (h=16, l=2, SE)",
+    "mode": "SAHI",
+    "metrics": {
+      "mAP50": 14.92,
+      "mAP50-95": 6.49,
+      "Precision": 7.7,
+      "Recall": 22.02,
+      "num_images": 0
+    }
+  },
+  "T1_fusion_h32_cbam": {
+    "description": "T1: Fusion h=32, l=3, CBAM",
+    "mode": "SAHI",
+    "metrics": {
+      "mAP50": 89.75,
+      "mAP50-95": 59.78,
+      "Precision": 51.63,
+      "Recall": 91.7,
+      "num_images": 0
+    }
+  },
+  "T2_residual07": {
+    "description": "T2: Fusion residual=0.7",
+    "mode": "SAHI",
+    "metrics": {
+      "mAP50": 89.75,
+      "mAP50-95": 59.78,
+      "Precision": 51.63,
+      "Recall": 91.7,
+      "num_images": 0
+    }
+  },
+  "T4_wavelet_dual": {
+    "description": "T4: Wavelet dual fusion",
+    "mode": "SAHI",
+    "metrics": {
+      "mAP50": 87.49,
+      "mAP50-95": 56.56,
+      "Precision": 34.69,
+      "Recall": 89.17,
+      "num_images": 0
+    }
+  },
+  "T8_shape_iou": {
+    "description": "T8: Shape-IoU loss",
+    "mode": "SAHI",
+    "metrics": {
+      "mAP50": 8.97,
+      "mAP50-95": 4.31,
+      "Precision": 5.01,
+      "Recall": 14.8,
+      "num_images": 0
+    }
+  },
+  "T5_yolo11l_fusion": {
+    "description": "T5: YOLO11l + Fusion (h=16, l=2, SE)",
+    "mode": "SAHI",
+    "metrics": {
+      "mAP50": 77.24,
+      "mAP50-95": 46.95,
+      "Precision": 46.49,
+      "Recall": 81.23,
+      "num_images": 0
+    }
+  },
+  "T7_augment_jitter": {
+    "description": "T7: Augment jitter 0.3 + Fusion",
+    "mode": "SAHI",
+    "metrics": {
+      "mAP50": 79.45,
+      "mAP50-95": 50.56,
+      "Precision": 56.05,
+      "Recall": 81.95,
+      "num_images": 0
+    }
+  },
+  "T9_wiou_fusion": {
+    "description": "T9: WIoU v3 loss + YOLO11l + Fusion",
+    "mode": "SAHI",
+    "metrics": {
+      "mAP50": 59.81,
+      "mAP50-95": 35.71,
+      "Precision": 15.09,
+      "Recall": 71.48,
+      "num_images": 0
+    }
+  },
+  "T25_preprocess_jitter": {
+    "description": "T25: Preprocess jitter 0.3 + Fusion",
+    "mode": "SAHI",
+    "metrics": {}
+  },
+  "P2_standard": {
+    "description": "P2: YOLO11m with P2 head (standard inference)",
+    "mode": "SAHI",
+    "metrics": {}
+  },
+  "P2_SAHI": {
+    "description": "P2: YOLO11m with P2 head (SAHI inference)",
+    "mode": "SAHI",
+    "metrics": {}
+  }
+}

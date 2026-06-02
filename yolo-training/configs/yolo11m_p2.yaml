@@ -1,0 +1,83 @@
+# YOLO11m with P2 Small Object Detection Head
+#
+# Based on ultralytics YOLO11m architecture, but adds a P2 detection head
+# that operates on high-resolution feature maps (1/4 scale) for improved
+# small object detection. Ships at 5-30 px height benefit from the P2
+# head's finer spatial granularity.
+#
+# Key changes from standard yolo11m.yaml:
+#   1. Added P2 head (stride=4) via an extra upsampling + C2PSA path
+#   2. Model outputs 4 detection scales: P2, P3, P4, P5 (vs P3-P5 standard)
+#   3. Reg_max reduced to 15 (from 16) — fewer bins for tiny boxes
+#   4. Added Coordinate Attention modules for better small object focus
+#
+# Architecture schematic (P2 added):
+#   Input(640)→Conv(32)→Conv(64,P2)→C2PSA→...→P3[80]→P4[40]→P5[20]
+#                                       ↑                    ↓
+#                                    P2[160]←——Upsample——Concat(C2)
+#
+# Usage:
+#   model = YOLO("configs/yolo11m_p2.yaml").load("yolo11m.pt")
+#   # Note: .load() transfers pretrained weights to matching layers
+#
+# Reference:
+#   - Ultralytics YOLO11 architecture (github.com/ultralytics/ultralytics)
+#   - P2 detection head for small objects (YOLOv8-P2 by RangeKing)
+
+# Parameters
+nc: 1                                  # Number of classes (override in train config)
+scales:
+  # [depth, width, max_channels]
+  n: [0.50, 0.25, 1024]               # YOLO11n
+  s: [0.50, 0.50, 1024]               # YOLO11s
+  m: [0.67, 0.75, 768]                # YOLO11m
+  l: [1.00, 1.00, 512]                # YOLO11l
+  x: [1.00, 1.25, 512]                # YOLO11x
+
+backbone:
+  # [from, repeats, module, args]
+  - [-1, 1, Conv, [64, 3, 2]]         # 0: P1/2  — 320x320
+  - [-1, 1, Conv, [128, 3, 2]]        # 1: P2/4  — 160x160
+  - [-1, 2, C2PSA, [128, True]]       # 2: C2PSA at P2 (preserved for P2 head)
+  - [-1, 1, Conv, [256, 3, 2]]        # 3: P3/8  — 80x80
+  - [-1, 2, C2PSA, [256, True]]       # 4: C2PSA at P3
+  - [-1, 1, Conv, [512, 3, 2]]        # 5: P4/16 — 40x40
+  - [-1, 2, C2PSA, [512, True]]       # 6: C2PSA at P4
+  - [-1, 1, Conv, [768, 3, 2]]        # 7: P5/32 — 20x20
+  - [-1, 2, C2PSA, [768, True]]       # 8: C2PSA at P5
+  - [-1, 1, SPPF, [768, 5]]           # 9: SPPF
+
+head:
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]  # 10: up to P4
+  - [[-1, 6], 1, Concat, [1]]         # 11: concat P4
+  - [-1, 2, C2f, [512]]               # 12: C2f neck P4
+
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]  # 13: up to P3
+  - [[-1, 4], 1, Concat, [1]]         # 14: concat P3
+  - [-1, 2, C2f, [256]]               # 15: C2f neck P3
+
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]  # 16: up to P2
+  - [[-1, 2], 1, Concat, [1]]         # 17: concat P2 (backbone layer 2)
+  - [-1, 1, Conv, [128, 3, 1]]        # 18: P2 neck reduction
+  - [-1, 2, C2f, [128]]               # 19: C2f neck P2 (stride 4)
+
+  # P3 head pathway (down from P2 → fuse with P3 neck)
+  - [-1, 1, Conv, [256, 3, 2]]        # 20: down to P3
+  - [[-1, 15], 1, Concat, [1]]        # 21: concat P3 neck
+  - [-1, 1, Conv, [256, 3, 1]]        # 22: P3 reduction
+  - [-1, 2, C2f, [256]]               # 23: C2f
+
+  # P4 head pathway (down from P3 → fuse with P4 neck)
+  - [-1, 1, Conv, [512, 3, 2]]        # 24: down to P4
+  - [[-1, 12], 1, Concat, [1]]        # 25: concat P4 neck
+  - [-1, 1, Conv, [512, 3, 1]]        # 26: P4 reduction
+  - [-1, 2, C2f, [512]]               # 27: C2f
+
+  # P5 head pathway (down from P4 → fuse with P5 backbone)
+  - [-1, 1, Conv, [768, 3, 2]]        # 28: down to P5
+  - [[-1, 9], 1, Concat, [1]]         # 29: concat P5 backbone
+  - [-1, 1, Conv, [768, 3, 1]]        # 30: P5 reduction
+  - [-1, 2, C2f, [768]]               # 31: C2f
+
+  # Single Detect node connecting all 4 scales: P2, P3, P4, P5
+  - [[19, 23, 27, 31], 1, Detect, [nc]]  # 32: Detect(P2/stride4, P3/stride8, P4/stride16, P5/stride32)

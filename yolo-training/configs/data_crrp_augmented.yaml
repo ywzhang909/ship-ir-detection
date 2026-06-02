@@ -1,0 +1,8 @@
+# YOLO Dataset Configuration — NSLSR LWIR + CRRP augmentation
+path: D:/Projects/AUVDect/data/ship/yolo-training/data/crrp_augmented
+train: train/images
+val: val/images
+test: test/images
+nc: 1
+names:
+  0: ship

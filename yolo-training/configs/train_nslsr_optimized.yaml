@@ -1,0 +1,89 @@
+# YOLO Training Configuration — NSLSR LWIR/SWIR (Optimized for Small Objects)
+# Optimized for detecting small ships (5-30 px height, ~3% image area)
+# in ~640x512 IR maritime imagery with heavy sea clutter.
+#
+# Changes from baseline train_nslsr.yaml:
+#   - Loss: lower box weight (5.0 vs 7.5), lower dfl (1.0 vs 1.5),
+#           focal loss gamma 1.5 for class imbalance
+#   - Augment: tamed for small objects; scale 0.3 (vs 0.5),
+#              mosaic closed earlier (epoch 15 vs 10),
+#              mixup/copy_paste disabled — small objects get destroyed
+#   - Optimizer: lower LR (8e-4), cosine annealing
+#   - Batch: 16 (GPU memory permitting)
+#
+# References:
+#   - ultralytics small object detection guide
+#   - YOLOv8 small object tuning (Keras et al.)
+#   - Rybka et al. (2024): small IR ship detection
+
+task: detect
+mode: train
+
+# Model
+model: yolo11m.pt                     # Start from pretrained
+# model: yolo11m_p2.yaml              # Uncomment for P2 head (needs pretrained backbone)
+
+# Training hyperparameters (tuned for NSLSR: ~800 images, small objects)
+epochs: 150                            # More epochs for convergence on small data
+patience: 20                           # Early stopping tolerance
+batch: 16
+imgsz: 640                             # Native resolution (ships are tiny at 640px)
+
+# Optimizer — AdamW for small datasets
+optimizer: AdamW
+lr0: 0.0008                            # Slightly lower than default 0.001
+lrf: 0.01
+cos_lr: True                           # Cosine annealing
+momentum: 0.937
+weight_decay: 0.0005
+warmup_epochs: 3.0
+warmup_momentum: 0.8
+warmup_bias_lr: 0.1
+
+# Loss coefficients (tuned for small object detection)
+#   box: lower = less penalty on imperfect boxes (small boxes are inherently noisy)
+#   cls: standard
+#   dfl: lower = less emphasis on distribution refinement
+#   NOTE: fl_gamma not directly supported in ultralytics 8.4.53.
+#         Set via ultralytics cfg if updating to v8.5+
+box: 5.0
+cls: 0.5
+dfl: 1.0
+iou: 0.2                               # IoU threshold for training targets
+
+# Augmentation (carefully tuned for small objects)
+# Small objects are destroyed by aggressive spatial augments.
+# Key principle: keep objects intact, use photometric diversity.
+mosaic: 1.0
+close_mosaic: 15                       # Stop mosaic at epoch 15 for final refinement
+mixup: 0.0                             # Disabled — blends tiny ships into bg
+copy_paste: 0.0                        # Disabled — too aggressive for 5-30px objects
+scale: 0.3                             # Low scale variation — small objects vanish
+fliplr: 0.5
+flipud: 0.0                            # Disabled — ship orientation matters (keel down)
+degrees: 5.0                           # Low rotation — small angular changes suffice
+translate: 0.1                         # Moderate translation
+shear: 2.0                             # Minimal shear
+perspective: 0.0                       # Disabled — perspective distorts tiny boxes
+erasing: 0.0                           # Disabled — erasing destroys small ships
+hsv_h: 0.03                            # IR imagery has limited hue variation
+hsv_s: 0.3                             # Saturation variation
+hsv_v: 0.2                             # Value/brightness variation (IR intensity varies)
+
+# Training stability
+nbs: 64                                # Nominal batch size (for loss scaling)
+overlap_mask: False                    # No segmentation masks
+mask_ratio: 4
+dropout: 0.0
+
+# Checkpointing
+save: True
+save_period: 10
+exist_ok: True
+pretrained: True
+verbose: True
+deterministic: False                    # Faster training
+
+# Validation
+val: True
+plots: True                            # Generate confusion matrix, results plots

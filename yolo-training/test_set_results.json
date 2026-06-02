@@ -1,0 +1,92 @@
+{
+  "Run1_tophat": {
+    "description": "Run 1: Top-hat + CLAHE (空域杂波抑制)",
+    "metrics": {
+      "mAP50-95": 62.35,
+      "mAP50": 92.66,
+      "Precision": 94.84,
+      "Recall": 88.81
+    }
+  },
+  "Run2_butterworth": {
+    "description": "Run 2: Butterworth BPF + CLAHE (频域杂波抑制)",
+    "metrics": {
+      "mAP50-95": 63.75,
+      "mAP50": 93.97,
+      "Precision": 96.17,
+      "Recall": 90.54
+    }
+  },
+  "Run3_fusion_base": {
+    "description": "Run 3: Fusion baseline (h=16, l=2, SE)",
+    "metrics": {
+      "mAP50-95": 25.33,
+      "mAP50": 52.3,
+      "Precision": 67.86,
+      "Recall": 44.98
+    }
+  },
+  "T1_fusion_h32_cbam": {
+    "description": "T1: Fusion h=32, l=3, CBAM",
+    "metrics": {
+      "mAP50-95": 21.23,
+      "mAP50": 37.67,
+      "Precision": 50.36,
+      "Recall": 39.19
+    }
+  },
+  "T2_residual07": {
+    "description": "T2: Fusion residual=0.7",
+    "metrics": {
+      "mAP50-95": 21.23,
+      "mAP50": 37.67,
+      "Precision": 50.36,
+      "Recall": 39.19
+    }
+  },
+  "T4_wavelet_dual": {
+    "description": "T4: Wavelet dual fusion",
+    "metrics": {
+      "mAP50-95": 66.1,
+      "mAP50": 97.45,
+      "Precision": 96.28,
+      "Recall": 93.53
+    }
+  },
+  "T8_shape_iou": {
+    "description": "T8: Shape-IoU loss",
+    "metrics": {
+      "mAP50-95": 56.71,
+      "mAP50": 86.25,
+      "Precision": 90.68,
+      "Recall": 77.23
+    }
+  },
+  "T5_yolo11l_fusion": {
+    "description": "T5: YOLO11l + Fusion (h=16, l=2, SE)",
+    "metrics": {
+      "mAP50-95": 68.02,
+      "mAP50": 97.87,
+      "Precision": 97.07,
+      "Recall": 94.58
+    }
+  },
+  "T7_augment_jitter": {
+    "description": "T7: Augment jitter 0.3 + Fusion",
+    "metrics": {
+      "mAP50-95": 65.46,
+      "mAP50": 96.63,
+      "Precision": 97.76,
+      "Recall": 94.36
+    }
+  },
+  "T9_wiou_fusion": {
+    "description": "T9: WIoU v3 loss + YOLO11l + Fusion",
+    "metrics": {
+      "mAP50-95": 60.85,
+      "mAP50": 93.18,
+      "Precision": 92.8,
+      "Recall": 86.64
+    }
+  }
+}
