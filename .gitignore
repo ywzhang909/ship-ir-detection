@@ -47,3 +47,6 @@ Thumbs.db
 *.log
 *.pid
 .preprocess_cache*
+
+# ─── Test Data ───────────────────────────────────────────
+ship_annotation/tests/test_data/
