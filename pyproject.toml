@@ -12,6 +12,7 @@ dependencies = [
     "torch>=2.7.0",
     "torchvision>=0.22.0",
     "streamlit>=1.62.0",
+    "pyside6>=6.7.0",
 ]
 
 [tool.uv.workspace]
@@ -29,6 +30,11 @@ torch = [
 ]
 torchvision = [
   { index = "pytorch-cu128" },
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
 ]
 
 [tool.pytest.ini_options]
