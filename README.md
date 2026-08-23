@@ -1,10 +1,10 @@
 # 舰船识别系统 — Ship IR Detection
 
-红外波段海面舰艇目标检测与识别系统，基于 YOLO11 + PySide6 可视化界面。
+红外波段海面舰艇目标检测与识别系统，基于 YOLO11 + PySide6 可视化展示界面。
 
 ## 系统截图
 
-![舰船识别标注系统](ship_annotation/resources/screenshot.png)
+![舰船识别展示系统](ship_detector/resources/screenshot.png)
 
 ## 环境要求
 
@@ -18,8 +18,8 @@
 # 安装依赖
 uv sync
 
-# 启动可视化界面
-cd ship_annotation
+# 启动展示界面
+cd ship_detector
 uv run python main.py
 ```
 
@@ -32,22 +32,20 @@ ship/
 │   ├── train.py                # 训练入口
 │   ├── predict.py              # 推理脚本 (标准 + SAHI)
 │   └── configs/                # 数据集与训练配置
-├── ship_annotation/            # PySide6 可视化界面
+├── ship_detector/              # PySide6 展示界面 (只读检测结果 + 交互)
 │   ├── main.py                 # 入口
 │   ├── config.py               # 全局配置
-│   ├── app.py                  # 应用单例
 │   ├── core/                   # 核心模块
-│   │   ├── data_models.py      # 数据模型
+│   │   ├── data_models.py      # 数据模型 (DetectedShip)
 │   │   ├── detector_base.py    # 检测器基类
-│   │   ├── yolo_detector.py    # YOLO 检测器
-│   │   └── frame_source.py     # 图像源管理
+│   │   └── yolo_detector.py    # YOLO 检测器
 │   ├── ui/                     # 界面模块
 │   │   ├── main_window.py      # 主窗口
-│   │   ├── toolbar.py          # 工具栏
-│   │   ├── left_panel.py       # 左侧面板
-│   │   ├── central_canvas.py   # 中央画布
-│   │   ├── right_panel.py      # 右侧面板
-│   │   └── bottom_panel.py     # 底部日志
+│   │   ├── toolbar.py          # 工具栏 (仅打开/开始/导出)
+│   │   ├── left_panel.py       # 左侧面板 (文件树+预览+设置)
+│   │   ├── central_canvas.py   # 中央画布 (悬停高亮+单击选中)
+│   │   ├── right_panel.py      # 右侧面板 (目标列表+只读详情)
+│   │   └── bottom_panel.py     # 底部日志 (系统日志+FPS)
 │   ├── resources/              # 资源文件
 │   │   └── styles/main.qss     # 全局样式
 │   └── tests/                  # 单元测试
@@ -56,14 +54,13 @@ ship/
 
 ## 功能特性
 
-### 可视化界面 (PySide6)
+### 可视化展示界面 (PySide6)
 
-- **图片加载**: 支持文件夹浏览，批量加载图片
+- **多源输入**: 支持图片文件夹、本地视频 (VOC/AI2D 标注)、摄像头/RTSP/ONVIF
 - **YOLO 检测**: 集成 YOLO11 模型，支持标准/SAHI 推理
-- **目标标注**: 矩形框选择、拖拽、编辑
-- **属性编辑**: 类别切换、置信度调整、备注添加
-- **工具栏**: 选择/矩形/箭头/删除工具
-- **日志面板**: 实时显示检测结果与系统状态
+- **交互式展示**: 悬停高亮、单击选中、右侧只读详情面板
+- **AI 标注阅读**: 支持读取 VOC XML / AI2D JSON 标注，画布标注层
+- **工具栏**: 仅 打开 / 开始检测 / 暂停 / 导出 4 个按钮
 
 ### YOLO 推理
 
@@ -100,7 +97,7 @@ uv run python train.py
 
 ```bash
 # 数据模型测试
-uv run pytest ship_annotation/tests/test_models.py -v
+uv run pytest ship_detector/tests/test_models.py -v
 
 # 标签格式测试
 cd yolo-training
