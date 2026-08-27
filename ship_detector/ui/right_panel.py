@@ -17,6 +17,9 @@ class RightPanel(QWidget):
         self.setMinimumWidth(240)
         self.setMaximumWidth(320)
         self._current_ship: Optional[DetectedShip] = None
+        self._img_w = 1024
+        self._img_h = 512
+        self._ships: List[DetectedShip] = []
         self._setup_ui()
 
     def _setup_ui(self):
@@ -71,15 +74,6 @@ class RightPanel(QWidget):
         self.lbl_area = QLabel("-")
         dg.addRow("面积占比:", self.lbl_area)
 
-        self.lbl_speed = QLabel("-")
-        dg.addRow("航速(节):", self.lbl_speed)
-
-        self.lbl_heading = QLabel("-")
-        dg.addRow("航向(°):", self.lbl_heading)
-
-        self.lbl_length = QLabel("-")
-        dg.addRow("估算船长(m):", self.lbl_length)
-
         # 备注 (持久化到 DetectedShip.note)
         self.edit_note = QLineEdit()
         self.edit_note.setPlaceholderText("添加备注...")
@@ -96,6 +90,11 @@ class RightPanel(QWidget):
 
         self._clear_details()
         layout.addStretch()
+
+    def set_image_size(self, w: int, h: int):
+        """设置当前图片尺寸，用于像素坐标计算"""
+        self._img_w = w
+        self._img_h = h
 
     def update_summary(self, count: int):
         self.summary.setText(f"共识别 {count} 艘舰船")
@@ -117,14 +116,13 @@ class RightPanel(QWidget):
 
         b = ship.bbox
         self.lbl_norm.setText(f"x:{b.x:.3f}  y:{b.y:.3f}  w:{b.w:.3f}  h:{b.h:.3f}")
-        self.lbl_pixel.setText(f"x:{int(b.x*1024)}  y:{int(b.y*512)}  w:{int(b.w*1024)}  h:{int(b.h*512)}")
+
+        # 使用实际图片尺寸计算像素坐标
+        px = b.to_pixels(self._img_w, self._img_h)
+        self.lbl_pixel.setText(f"x:{px[0]}  y:{px[1]}  w:{px[2]-px[0]}  h:{px[3]-px[1]}")
+
         self.lbl_center.setText(f"({b.center[0]:.3f}, {b.center[1]:.3f})")
         self.lbl_area.setText(f"{b.area_norm:.2%}")
-
-        # 修复 falsy-zero bug: 用 is not None 而不是 truthy 检查
-        self.lbl_speed.setText(f"{ship.speed_knots:.1f}" if ship.speed_knots is not None else "—")
-        self.lbl_heading.setText(f"{ship.heading_deg:.1f}" if ship.heading_deg is not None else "—")
-        self.lbl_length.setText(f"{ship.length_m:.1f}" if ship.length_m is not None else "—")
 
         # 备注和审核状态
         self.edit_note.blockSignals(True)
@@ -146,9 +144,6 @@ class RightPanel(QWidget):
         self.lbl_pixel.setText("-")
         self.lbl_center.setText("-")
         self.lbl_area.setText("-")
-        self.lbl_speed.setText("—")
-        self.lbl_heading.setText("—")
-        self.lbl_length.setText("—")
         self.edit_note.blockSignals(True)
         self.edit_note.clear()
         self.edit_note.blockSignals(False)
@@ -167,9 +162,10 @@ class RightPanel(QWidget):
             self._current_ship.reviewed = checked
 
     def update_ship_list(self, ships: List[DetectedShip]):
+        self._ships = ships
         self.ship_list.clear()
         for ship in ships:
-            prefix = "✓ " if ship.reviewed else ""
+            prefix = "V " if ship.reviewed else ""
             item = QListWidgetItem(f"{prefix}#{ship.track_id} {ship.class_name}")
             item.setData(Qt.UserRole, ship.track_id)
             color = QColor(*ship.color)

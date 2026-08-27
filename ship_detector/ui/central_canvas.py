@@ -1,8 +1,9 @@
 from typing import List, Optional, Tuple
 from PySide6.QtWidgets import QLabel
-from PySide6.QtCore import Signal, Qt, QPoint, QRect
+from PySide6.QtCore import Signal, Qt, QPoint, QRect, QTimer
 from PySide6.QtGui import QPixmap, QPainter, QPen, QColor, QFont, QMouseEvent, QPaintEvent, QImage
 import numpy as np
+import cv2
 
 from core.data_models import DetectedShip, BoundingBox
 
@@ -30,6 +31,17 @@ class CentralCanvas(QLabel):
         self._current_frame: Optional[np.ndarray] = None
         self._current_image_path: Optional[str] = None
 
+        # 视频/相机
+        self._cap: Optional[cv2.VideoCapture] = None
+        self._timer = QTimer(self)
+        self._timer.timeout.connect(self._next_frame)
+        self._is_playing = False
+        self._frame_id = 0
+        self._fps_counter = 0
+        self._fps_timer = QTimer(self)
+        self._fps_timer.timeout.connect(self._calc_fps)
+        self._fps_timer.start(1000)
+
         self.setMouseTracking(True)
 
     @property
@@ -44,8 +56,22 @@ class CentralCanvas(QLabel):
     def current_image_path(self) -> Optional[str]:
         return self._current_image_path
 
+    @property
+    def is_playing(self) -> bool:
+        return self._is_playing
+
+    @property
+    def image_width(self) -> int:
+        return self.display_pixmap.width()
+
+    @property
+    def image_height(self) -> int:
+        return self.display_pixmap.height()
+
+    # ========== 图片加载 ==========
+
     def load_image(self, path: str):
-        import cv2
+        self._stop_capture()
         pixmap = QPixmap(path)
         if pixmap.isNull():
             self.status_message.emit(f"无法加载: {path}")
@@ -61,14 +87,94 @@ class CentralCanvas(QLabel):
         self.update()
         self.status_message.emit(f"已加载图片: {path}")
 
+    # ========== 视频/相机 ==========
+
     def load_video(self, path: str):
-        self.status_message.emit(f"加载视频: {path}")
+        self._stop_capture()
+        cap = cv2.VideoCapture(path)
+        if not cap.isOpened():
+            self.status_message.emit(f"无法打开视频: {path}")
+            return
+        self._cap = cap
+        self._frame_id = 0
+        fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+        self._timer.start(int(1000 / fps))
+        self._is_playing = True
+        self._read_next_frame()
+        self.status_message.emit(f"播放视频: {path}")
 
     def connect_camera(self, url: str):
-        self.status_message.emit(f"连接相机: {url}")
+        self._stop_capture()
+        # 尝试解析为整数 (本地摄像头)
+        try:
+            source = int(url)
+        except ValueError:
+            source = url  # RTSP URL
+
+        cap = cv2.VideoCapture(source)
+        if not cap.isOpened():
+            self.status_message.emit(f"无法连接相机: {url}")
+            return
+        self._cap = cap
+        self._frame_id = 0
+        self._timer.start(33)  # ~30fps
+        self._is_playing = True
+        self._read_next_frame()
+        self.status_message.emit(f"已连接相机: {url}")
+
+    def pause(self):
+        if self._is_playing:
+            self._timer.stop()
+            self._is_playing = False
+            self.status_message.emit("已暂停")
+        elif self._cap is not None and self._cap.isOpened():
+            fps = self._cap.get(cv2.CAP_PROP_FPS) or 30.0
+            self._timer.start(int(1000 / fps))
+            self._is_playing = True
+            self.status_message.emit("继续播放")
+
+    def _stop_capture(self):
+        self._timer.stop()
+        self._is_playing = False
+        if self._cap is not None:
+            self._cap.release()
+            self._cap = None
+
+    def _read_next_frame(self):
+        if self._cap is None or not self._cap.isOpened():
+            return
+        ret, frame = self._cap.read()
+        if not ret:
+            self._timer.stop()
+            self._is_playing = False
+            self.status_message.emit("视频播放结束")
+            return
+        self._frame_id += 1
+        self._current_frame = frame
+        self._set_frame_pixmap(frame)
+        self._fps_counter += 1
+
+    def _next_frame(self):
+        """QTimer 回调 — 读取下一帧"""
+        self._read_next_frame()
+
+    def _calc_fps(self):
+        """每秒计算一次 FPS"""
+        if self._fps_counter > 0:
+            self.fps_updated.emit(float(self._fps_counter))
+            self._fps_counter = 0
+
+    def _set_frame_pixmap(self, frame: np.ndarray):
+        """将 BGR ndarray 转为 QPixmap 显示"""
+        h, w = frame.shape[:2]
+        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        qimg = QImage(rgb.data, w, h, w * 3, QImage.Format_RGB888)
+        self.display_pixmap = QPixmap.fromImage(qimg)
+        self.resolution_changed.emit(w, h)
+        self.update()
 
     def update_frame(self, pixmap: QPixmap, ships: List[DetectedShip] = None):
-        """更新显示帧 (视频/相机)"""
+        """外部更新显示帧"""
         self.display_pixmap = pixmap
         if ships is not None:
             self.ships = ships
@@ -78,19 +184,9 @@ class CentralCanvas(QLabel):
     def set_frame(self, frame: np.ndarray):
         """设置当前帧 ndarray (不触发检测)"""
         self._current_frame = frame
-        h, w = frame.shape[:2]
-        rgb = frame[:, :, ::-1].copy()
-        qimg = QImage(rgb.data, w, h, w * 3, QImage.Format_RGB888)
-        self.display_pixmap = QPixmap.fromImage(qimg)
-        self.resolution_changed.emit(w, h)
-        self.update()
+        self._set_frame_pixmap(frame)
 
-    def run_detection(self):
-        """触发检测 — 由 MainWindow 连接到 DetectionWorker"""
-        if self._current_frame is None:
-            self.status_message.emit("请先加载图片或视频")
-            return
-        self.status_message.emit("正在检测...")
+    # ========== 检测 ==========
 
     def highlight_ship(self, track_id: int):
         for ship in self.ships:
@@ -115,6 +211,12 @@ class CentralCanvas(QLabel):
         painter.setRenderHint(QPainter.Antialiasing)
         for ship in self.ships:
             self._draw_ship_box(painter, ship, img_rect)
+
+        # 播放状态指示
+        if self._is_playing:
+            painter.setPen(QPen(QColor(0, 200, 0), 2))
+            painter.setBrush(QColor(0, 200, 0, 100))
+            painter.drawEllipse(img_rect.right() - 30, img_rect.y() + 10, 20, 20)
 
         painter.end()
 
@@ -227,5 +329,8 @@ class CentralCanvas(QLabel):
 
         self.update()
 
-    def pause(self):
-        pass
+    def closeEvent(self, event):
+        """清理资源"""
+        self._stop_capture()
+        self._fps_timer.stop()
+        super().closeEvent(event)

@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (
     QFileDialog,
 )
 from PySide6.QtCore import Signal, Qt
+from PySide6.QtGui import QKeySequence, QShortcut
 
 
 class LeftPanel(QWidget):
@@ -13,12 +14,14 @@ class LeftPanel(QWidget):
     video_selected = Signal(str)
     camera_connected = Signal(str)
     confidence_changed = Signal(float)
+    sahi_toggled = Signal(bool)
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setMinimumWidth(200)
         self.setMaximumWidth(280)
         self._setup_ui()
+        self._setup_shortcuts()
 
     def _setup_ui(self):
         layout = QVBoxLayout(self)
@@ -27,9 +30,9 @@ class LeftPanel(QWidget):
         # === 源选择 ===
         group = QGroupBox("数据源")
         g_layout = QVBoxLayout()
-        self.rb_image = QRadioButton("🖼 本地图片")
-        self.rb_video = QRadioButton("🎬 视频文件")
-        self.rb_camera = QRadioButton("📷 相机/流")
+        self.rb_image = QRadioButton("本地图片")
+        self.rb_video = QRadioButton("视频文件")
+        self.rb_camera = QRadioButton("相机/流")
         self.rb_image.setChecked(True)
         g_layout.addWidget(self.rb_image)
         g_layout.addWidget(self.rb_video)
@@ -74,7 +77,7 @@ class LeftPanel(QWidget):
         l3 = QVBoxLayout(p3)
         self.edit_url = QLineEdit()
         self.edit_url.setPlaceholderText("0 或 rtsp://...")
-        self.btn_connect = QPushButton("🔌 连接")
+        self.btn_connect = QPushButton("连接")
         self.lbl_cam = QLabel("● 未连接")
         self.lbl_cam.setStyleSheet("color: gray;")
         l3.addWidget(QLabel("设备号 / RTSP地址:"))
@@ -137,6 +140,12 @@ class LeftPanel(QWidget):
         layout.addStretch()
         self._connect_signals()
 
+    def _setup_shortcuts(self):
+        """键盘快捷键"""
+        QShortcut(QKeySequence("O"), self, self._open_image)
+        QShortcut(QKeySequence("F"), self, self._open_folder)
+        QShortcut(QKeySequence("V"), self, self._open_video)
+
     def _connect_signals(self):
         self.rb_image.toggled.connect(lambda c: c and self.stack.setCurrentIndex(0))
         self.rb_video.toggled.connect(lambda c: c and self.stack.setCurrentIndex(1))
@@ -146,6 +155,7 @@ class LeftPanel(QWidget):
         self.btn_open_folder.clicked.connect(self._open_folder)
         self.btn_open_vid.clicked.connect(self._open_video)
         self.file_tree.itemClicked.connect(self._on_tree_click)
+        self.file_tree.itemDoubleClicked.connect(self._on_tree_dblclick)
         self.btn_connect.clicked.connect(
             lambda: self.camera_connected.emit(self.edit_url.text())
         )
@@ -160,6 +170,13 @@ class LeftPanel(QWidget):
         self.chk_sahi.clicked.connect(self._toggle_sahi)
 
     def _on_tree_click(self, item):
+        path = item.data(0, Qt.UserRole)
+        if path:
+            self.image_selected.emit(path)
+            self._show_preview(path)
+
+    def _on_tree_dblclick(self, item):
+        """双击自动检测"""
         path = item.data(0, Qt.UserRole)
         if path:
             self.image_selected.emit(path)
@@ -226,6 +243,7 @@ class LeftPanel(QWidget):
     def _toggle_sahi(self):
         checked = self.chk_sahi.isChecked()
         self.chk_sahi.setText(f"SAHI: {'开' if checked else '关'}")
+        self.sahi_toggled.emit(checked)
 
     def update_ship_count(self, count: int):
         self.lbl_count.setText(f"当前画面舰船数: {count}")

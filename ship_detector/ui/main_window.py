@@ -73,38 +73,76 @@ class MainWindow(QMainWindow):
             self.status_bar.showMessage("检测器加载失败")
 
     def _connect_signals(self):
+        # 工具栏 -> 功能
+        self.toolbar.open_file.connect(self._on_toolbar_open)
+        self.toolbar.run_detection.connect(self._run_detection)
+        self.toolbar.pause_video.connect(self.canvas.pause)
+        self.toolbar.save_result.connect(self._on_save)
+
         # 左 -> 画布
         self.left_panel.image_selected.connect(self.canvas.load_image)
         self.left_panel.video_selected.connect(self.canvas.load_video)
         self.left_panel.camera_connected.connect(self.canvas.connect_camera)
 
-        # 工具栏 -> 检测
-        self.toolbar.run_detection.connect(self._run_detection)
-        self.toolbar.pause_video.connect(self.canvas.pause)
-        self.toolbar.save_result.connect(self._on_save)
-
         # 置信度变化
         self.left_panel.confidence_changed.connect(self._on_confidence_changed)
+
+        # SAHI 切换
+        self.left_panel.sahi_toggled.connect(self._on_sahi_toggled)
 
         # 画布 -> 右侧面板
         self.canvas.ship_selected.connect(self.right_panel.display_ship)
         self.canvas.ships_updated.connect(self.left_panel.update_ship_count)
         self.canvas.ships_updated.connect(self.right_panel.update_summary)
         self.canvas.status_message.connect(self.status_bar.showMessage)
-        self.canvas.resolution_changed.connect(self.bottom_panel.set_resolution)
+        self.canvas.resolution_changed.connect(self._on_resolution_changed)
+        self.canvas.fps_updated.connect(self.bottom_panel.update_fps)
 
         # 画布 ships_updated 同步更新目标列表
         self.canvas.ships_updated.connect(
             lambda c: self.right_panel.update_ship_list(self.canvas.ships)
         )
 
-        # 右侧面板 -> 画布
-        self.right_panel.highlight_ship.connect(self.canvas.highlight_ship)
+        # 右侧面板 -> 画布 (列表点击 -> 选中 + 详情)
+        self.right_panel.highlight_ship.connect(self._on_list_highlight)
 
         # 数据源状态
         self.left_panel.image_selected.connect(
             lambda p: self.left_panel.set_source_status(f"图片: {p}", True)
         )
+        self.left_panel.video_selected.connect(
+            lambda p: self.left_panel.set_source_status(f"视频: {p}", True)
+        )
+        self.left_panel.camera_connected.connect(
+            lambda u: self.left_panel.set_source_status(f"相机: {u}", True)
+        )
+
+    def _on_toolbar_open(self):
+        """工具栏打开按钮 — 根据当前源类型打开对应对话框"""
+        if self.left_panel.rb_image.isChecked():
+            self.left_panel._open_image()
+        elif self.left_panel.rb_video.isChecked():
+            self.left_panel._open_video()
+        else:
+            self.left_panel.btn_connect.click()
+
+    def _on_sahi_toggled(self, enabled: bool):
+        self.detector.set_sahi(enabled)
+        mode = "SAHI 切片" if enabled else "标准"
+        self.bottom_panel.append_log(f"推理模式: {mode}", "INFO")
+        self.status_bar.showMessage(f"切换到 {mode} 推理")
+
+    def _on_resolution_changed(self, w: int, h: int):
+        self.bottom_panel.set_resolution(w, h)
+        self.right_panel.set_image_size(w, h)
+
+    def _on_list_highlight(self, track_id: int):
+        """列表点击 -> 画布高亮 + 详情面板更新"""
+        self.canvas.highlight_ship(track_id)
+        for ship in self.canvas.ships:
+            if ship.track_id == track_id:
+                self.right_panel.display_ship(ship)
+                break
 
     def _run_detection(self):
         """执行检测 — 在后台线程运行"""
@@ -177,6 +215,7 @@ class MainWindow(QMainWindow):
                 "confidence": s.confidence,
                 "bbox": {"x": s.bbox.x, "y": s.bbox.y, "w": s.bbox.w, "h": s.bbox.h},
                 "note": s.note,
+                "reviewed": s.reviewed,
             })
 
         with open(path, "w", encoding="utf-8") as f:
@@ -188,3 +227,11 @@ class MainWindow(QMainWindow):
     def _init_log(self):
         self.bottom_panel.append_log("系统启动", "INFO")
         self.bottom_panel.append_log("欢迎使用舰船识别系统", "INFO")
+
+    def closeEvent(self, event):
+        """退出时清理"""
+        if self._worker and self._worker.isRunning():
+            self._worker.quit()
+            self._worker.wait(2000)
+        self.canvas.close()
+        super().closeEvent(event)
