@@ -50,6 +50,10 @@ class DetectedShip:
     length_m: Optional[float] = None
     ship_type: Optional[str] = None
 
+    # 人工标注
+    note: str = ""
+    reviewed: bool = False
+
 
 @dataclass
 class FrameResult:

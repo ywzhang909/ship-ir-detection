@@ -1,7 +1,9 @@
 from typing import List, Optional, Tuple
 from PySide6.QtWidgets import QLabel
 from PySide6.QtCore import Signal, Qt, QPoint, QRect
-from PySide6.QtGui import QPixmap, QPainter, QPen, QColor, QFont, QMouseEvent, QPaintEvent
+from PySide6.QtGui import QPixmap, QPainter, QPen, QColor, QFont, QMouseEvent, QPaintEvent, QImage
+import numpy as np
+
 from core.data_models import DetectedShip, BoundingBox
 
 
@@ -24,14 +26,33 @@ class CentralCanvas(QLabel):
         self.selected_ship: Optional[DetectedShip] = None
         self.hovered_ship: Optional[DetectedShip] = None
 
+        # 当前帧的 ndarray (BGR) — 用于检测
+        self._current_frame: Optional[np.ndarray] = None
+        self._current_image_path: Optional[str] = None
+
         self.setMouseTracking(True)
 
+    @property
+    def has_content(self) -> bool:
+        return not self.display_pixmap.isNull()
+
+    @property
+    def current_frame(self) -> Optional[np.ndarray]:
+        return self._current_frame
+
+    @property
+    def current_image_path(self) -> Optional[str]:
+        return self._current_image_path
+
     def load_image(self, path: str):
+        import cv2
         pixmap = QPixmap(path)
         if pixmap.isNull():
             self.status_message.emit(f"无法加载: {path}")
             return
         self.display_pixmap = pixmap
+        self._current_image_path = path
+        self._current_frame = cv2.imread(path)
         self.ships = []
         self.selected_ship = None
         self.hovered_ship = None
@@ -46,19 +67,30 @@ class CentralCanvas(QLabel):
     def connect_camera(self, url: str):
         self.status_message.emit(f"连接相机: {url}")
 
-    def update_frame(self, pixmap: QPixmap, ships: List[DetectedShip]):
+    def update_frame(self, pixmap: QPixmap, ships: List[DetectedShip] = None):
+        """更新显示帧 (视频/相机)"""
         self.display_pixmap = pixmap
-        self.ships = ships
-        self.ships_updated.emit(len(ships))
+        if ships is not None:
+            self.ships = ships
+            self.ships_updated.emit(len(ships))
+        self.update()
+
+    def set_frame(self, frame: np.ndarray):
+        """设置当前帧 ndarray (不触发检测)"""
+        self._current_frame = frame
+        h, w = frame.shape[:2]
+        rgb = frame[:, :, ::-1].copy()
+        qimg = QImage(rgb.data, w, h, w * 3, QImage.Format_RGB888)
+        self.display_pixmap = QPixmap.fromImage(qimg)
+        self.resolution_changed.emit(w, h)
         self.update()
 
     def run_detection(self):
-        if self.display_pixmap.isNull():
+        """触发检测 — 由 MainWindow 连接到 DetectionWorker"""
+        if self._current_frame is None:
             self.status_message.emit("请先加载图片或视频")
             return
         self.status_message.emit("正在检测...")
-        self.ships_updated.emit(len(self.ships))
-        self.update()
 
     def highlight_ship(self, track_id: int):
         for ship in self.ships:
@@ -69,6 +101,8 @@ class CentralCanvas(QLabel):
 
     def set_ships(self, ships: List[DetectedShip]):
         self.ships = ships
+        self.selected_ship = None
+        self.hovered_ship = None
         self.ships_updated.emit(len(ships))
         self.update()
 
@@ -128,9 +162,11 @@ class CentralCanvas(QLabel):
         tw = fm.horizontalAdvance(label) + 10
         th = fm.height() + 4
 
-        painter.fillRect(rect.x(), rect.y() - th, tw, th, color)
+        # 标签在框上方 (避免裁剪)
+        label_y = max(img_rect.y(), rect.y() - th)
+        painter.fillRect(rect.x(), label_y, tw, th, color)
         painter.setPen(QColor(255, 255, 255))
-        painter.drawText(rect.x() + 5, rect.y() - th + fm.ascent() + 2, label)
+        painter.drawText(rect.x() + 5, label_y + fm.ascent() + 2, label)
 
         if is_selected:
             painter.setBrush(color)
@@ -139,14 +175,14 @@ class CentralCanvas(QLabel):
     # ========== 鼠标交互 ==========
     def mouseMoveEvent(self, event):
         img_rect = self._calc_fit_rect()
-        if not img_rect.contains(event.pos()):
+        if not img_rect.contains(event.position().toPoint()):
             if self.hovered_ship:
                 self.hovered_ship = None
                 self.setCursor(Qt.ArrowCursor)
                 self.update()
             return
 
-        nx, ny = self._to_norm(event.pos(), img_rect)
+        nx, ny = self._to_norm(event.position().toPoint(), img_rect)
         found = None
         for ship in reversed(self.ships):
             x1, y1, x2, y2 = ship.bbox.to_pixels(1, 1)
@@ -164,13 +200,13 @@ class CentralCanvas(QLabel):
             return
 
         img_rect = self._calc_fit_rect()
-        if not img_rect.contains(event.pos()):
+        if not img_rect.contains(event.position().toPoint()):
             self.selected_ship = None
             self.ship_selected.emit(None)
             self.update()
             return
 
-        nx, ny = self._to_norm(event.pos(), img_rect)
+        nx, ny = self._to_norm(event.position().toPoint(), img_rect)
         clicked = None
         for ship in reversed(self.ships):
             x1, y1, x2, y2 = ship.bbox.to_pixels(1, 1)

@@ -32,3 +32,9 @@ class BottomPanel(QWidget):
 
     def set_resolution(self, w: int, h: int):
         self.lbl_res.setText(f"分辨率: {w}×{h}")
+
+    def set_frame(self, frame_id: int):
+        self.lbl_frame.setText(f"帧号: {frame_id}")
+
+    def clear_log(self):
+        self.log.clear()
