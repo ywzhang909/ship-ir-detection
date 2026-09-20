@@ -48,5 +48,29 @@ Thumbs.db
 *.pid
 .preprocess_cache*
 
+# ─── Agent / Tool Config ─────────────────────────────────
+.agents/
+.omo/
+skills-lock.json
+manager_info.txt
+readme.txt
+
+# ─── Staging / Temporary Data ────────────────────────────
+data/weights_staging/
+data/processed*/
+data/preprocessed*/
+data/preprocess_cache*
+
+# ─── Binary Installers ───────────────────────────────────
+linux_aes_installer.tar.gz
+sfupdate32.bin
+sfupdate64.bin
+sfupdate_aarch64.bin
+sfupdate_dom.bin
+sfupdate_loongarch64.bin
+sfupdate_mips64.bin
+agent_installer.sh
+off_sfesp.sh
+
 # ─── Test Data ───────────────────────────────────────────
 ship_annotation/tests/test_data/

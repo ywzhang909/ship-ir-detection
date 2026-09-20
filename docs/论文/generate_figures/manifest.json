@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0",
+  "description": "论文图表清单（Fig1–Fig10）。所有 figure agent 必须按此清单生成图片，文件名与正文 `![图N](figures/xxx.png)` 引用保持一致。",
+  "figures_dir": "figures",
+  "figures": {
+    "Fig1": {
+      "filename": "fig1_pipeline.png",
+      "title": "整体技术路线图",
+      "description": "红外海面舰艇识别全流程：数据预处理 → 数据增强 → 空频融合 → 检测网络 → 后处理（SAHI）",
+      "status": "generated"
+    },
+    "Fig2": {
+      "filename": "fig2_fusion_module.png",
+      "title": "空频融合模块结构",
+      "description": "SpatialFrequencyFusion 可学习空间-频率融合模块结构图（双流输入 → 空间/频率分支 → 融合 → 残差）",
+      "status": "generated"
+    },
+    "Fig3": {
+      "filename": "fig3_preprocess_effects.png",
+      "title": "预处理方法效果对比",
+      "description": "CLAHE / AWB / Top-hat+CLAHE / Butterworth+CLAHE / MSR / 同态滤波 / DWT / DoG / 各向异性扩散 / 中值 / 双边及双流三通道输出",
+      "status": "generated"
+    },
+    "Fig4": {
+      "filename": "fig4_run123_val_metrics.png",
+      "title": "Run1/2/3 验证集指标对比",
+      "description": "空域 Top-hat、频域 Butterworth、双流空频融合三条主基线的验证集 mAP50、mAP50-95、Precision、Recall",
+      "status": "generated"
+    },
+    "Fig5": {
+      "filename": "fig5_test_mAP50_ranking.png",
+      "title": "全实验测试集 mAP50 排名",
+      "description": "全部消融实验（T1–T28）测试集 mAP50 降序排名柱状图",
+      "status": "generated"
+    },
+    "Fig6": {
+      "filename": "fig6_generalization_gap.png",
+      "title": "验证-测试泛化差距",
+      "description": "各实验验证集与测试集 mAP50 泛化差距（Δ=测试−验证），Run3/T1/T2 严重过拟合（Δ < −37）",
+      "status": "generated"
+    },
+    "Fig7": {
+      "filename": "fig7_loss_ablation.png",
+      "title": "损失函数消融",
+      "description": "CIoU 基线、Shape-IoU、WIoU v3、NWD 四种损失函数的测试集 mAP50 与 mAP50-95 对比",
+      "status": "generated"
+    },
+    "Fig8": {
+      "filename": "fig8_sahi_vs_standard.png",
+      "title": "SAHI vs 标准推理",
+      "description": "SAHI 滑窗推理与标准推理的测试集 mAP50 对比：SAHI 仅对严重过拟合模型有恢复效果",
+      "status": "generated"
+    },
+    "Fig9": {
+      "filename": "fig9_dual_randomization.png",
+      "title": "双随机化策略对比",
+      "description": "Run3 基线、T7 augment-jitter 与 T25 preprocess-jitter 的验证集与测试集指标，双随机化修复过拟合",
+      "status": "generated"
+    },
+    "Fig10": {
+      "filename": "fig10_crrp.png",
+      "title": "CRRP 数据增强流程",
+      "description": "Copy-Rotate-Resize-Paste 数据增强流程：复制目标实例，经旋转、缩放粘贴至新背景，可选泊松融合平滑边界",
+      "status": "generated"
+    }
+  },
+  "detection_figures": {
+    "description": "真实 NSLSR 验证帧上的消融实验检测结果图（由 predict.py 标准推理生成）",
+    "dir": "figures/detection",
+    "figures": [
+      {"filename": "det_T7_jitter.png", "label": "空域预处理（Top-hat+CLAHE）", "detections": 31},
+      {"filename": "det_starnet.png", "label": "频域预处理（Butterworth+CLAHE）", "detections": 21},
+      {"filename": "det_T4_wavelet.png", "label": "小波 DWT 子带缩放", "detections": 22},
+      {"filename": "det_T16_crrp.png", "label": "CRRP 增强（YOLO11l+Fusion）", "detections": 6},
+      {"filename": "det_baseline.png", "label": "YOLO11m + Fusion 基线", "detections": 18},
+      {"filename": "det_T1_fusion.png", "label": "T1 大融合架构（过拟合）", "detections": 51},
+      {"filename": "det_T2_fusion.png", "label": "T2 残差搜索（过拟合）", "detections": 51},
+      {"filename": "det_T5_yolo11l.png", "label": "T5 YOLO11l + Fusion", "detections": 20},
+      {"filename": "det_T20_dyn.png", "label": "T20 动态检测头", "detections": 19},
+      {"filename": "det_T22_large.png", "label": "T22 大模型（YOLO11l 扩大参数）", "detections": 21}
+    ]
+  }
+}
