@@ -65,19 +65,21 @@
     }
   },
   "detection_figures": {
-    "description": "真实 NSLSR 验证帧上的消融实验检测结果图（由 predict.py 标准推理生成）",
+    "description": "真实 NSLSR 验证帧上的消融实验检测结果图（由 predict.py 标准推理生成，含置信度标注）",
     "dir": "figures/detection",
     "figures": [
-      {"filename": "det_T7_jitter.png", "label": "空域预处理（Top-hat+CLAHE）", "detections": 31},
-      {"filename": "det_starnet.png", "label": "频域预处理（Butterworth+CLAHE）", "detections": 21},
-      {"filename": "det_T4_wavelet.png", "label": "小波 DWT 子带缩放", "detections": 22},
-      {"filename": "det_T16_crrp.png", "label": "CRRP 增强（YOLO11l+Fusion）", "detections": 6},
-      {"filename": "det_baseline.png", "label": "YOLO11m + Fusion 基线", "detections": 18},
-      {"filename": "det_T1_fusion.png", "label": "T1 大融合架构（过拟合）", "detections": 51},
-      {"filename": "det_T2_fusion.png", "label": "T2 残差搜索（过拟合）", "detections": 51},
-      {"filename": "det_T5_yolo11l.png", "label": "T5 YOLO11l + Fusion", "detections": 20},
-      {"filename": "det_T20_dyn.png", "label": "T20 动态检测头", "detections": 19},
-      {"filename": "det_T22_large.png", "label": "T22 大模型（YOLO11l 扩大参数）", "detections": 21}
+      {"filename": "det_T7_jitter_f0.png", "label": "空域预处理（Top-hat+CLAHE）", "frame": 0, "detections": 31, "avg_conf": 0.511, "max_conf": 0.778, "min_conf": 0.068},
+      {"filename": "det_starnet_f0.png", "label": "频域预处理（Butterworth+CLAHE）", "frame": 0, "detections": 21, "avg_conf": 0.112, "max_conf": 0.357, "min_conf": 0.050},
+      {"filename": "det_T4_wavelet_f0.png", "label": "小波 DWT 子带缩放", "frame": 0, "detections": 22, "avg_conf": 0.446, "max_conf": 0.792, "min_conf": 0.071},
+      {"filename": "det_T16_crrp_f0.png", "label": "CRRP 增强（YOLO11l+Fusion）", "frame": 0, "detections": 6, "avg_conf": 0.449, "max_conf": 0.724, "min_conf": 0.051},
+      {"filename": "det_baseline_f0.png", "label": "YOLO11m + Fusion 基线", "frame": 0, "detections": 18, "avg_conf": 0.186, "max_conf": 0.440, "min_conf": 0.056},
+      {"filename": "det_T1_fusion_f0.png", "label": "T1 大融合架构（过拟合）", "frame": 0, "detections": 51, "avg_conf": 0.403, "max_conf": 0.789, "min_conf": 0.051},
+      {"filename": "det_T2_fusion_f0.png", "label": "T2 残差搜索（过拟合）", "frame": 0, "detections": 51, "avg_conf": 0.403, "max_conf": 0.789, "min_conf": 0.051},
+      {"filename": "det_T5_yolo11l_f0.png", "label": "T5 YOLO11l + Fusion", "frame": 0, "detections": 56, "avg_conf": 0.350, "max_conf": 0.800, "min_conf": 0.051},
+      {"filename": "det_T5_yolo11l_f1.png", "label": "T5 YOLO11l + Fusion（损失函数消融）", "frame": 1, "detections": 54, "avg_conf": 0.331, "max_conf": 0.794, "min_conf": 0.053},
+      {"filename": "det_T7_jitter_f1.png", "label": "T7 augment-jitter（训练策略）", "frame": 1, "detections": 34, "avg_conf": 0.478, "max_conf": 0.799, "min_conf": 0.073},
+      {"filename": "det_T20_dyn_f1.png", "label": "T20 动态检测头", "frame": 1, "detections": 33, "avg_conf": 0.540, "max_conf": 0.884, "min_conf": 0.051},
+      {"filename": "det_T22_large_f1.png", "label": "T22 大模型（YOLO11l 扩大参数）", "frame": 1, "detections": 4, "avg_conf": 0.081, "max_conf": 0.093, "min_conf": 0.055}
     ]
   }
 }

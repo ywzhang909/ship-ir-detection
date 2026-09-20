@@ -1,0 +1,232 @@
+{
+  "baseline_yolo11m": {
+    "frame0": {
+      "detections": 18,
+      "avg_conf": 0.18626745873027378,
+      "max_conf": 0.4395579695701599,
+      "min_conf": 0.05639662966132164,
+      "inference_ms": 874.2821216583252
+    },
+    "frame1": {
+      "detections": 23,
+      "avg_conf": 0.19510269262220548,
+      "max_conf": 0.3592543601989746,
+      "min_conf": 0.05254742503166199,
+      "inference_ms": 10.699033737182617
+    },
+    "frame2": {
+      "detections": 25,
+      "avg_conf": 0.19388353288173676,
+      "max_conf": 0.44913449883461,
+      "min_conf": 0.055744778364896774,
+      "inference_ms": 10.038375854492188
+    }
+  },
+  "starnet_s1": {
+    "frame0": {
+      "detections": 21,
+      "avg_conf": 0.11210571406852632,
+      "max_conf": 0.3567468523979187,
+      "min_conf": 0.05046801641583443,
+      "inference_ms": 206.24375343322754
+    },
+    "frame1": {
+      "detections": 24,
+      "avg_conf": 0.11473768126840393,
+      "max_conf": 0.3552233874797821,
+      "min_conf": 0.05139002948999405,
+      "inference_ms": 16.43824577331543
+    },
+    "frame2": {
+      "detections": 25,
+      "avg_conf": 0.1279406091570854,
+      "max_conf": 0.4065179228782654,
+      "min_conf": 0.054151080548763275,
+      "inference_ms": 10.469198226928711
+    }
+  },
+  "T1_fusion_h32_l3_cbam": {
+    "frame0": {
+      "detections": 51,
+      "avg_conf": 0.4030615805703051,
+      "max_conf": 0.7889436483383179,
+      "min_conf": 0.050537802278995514,
+      "inference_ms": 209.90324020385742
+    },
+    "frame1": {
+      "detections": 53,
+      "avg_conf": 0.38855626806616783,
+      "max_conf": 0.738466203212738,
+      "min_conf": 0.052535273134708405,
+      "inference_ms": 16.930103302001953
+    },
+    "frame2": {
+      "detections": 41,
+      "avg_conf": 0.4739043743508618,
+      "max_conf": 0.8182390332221985,
+      "min_conf": 0.05462958663702011,
+      "inference_ms": 10.282278060913086
+    }
+  },
+  "T2_fusion_residual07": {
+    "frame0": {
+      "detections": 51,
+      "avg_conf": 0.4030615805703051,
+      "max_conf": 0.7889436483383179,
+      "min_conf": 0.050537802278995514,
+      "inference_ms": 211.63487434387207
+    },
+    "frame1": {
+      "detections": 53,
+      "avg_conf": 0.38855626806616783,
+      "max_conf": 0.738466203212738,
+      "min_conf": 0.052535273134708405,
+      "inference_ms": 18.18537712097168
+    },
+    "frame2": {
+      "detections": 41,
+      "avg_conf": 0.4739043743508618,
+      "max_conf": 0.8182390332221985,
+      "min_conf": 0.05462958663702011,
+      "inference_ms": 10.192394256591797
+    }
+  },
+  "T4_wavelet_dual": {
+    "frame0": {
+      "detections": 22,
+      "avg_conf": 0.44595310193571175,
+      "max_conf": 0.7915984392166138,
+      "min_conf": 0.0709092915058136,
+      "inference_ms": 207.29303359985352
+    },
+    "frame1": {
+      "detections": 20,
+      "avg_conf": 0.35222702454775573,
+      "max_conf": 0.725162148475647,
+      "min_conf": 0.05117524787783623,
+      "inference_ms": 15.91348648071289
+    },
+    "frame2": {
+      "detections": 17,
+      "avg_conf": 0.3440589911359198,
+      "max_conf": 0.7664612531661987,
+      "min_conf": 0.05557206645607948,
+      "inference_ms": 10.205268859863281
+    }
+  },
+  "T5_yolo11l_fusion": {
+    "frame0": {
+      "detections": 56,
+      "avg_conf": 0.3495158074157579,
+      "max_conf": 0.7998079657554626,
+      "min_conf": 0.05100785195827484,
+      "inference_ms": 246.4916706085205
+    },
+    "frame1": {
+      "detections": 54,
+      "avg_conf": 0.33125765600966084,
+      "max_conf": 0.7944676876068115,
+      "min_conf": 0.05270230397582054,
+      "inference_ms": 19.582271575927734
+    },
+    "frame2": {
+      "detections": 62,
+      "avg_conf": 0.3495184331531486,
+      "max_conf": 0.8059965968132019,
+      "min_conf": 0.05228080227971077,
+      "inference_ms": 12.197017669677734
+    }
+  },
+  "T7_augment_jitter": {
+    "frame0": {
+      "detections": 31,
+      "avg_conf": 0.5110186259112051,
+      "max_conf": 0.7783582210540771,
+      "min_conf": 0.06823395937681198,
+      "inference_ms": 204.27250862121582
+    },
+    "frame1": {
+      "detections": 34,
+      "avg_conf": 0.47783596200101514,
+      "max_conf": 0.798694908618927,
+      "min_conf": 0.07265794277191162,
+      "inference_ms": 16.390323638916016
+    },
+    "frame2": {
+      "detections": 34,
+      "avg_conf": 0.47634543237440724,
+      "max_conf": 0.7821424007415771,
+      "min_conf": 0.10094360262155533,
+      "inference_ms": 10.314226150512695
+    }
+  },
+  "T16_crrp": {
+    "frame0": {
+      "detections": 6,
+      "avg_conf": 0.4489201996475458,
+      "max_conf": 0.7238713502883911,
+      "min_conf": 0.05114809796214104,
+      "inference_ms": 250.6403923034668
+    },
+    "frame1": {
+      "detections": 3,
+      "avg_conf": 0.3727722217639287,
+      "max_conf": 0.5784295797348022,
+      "min_conf": 0.08055339753627777,
+      "inference_ms": 18.653154373168945
+    },
+    "frame2": {
+      "detections": 15,
+      "avg_conf": 0.4566380336880684,
+      "max_conf": 0.8184096217155457,
+      "min_conf": 0.059985339641571045,
+      "inference_ms": 12.443304061889648
+    }
+  },
+  "T20_dynamic_head": {
+    "frame0": {
+      "detections": 37,
+      "avg_conf": 0.52485346039002,
+      "max_conf": 0.8764756321907043,
+      "min_conf": 0.05700318142771721,
+      "inference_ms": 243.6378002166748
+    },
+    "frame1": {
+      "detections": 33,
+      "avg_conf": 0.5398255192646475,
+      "max_conf": 0.8838391900062561,
+      "min_conf": 0.05072290077805519,
+      "inference_ms": 20.690441131591797
+    },
+    "frame2": {
+      "detections": 28,
+      "avg_conf": 0.5212888257311923,
+      "max_conf": 0.8623123168945312,
+      "min_conf": 0.053467147052288055,
+      "inference_ms": 12.364864349365234
+    }
+  },
+  "T22_large": {
+    "frame0": {
+      "detections": 5,
+      "avg_conf": 0.09632243737578391,
+      "max_conf": 0.1300058215856552,
+      "min_conf": 0.05315859243273735,
+      "inference_ms": 243.49308013916016
+    },
+    "frame1": {
+      "detections": 4,
+      "avg_conf": 0.08106598444283009,
+      "max_conf": 0.09307889640331268,
+      "min_conf": 0.05534713715314865,
+      "inference_ms": 19.709348678588867
+    },
+    "frame2": {
+      "detections": 4,
+      "avg_conf": 0.09909093752503395,
+      "max_conf": 0.17498543858528137,
+      "min_conf": 0.05351636931300163,
+      "inference_ms": 11.999130249023438
+    }
+  }
+}
