@@ -17,6 +17,7 @@ import logging
 import sys
 from datetime import datetime
 from pathlib import Path
+from typing import Optional
 
 import cv2
 import numpy as np
@@ -283,6 +284,194 @@ def save_results(
     logger.info("=" * 50)
 
 
+def run_wandb_media(
+    weights_path: Path,
+    class_names: list,
+    conf: float = 0.25,
+    imgsz: int = 640,
+    project: str = "ship-detection",
+    run_name: str | None = None,
+    run_eval: bool = False,
+    eval_conf: float = 0.001,
+    eval_data: str | Path | None = None,
+):
+    """Run inference on the first image of each customn subfolder,
+    stitch results into a grid, and log to wandb Media.
+    Optionally runs YOLO val() on the test split and logs metrics.
+
+    Args:
+        weights_path: Path to best.pt.
+        class_names: List of class name strings.
+        conf: Confidence threshold.
+        imgsz: Image size for standard inference.
+        project: Wandb project name.
+        run_name: Wandb run name (auto-generated if None).
+        run_eval: Also run YOLO val() on test split and log metrics.
+        eval_conf: Confidence threshold for evaluation.
+        eval_data: Data YAML path for evaluation (None = model default).
+    """
+    logger.info("=" * 50)
+    logger.info("Customn + Wandb Media Pipeline")
+    logger.info("=" * 50)
+
+    from ultralytics import YOLO
+
+    # Get subfolders (sorted, exclude predict/)
+    subdirs = sorted(
+        d for d in CUSTOMN_DIR.iterdir()
+        if d.is_dir() and d.name.lower() != "predict"
+    )
+    if not subdirs:
+        logger.error("No subfolders found in %s", CUSTOMN_DIR)
+        return
+
+    logger.info("Found %d subfolders: %s", len(subdirs), [d.name for d in subdirs])
+
+    # Load model
+    logger.info("Loading model from %s ...", weights_path)
+    model = YOLO(str(weights_path))
+
+    annotated_images = []
+    captions = []
+
+    for subdir in subdirs:
+        # Find first .BMP in this subfolder
+        bmp_files = sorted(
+            p for p in subdir.iterdir()
+            if p.suffix.lower() == ".bmp" and p.is_file()
+        )
+        if not bmp_files:
+            logger.warning("  No BMP files in %s, skipping", subdir.name)
+            continue
+
+        first_img = bmp_files[0]
+        logger.info("  Processing %s -> %s", subdir.name, first_img.name)
+
+        img_bgr = cv2.imread(str(first_img))
+        if img_bgr is None:
+            logger.warning("  Failed to load %s, skipping", first_img)
+            continue
+
+        # Run inference
+        results = model(str(first_img), imgsz=imgsz, conf=conf, verbose=False)
+
+        # Collect detections
+        detections = []
+        for r in results:
+            if r.boxes is None or len(r.boxes) == 0:
+                continue
+            for box in r.boxes:
+                cls_id = int(box.cls[0])
+                conf_val = float(box.conf[0])
+                x1, y1, x2, y2 = map(float, box.xyxy[0].tolist())
+                detections.append((cls_id, conf_val, x1, y1, x2, y2))
+
+        # Draw detections with confidence annotation (reuse existing function)
+        draw_detections(img_bgr, detections, class_names)
+
+        annotated_images.append(img_bgr)
+        captions.append(f"{subdir.name} ({len(detections)} det)")
+
+    if not annotated_images:
+        logger.error("No annotated images generated — nothing to log to wandb.")
+        return
+
+    # Stitch into grid (2 rows × ceil(n/2) cols)
+    n_images = len(annotated_images)
+    n_cols = min(4, n_images)
+    n_rows = (n_images + n_cols - 1) // n_cols
+
+    # Resize all images to the same dimensions (max width/height)
+    max_h = max(img.shape[0] for img in annotated_images)
+    max_w = max(img.shape[1] for img in annotated_images)
+    resized = []
+    for img in annotated_images:
+        h, w = img.shape[:2]
+        scale = min(max_w / w, max_h / h)
+        new_w, new_h = int(w * scale), int(h * scale)
+        resized_img = cv2.resize(img, (new_w, new_h))
+        # Pad to uniform size
+        top = (max_h - new_h) // 2
+        bottom = max_h - new_h - top
+        left = (max_w - new_w) // 2
+        right = max_w - new_w - left
+        padded = cv2.copyMakeBorder(resized_img, top, bottom, left, right,
+                                    cv2.BORDER_CONSTANT, value=(32, 32, 32))
+        resized.append(padded)
+
+    # Create grid
+    grid_h = n_rows * max_h + (n_rows - 1) * 4
+    grid_w = n_cols * max_w + (n_cols - 1) * 4
+    grid = np.full((grid_h, grid_w, 3), 32, dtype=np.uint8)
+
+    for idx, img in enumerate(resized):
+        row = idx // n_cols
+        col = idx % n_cols
+        y = row * (max_h + 4)
+        x = col * (max_w + 4)
+        grid[y:y + max_h, x:x + max_w] = img
+
+    # Log to wandb
+    try:
+        import wandb
+
+        if wandb.run is None:
+            derived_name = run_name or f"customn-media-{weights_path.parent.parent.name}"
+            wandb.init(project=project, name=derived_name)
+
+        # Convert BGR (OpenCV) to RGB for wandb
+        grid_rgb = cv2.cvtColor(grid, cv2.COLOR_BGR2RGB)
+        wandb.log({
+            "customn_prediction_grid": wandb.Image(
+                grid_rgb,
+                caption=" | ".join(captions),
+            )
+        }, step=0)
+
+        logger.info("Logged customn prediction grid to wandb (run: %s)", wandb.run.name)
+
+        # ── Optional: Run YOLO val() on test split, log metrics ──
+        if run_eval:
+            try:
+                logger.info("Running YOLO val() on test split ...")
+                val_kwargs = {
+                    "split": "test",
+                    "conf": eval_conf,
+                    "imgsz": 640,
+                    "batch": 16,
+                    "verbose": False,
+                }
+                if eval_data is not None:
+                    val_kwargs["data"] = str(eval_data)
+                    logger.info("Using data config: %s", eval_data)
+
+                metrics = model.val(**val_kwargs)
+
+                if metrics and hasattr(metrics, "box"):
+                    wandb.log({
+                        "test/mAP50": round(metrics.box.map50 * 100, 2),
+                        "test/mAP50-95": round(metrics.box.map * 100, 2),
+                        "test/Precision": round(metrics.box.mp * 100, 2),
+                        "test/Recall": round(metrics.box.mr * 100, 2),
+                    }, step=0)
+                    logger.info(
+                        "Logged test metrics to wandb: mAP50=%.2f, mAP50-95=%.2f, "
+                        "P=%.2f, R=%.2f",
+                        round(metrics.box.map50 * 100, 2),
+                        round(metrics.box.map * 100, 2),
+                        round(metrics.box.mp * 100, 2),
+                        round(metrics.box.mr * 100, 2),
+                    )
+                else:
+                    logger.warning("Evaluation returned no metrics.")
+            except Exception as eval_exc:
+                logger.warning("Test evaluation failed: %s", eval_exc)
+    except ImportError:
+        logger.warning("wandb not installed — skipping media logging.")
+    except Exception as exc:
+        logger.warning("Failed to log to wandb: %s", exc)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Batch inference on customn dataset with bbox visualization",
@@ -317,6 +506,20 @@ def main():
         "--imgsz", type=int, default=640,
         help="Image size for standard inference (default: 640)",
     )
+    parser.add_argument(
+        "--wandb-media", action="store_true",
+        help="Run customn first-image-per-folder prediction and log stitched "
+             "grid to wandb Media (alternative to full batch inference).",
+    )
+    parser.add_argument(
+        "--wandb-eval", action="store_true",
+        help="When used with --wandb-media, also run YOLO val() on the test "
+             "split and log metrics (mAP, Precision, Recall) to the same wandb run.",
+    )
+    parser.add_argument(
+        "--wandb-project", type=str, default="ship-detection",
+        help="Wandb project name (default: ship-detection)",
+    )
     args = parser.parse_args()
 
     # Validate model weights
@@ -333,6 +536,17 @@ def main():
     # Get class names for the selected dataset
     class_names = CLASS_NAMES_MAP[args.dataset]
 
+    # ── Wandb media (+ optional eval) mode ──
+    if args.wandb_media:
+        run_wandb_media(
+            weights_path, class_names,
+            conf=args.conf, imgsz=args.imgsz,
+            project=args.wandb_project,
+            run_eval=args.wandb_eval,
+        )
+        return
+
+    # ── Full batch inference mode ──
     # Collect all BMP files
     logger.info("Scanning %s for .BMP files ...", CUSTOMN_DIR)
     image_paths = collect_bmp_files(CUSTOMN_DIR)

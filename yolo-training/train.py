@@ -568,6 +568,62 @@ def _make_augment_jitter_callback(jitter_magnitude: float):
     return {"on_epoch_start": on_epoch_start}
 
 
+def _make_map95_early_stop_callback(tolerance: float = 1e-3, patience: int = 3):
+    """Create an on_val_epoch_end callback that stops training when mAP50-95
+    improvement stalls.
+
+    More aggressive than YOLO's default patience=30 (which uses a combined
+    fitness metric). This callback monitors mAP50-95 directly and triggers
+    stop when improvement < `tolerance` for `patience` consecutive val epochs.
+
+    Args:
+        tolerance: Minimum absolute improvement in mAP50-95 to reset counter.
+        patience: Consecutive non-improving val epochs before stopping.
+
+    Returns:
+        Dict with 'on_val_epoch_end' callback key.
+    """
+    best_map95 = -1.0
+    stall_count = 0
+
+    def on_val_epoch_end(trainer):
+        nonlocal best_map95, stall_count
+
+        # Extract current mAP50-95 from trainer metrics
+        current_map95 = getattr(trainer, "map", None)
+        if current_map95 is None:
+            # Try trainer.metrics or trainer.validator metrics
+            if hasattr(trainer, "metrics") and trainer.metrics is not None:
+                current_map95 = trainer.metrics.get("metrics/mAP50-95(B)", None)
+            if current_map95 is None and hasattr(trainer, "validator"):
+                current_map95 = getattr(trainer.validator, "map", None)
+
+        if current_map95 is None:
+            return  # Cannot determine mAP50-95, skip
+
+        improvement = current_map95 - best_map95
+        if improvement > tolerance:
+            best_map95 = current_map95
+            stall_count = 0
+        else:
+            stall_count += 1
+            logger.info(
+                "EarlyStop [mAP50-95]: epoch=%d, current=%.4f, best=%.4f, "
+                "improvement=%.4f (tolerance=%.4f), stall=%d/%d",
+                trainer.epoch, current_map95, best_map95,
+                improvement, tolerance, stall_count, patience,
+            )
+            if stall_count >= patience:
+                logger.info(
+                    "EarlyStop [mAP50-95]: Stopping at epoch %d — "
+                    "mAP50-95=%.4f did not improve > %.4f for %d epochs",
+                    trainer.epoch, current_map95, tolerance, patience,
+                )
+                trainer.stop = True
+
+    return {"on_val_epoch_end": on_val_epoch_end}
+
+
 def log_val_metrics_to_wandb(metrics):
     """Log validation metrics to an existing wandb run."""
     if metrics is None or not hasattr(metrics, "box"):
@@ -597,6 +653,14 @@ def log_val_metrics_to_wandb(metrics):
 # ===================================================================
 
 def main():
+    # ── cuDNN stability: disable autotuning (avoids CUDNN_STATUS_EXECUTION_FAILED
+    #    on newer GPU architectures like Blackwell RTX 5080 Laptop) ──
+    import torch
+    torch.backends.cudnn.benchmark = False
+    # Set environment variable to avoid cuDNN algorithm search failures at high res
+    import os
+    os.environ["CUDNN_V8_API_ENABLED"] = "1"  # Use cuDNN v8 API path (more stable)
+
     parser = argparse.ArgumentParser(
         description="Train YOLO for IR ship identification with preprocessing"
     )
@@ -658,6 +722,13 @@ def main():
                              "'asff' (Adaptive Spatial Feature Fusion — replaces Concat "
                              "with learnable weighted fusion). "
                              "Applied on top of all other modifications.")
+
+    # Backbone architecture
+    parser.add_argument("--backbone", type=str, default=None, choices=["starnet", "leconv"],
+                        help="Replace backbone C3k2 blocks with: "
+                             "'starnet' (C3k2Star: StarNet element-wise feature multiplication) "
+                             "or 'leconv' (C3k2LeConv: decomposed conv with long-range scaling). "
+                             "Applied before neck/head modifications.")
 
     # Detection head architecture
     parser.add_argument("--head-type", type=str, default=None, choices=["dynamic"],
@@ -833,6 +904,8 @@ def main():
                 f"lr_scale={args.fusion_lr_scale}x)" if args.use_fusion else "disabled")
     logger.info("Attention:  %s", f"{args.attention_type.upper()} in backbone" if args.attention_type else "disabled")
     logger.info("Neck:       %s", f"{args.neck_type.upper()}" if args.neck_type else "YOLO default")
+    logger.info("Backbone:   %s", f"{args.backbone.upper()}" if args.backbone else "YOLO default")
+    logger.info("Head:       %s", f"{args.head_type.upper()}" if args.head_type else "YOLO default")
     logger.info("Wandb:      %s", "enabled" if args.wandb else "disabled")
     logger.info("Device:     %s", args.device or "auto")
     logger.info("=" * 60)
@@ -943,6 +1016,23 @@ def main():
         logger.info("Type:      C3K3 (%d C3k2 blocks replaced, k=3)", n_replaced)
         logger.info("=" * 60)
 
+    # ── Backbone replacement ─────────────────────────────────────────
+    if args.backbone == "starnet":
+        from starnet_backbone import replace_backbone_with_starnet
+        n_replaced = replace_backbone_with_starnet(model)
+        logger.info("=" * 60)
+        logger.info("BACKBONE REPLACEMENT")
+        logger.info("Type:      StarNet (%d C3k2 blocks → C3k2Star)", n_replaced)
+        logger.info("=" * 60)
+
+    if args.backbone == "leconv":
+        from leconv_backbone import replace_backbone_with_leconv
+        n_replaced = replace_backbone_with_leconv(model)
+        logger.info("=" * 60)
+        logger.info("BACKBONE REPLACEMENT")
+        logger.info("Type:      LeConv (%d C3k2 blocks → C3k2LeConv)", n_replaced)
+        logger.info("=" * 60)
+
     # ── Detection head replacement ──────────────────────────────────
     if args.head_type == "dynamic":
         from dynamic_head import replace_detect_with_dynamic_head
@@ -970,6 +1060,14 @@ def main():
         jitter_callback = _make_augment_jitter_callback(args.augment_jitter)
         model.add_callback("on_epoch_start", jitter_callback["on_epoch_start"])
         logger.info("Augment jitter: enabled (magnitude=%.2f)", args.augment_jitter)
+
+    # ── mAP50-95 Early stopping callback (always active) ───────────────
+    # Monitors mAP50-95 on val end; stops when improvement < 1e-3
+    # for 3 consecutive epochs. More aggressive than default patience=30.
+    early_stop_callbacks = _make_map95_early_stop_callback(
+        tolerance=1e-3, patience=3
+    )
+    model.add_callback("on_val_epoch_end", early_stop_callbacks["on_val_epoch_end"])
 
     # -------------------------------------------------------------------
     # Training
