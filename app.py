@@ -39,14 +39,19 @@ def get_model(path_str: str) -> detector.LoadedModel:
 
 
 def _metrics_table(metrics: dict) -> pd.DataFrame:
-    """Two-column Metric/Value view of a per-image metrics dict (no filename)."""
+    """Two-column Metric/Value view of a per-image metrics dict (no filename).
+
+    Values are stringified so the Value column stays a single dtype: metrics mix
+    floats/ints with the per-class summary, and a mixed object column breaks
+    pyarrow serialization in st.dataframe.
+    """
     rows = []
     for key, value in metrics.items():
         if key == "filename":
             continue
         if key == "per_class" and isinstance(value, dict):
             value = ", ".join(f"{n}: {c}" for n, c in value.items()) or "-"
-        rows.append({"Metric": key, "Value": value})
+        rows.append({"Metric": key, "Value": str(value)})
     return pd.DataFrame(rows, columns=["Metric", "Value"])
 
 
