@@ -5,6 +5,7 @@
 - **标题**: "Focal Modulation Networks"
 - **作者**: Jianwei Yang, Chunyuan Li, Xiyang Dai, Lu Yuan, Jianfeng Gao
 - **时间**: NeurIPS 2022 (arXiv: 2022-03-22 → NeurIPS 2022)
+- **Zotero**: `FZE6AINR`
 - **GitHub**: [microsoft/FocalNet](https://github.com/microsoft/FocalNet)
 - **HuggingFace**: `microsoft/focalnet-tiny`
 
