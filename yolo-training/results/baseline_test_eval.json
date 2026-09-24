@@ -1,0 +1,12 @@
+{
+  "single": {
+    "weights": "D:\\Projects\\AUVDect\\data\\ship\\runs\\detect\\ship-detection\\baseline-yolo11m\\weights\\best.pt",
+    "mode": "standard",
+    "metrics": {
+      "mAP50-95": 81.75,
+      "mAP50": 99.25,
+      "Precision": 96.23,
+      "Recall": 96.92
+    }
+  }
+}
