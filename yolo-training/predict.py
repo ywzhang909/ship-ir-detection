@@ -70,11 +70,11 @@ def standard_inference(
     """Run standard YOLO inference with optional preprocessing."""
     from ultralytics import YOLO
 
-    if class_names is None:
-        class_names = CLASS_NAMES
-
     logger.info("Loading model from %s ...", model_path)
     model = YOLO(model_path)
+    # 统一输出 "ship"：训练数据 class 0 的类名本身是标注错误（标成了 "Ada"，实际为舰船）。
+    # 因此无论模型内置 9 类名（baseline/starnet）还是单类名（T5 等），一律显示 "ship"。
+    class_names = ["ship"]
 
     source_path = Path(source)
     image_paths = []

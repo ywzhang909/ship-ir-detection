@@ -93,13 +93,24 @@ class YoloDetector(DetectorBase):
             logger.error("检测失败: %s", e)
             return []
 
+    def _model_class_names(self) -> list:
+        """统一输出 'ship'（唯一数据源 = 论文约定）。
+
+        训练数据的第 0 类类名本身是标注错误（标成了 "Ada"/"Ada"，实际类别为舰船）。
+        因此无论模型内置 9 类名（baseline/starnet）还是单类名（T5 等），
+        检测结果一律显示 "ship"。这也是全论文统一规则：
+        所有 det_*.png、fig13/fig14、GUI 截图、界面面板 全部只出现 "ship"。"""
+
+        return ["ship"]
+
     def detect_frame(self, frame: np.ndarray, conf: float = 0.25) -> List[DetectedShip]:
         """从 BGR ndarray 检测 — 视频帧/相机帧的入口"""
         if not self._is_loaded or self._model is None:
             return []
 
         try:
-            class_names, class_colors = _get_class_info()
+            class_names = self._model_class_names()
+            _, class_colors = _get_class_info()
 
             if self._use_sahi and self._sahi_model is not None:
                 return self._detect_sahi(frame, conf, class_names, class_colors)

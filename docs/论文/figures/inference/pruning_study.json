@@ -1,0 +1,412 @@
+{
+  "source_model": "YOLO11l + 空频融合（最佳 large 模型）",
+  "source_params_m": 25.31,
+  "source_nnz_m": 25.249,
+  "frames": [
+    "val_batch0_pred_101.jpg",
+    "val_batch1_pred_101.jpg",
+    "val_batch2_pred_101.jpg"
+  ],
+  "variants": {
+    "unpruned": {
+      "sparsity_pct": 0,
+      "params_m": 25.31,
+      "file_mb": 51.2,
+      "per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 29,
+          "avg_conf": 0.1642,
+          "max_conf": 0.466
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 20,
+          "avg_conf": 0.1892,
+          "max_conf": 0.4627
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 20,
+          "avg_conf": 0.1965,
+          "max_conf": 0.6378
+        }
+      },
+      "latency_ms_640": 12.73,
+      "fps_640": 78.56,
+      "latency_ms_1280": 14.77,
+      "fps_1280": 67.69,
+      "avg_conf": 0.1808,
+      "max_conf": 0.6378
+    },
+    "unstructured_magnitude_30": {
+      "params_m": 25.31,
+      "file_mb": 102.02,
+      "per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 9,
+          "avg_conf": 0.0864,
+          "max_conf": 0.1427
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 3,
+          "avg_conf": 0.0647,
+          "max_conf": 0.0875
+        }
+      },
+      "latency_ms_640": 12.57,
+      "fps_640": 79.58,
+      "latency_ms_1280": 15.11,
+      "fps_1280": 66.2,
+      "avg_conf": 0.081,
+      "max_conf": 0.1427,
+      "method": "unstructured_magnitude",
+      "target_sparsity_pct": 30,
+      "achieved_sparsity_pct": 29.99,
+      "nnz_m": 17.676
+    },
+    "unstructured_magnitude_50": {
+      "params_m": 25.31,
+      "file_mb": 102.02,
+      "per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        }
+      },
+      "latency_ms_640": 12.27,
+      "fps_640": 81.49,
+      "latency_ms_1280": 14.59,
+      "fps_1280": 68.56,
+      "avg_conf": 0.0,
+      "max_conf": 0.0,
+      "method": "unstructured_magnitude",
+      "target_sparsity_pct": 50,
+      "achieved_sparsity_pct": 49.98,
+      "nnz_m": 12.628
+    },
+    "unstructured_magnitude_70": {
+      "params_m": 25.31,
+      "file_mb": 102.02,
+      "per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        }
+      },
+      "latency_ms_640": 12.35,
+      "fps_640": 80.96,
+      "latency_ms_1280": 14.47,
+      "fps_1280": 69.12,
+      "avg_conf": 0.0,
+      "max_conf": 0.0,
+      "method": "unstructured_magnitude",
+      "target_sparsity_pct": 70,
+      "achieved_sparsity_pct": 69.99,
+      "nnz_m": 7.578
+    },
+    "unstructured_l1_30": {
+      "params_m": 25.31,
+      "file_mb": 102.02,
+      "per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 8,
+          "avg_conf": 0.0905,
+          "max_conf": 0.1322
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 3,
+          "avg_conf": 0.0596,
+          "max_conf": 0.0749
+        }
+      },
+      "latency_ms_640": 12.59,
+      "fps_640": 79.4,
+      "latency_ms_1280": 14.99,
+      "fps_1280": 66.72,
+      "avg_conf": 0.0821,
+      "max_conf": 0.1322,
+      "method": "unstructured_l1",
+      "target_sparsity_pct": 30,
+      "achieved_sparsity_pct": 30.0,
+      "nnz_m": 17.674
+    },
+    "unstructured_l1_50": {
+      "params_m": 25.31,
+      "file_mb": 102.02,
+      "per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        }
+      },
+      "latency_ms_640": 12.35,
+      "fps_640": 80.98,
+      "latency_ms_1280": 14.76,
+      "fps_1280": 67.77,
+      "avg_conf": 0.0,
+      "max_conf": 0.0,
+      "method": "unstructured_l1",
+      "target_sparsity_pct": 50,
+      "achieved_sparsity_pct": 50.0,
+      "nnz_m": 12.624
+    },
+    "unstructured_l1_70": {
+      "params_m": 25.31,
+      "file_mb": 102.02,
+      "per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        }
+      },
+      "latency_ms_640": 12.52,
+      "fps_640": 79.85,
+      "latency_ms_1280": 14.62,
+      "fps_1280": 68.39,
+      "avg_conf": 0.0,
+      "max_conf": 0.0,
+      "method": "unstructured_l1",
+      "target_sparsity_pct": 70,
+      "achieved_sparsity_pct": 70.0,
+      "nnz_m": 7.575
+    },
+    "unstructured_random_30": {
+      "params_m": 25.31,
+      "file_mb": 102.02,
+      "per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        }
+      },
+      "latency_ms_640": 12.3,
+      "fps_640": 81.29,
+      "latency_ms_1280": 14.62,
+      "fps_1280": 68.42,
+      "avg_conf": 0.0,
+      "max_conf": 0.0,
+      "method": "unstructured_random",
+      "target_sparsity_pct": 30,
+      "achieved_sparsity_pct": 30.0,
+      "nnz_m": 17.674
+    },
+    "unstructured_random_50": {
+      "params_m": 25.31,
+      "file_mb": 102.02,
+      "per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        }
+      },
+      "latency_ms_640": 12.5,
+      "fps_640": 80.01,
+      "latency_ms_1280": 14.76,
+      "fps_1280": 67.74,
+      "avg_conf": 0.0,
+      "max_conf": 0.0,
+      "method": "unstructured_random",
+      "target_sparsity_pct": 50,
+      "achieved_sparsity_pct": 50.0,
+      "nnz_m": 12.624
+    },
+    "unstructured_random_70": {
+      "params_m": 25.31,
+      "file_mb": 102.02,
+      "per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        }
+      },
+      "latency_ms_640": 12.42,
+      "fps_640": 80.54,
+      "latency_ms_1280": 14.72,
+      "fps_1280": 67.93,
+      "avg_conf": 0.0,
+      "max_conf": 0.0,
+      "method": "unstructured_random",
+      "target_sparsity_pct": 70,
+      "achieved_sparsity_pct": 70.0,
+      "nnz_m": 7.575
+    },
+    "structured_channel_30": {
+      "params_m": 25.31,
+      "file_mb": 102.02,
+      "per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        }
+      },
+      "latency_ms_640": 12.4,
+      "fps_640": 80.63,
+      "latency_ms_1280": 14.59,
+      "fps_1280": 68.54,
+      "avg_conf": 0.0,
+      "max_conf": 0.0,
+      "method": "structured_channel",
+      "target_sparsity_pct": 30,
+      "achieved_sparsity_pct": 29.95,
+      "nnz_m": 17.686
+    },
+    "structured_channel_50": {
+      "params_m": 25.31,
+      "file_mb": 102.02,
+      "per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        }
+      },
+      "latency_ms_640": 12.57,
+      "fps_640": 79.58,
+      "latency_ms_1280": 14.83,
+      "fps_1280": 67.45,
+      "avg_conf": 0.0,
+      "max_conf": 0.0,
+      "method": "structured_channel",
+      "target_sparsity_pct": 50,
+      "achieved_sparsity_pct": 50.0,
+      "nnz_m": 12.625
+    },
+    "structured_channel_70": {
+      "params_m": 25.31,
+      "file_mb": 102.02,
+      "per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 0,
+          "avg_conf": 0.0,
+          "max_conf": 0.0
+        }
+      },
+      "latency_ms_640": 12.43,
+      "fps_640": 80.43,
+      "latency_ms_1280": 14.71,
+      "fps_1280": 68.0,
+      "avg_conf": 0.0,
+      "max_conf": 0.0,
+      "method": "structured_channel",
+      "target_sparsity_pct": 70,
+      "achieved_sparsity_pct": 70.05,
+      "nnz_m": 7.563
+    }
+  }
+}
