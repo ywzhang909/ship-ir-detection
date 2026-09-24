@@ -95,28 +95,43 @@ class MainWindow(QMainWindow):
             self.bottom_panel.append_log("请先加载图片", "WARN")
             return
 
-        if not self._app.detector.is_loaded:
-            self.bottom_panel.append_log("检测器未加载，请先加载模型", "WARN")
-            self.status_bar.showMessage("检测器未加载")
+        current_path = self._app.frame_source.current_path
+        if not current_path:
+            self.bottom_panel.append_log("无当前图片路径", "WARN")
             return
+
+        # 模型未加载时自动加载测试集最优模型
+        if not self._app.detector.is_loaded:
+            self.bottom_panel.append_log("检测器未加载，正在自动加载最优模型...", "INFO")
+            self.status_bar.showMessage("正在加载最优模型...")
+            if not self._app.load_best_model():
+                self.bottom_panel.append_log(
+                    f"未找到任何模型权重: runs/detect/ship-detection/*/weights/best.pt",
+                    "ERROR",
+                )
+                self.status_bar.showMessage("模型加载失败")
+                return
+            self.left_panel.set_detector_status(True)
+            self.bottom_panel.append_log(
+                f"已加载最优模型: {self._app.detector.model_label}", "INFO"
+            )
 
         self.bottom_panel.append_log("开始检测...", "INFO")
         self.status_bar.showMessage("正在检测...")
 
-        # 执行检测
-        current_path = self._app.frame_source.current_path
-        if current_path:
-            targets = self._app.detector.detect(
-                current_path,
-                conf=self._app.config.confidence_threshold,
-            )
-            self.canvas.targets = targets
-            self.canvas.update()
-            self.canvas.targets_updated.emit(targets)
-            self.bottom_panel.append_log(f"检测完成，找到 {len(targets)} 个目标", "INFO")
-            self.status_bar.showMessage(f"检测完成: {len(targets)} 个目标")
-        else:
-            self.bottom_panel.append_log("无当前图片路径", "WARN")
+        # 执行检测（含训练分布预处理）
+        targets = self._app.detector.detect(
+            current_path,
+            conf=self._app.config.confidence_threshold,
+        )
+        self.canvas.targets = targets
+        self.canvas.update()
+        self.canvas.targets_updated.emit(targets)
+        latency = getattr(self._app.detector, "last_latency_ms", 0.0)
+        self.bottom_panel.append_log(
+            f"检测完成，找到 {len(targets)} 个目标 (耗时 {latency:.0f} ms)", "INFO"
+        )
+        self.status_bar.showMessage(f"检测完成: {len(targets)} 个目标")
 
     def _on_save(self):
         """保存项目"""

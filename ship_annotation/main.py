@@ -1,8 +1,9 @@
 """入口，创建 QApplication"""
-import sys
 import logging
-from PySide6.QtWidgets import QApplication
+import sys
+
 from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QApplication
 from ui.main_window import MainWindow
 
 

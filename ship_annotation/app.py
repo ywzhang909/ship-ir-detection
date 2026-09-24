@@ -1,9 +1,10 @@
 """应用级逻辑（单例）"""
 import logging
 from pathlib import Path
-from core.yolo_detector import YoloDetector
-from core.frame_source import FrameSource
+
 from config import PROJECT_CONFIG
+from core.frame_source import FrameSource
+from core.yolo_detector import YoloDetector
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +38,15 @@ class App:
         else:
             logger.warning("模型加载失败: %s", model_path)
         return success
+
+    def load_best_model(self) -> bool:
+        """自动发现并加载测试集 mAP50-95 最优的模型"""
+        ok = self.detector.load_best_model()
+        if ok:
+            logger.info("最优模型已加载: %s", self.detector.model_label)
+        else:
+            logger.warning("自动加载最优模型失败：未找到任何权重")
+        return ok
 
     def detect_current(self) -> list:
         """对当前图片执行检测"""
