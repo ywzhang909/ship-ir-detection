@@ -5,8 +5,11 @@ from pathlib import Path
 # 项目根目录
 PROJECT_ROOT = Path(__file__).resolve().parent
 
-# 模型默认路径
-DEFAULT_MODEL_DIR = PROJECT_ROOT.parent / "yolo-training" / "runs" / "detect" / "train" / "weights"
+# 仓库根目录（ship_annotation/ 的上一级）
+REPO_ROOT = PROJECT_ROOT.parent
+
+# 训练运行目录：runs/detect/ship-detection/<run>/weights/best.pt
+DEFAULT_RUNS_DIR = REPO_ROOT / "runs" / "detect" / "ship-detection"
 
 # 导出的配置实例
 PROJECT_CONFIG = ProjectConfig(

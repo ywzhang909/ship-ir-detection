@@ -5,6 +5,7 @@
 - **标题**: MobileOne: An Improved One millisecond Mobile Backbone
 - **作者**: Xinchao Wang, et al. (Apple)
 - **时间**: CVPR 2023
+- **Zotero**: `ABMGYLAE`
 - **GitHub**: [apple/ml-mobileone](https://github.com/apple/ml-mobileone)
 
 ## 方法概要

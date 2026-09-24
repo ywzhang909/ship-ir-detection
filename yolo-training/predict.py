@@ -104,7 +104,7 @@ def standard_inference(
             pre_out = output_dir / f"pre_{img_path.name}"
             cv2.imwrite(str(pre_out), img_bgr)
 
-        results = model(img_bgr, imgsz=imgsz, conf=conf, save=True)
+        results = model(img_bgr, imgsz=imgsz, conf=conf, save=False)
 
         file_detections = []
         for i, r in enumerate(results):
@@ -120,6 +120,25 @@ def standard_inference(
                     file_detections.append((cls_id, conf_val, x1, y1, x2, y2))
             else:
                 logger.info("  no detections")
+
+        # Draw detections on a copy of the original image for visualization
+        img_vis = cv2.imread(str(img_path))
+        for cls_id, conf_val, x1, y1, x2, y2 in file_detections:
+            cls_name = class_names[cls_id] if cls_id < len(class_names) else f"c{cls_id}"
+            color = (0, 255, 0) if conf_val > 0.5 else (0, 255, 255)
+            cv2.rectangle(img_vis, (int(x1), int(y1)), (int(x2), int(y2)), color, 2)
+            label = f"{cls_name} {conf_val:.0%}"
+            # Draw filled label background for readability
+            (tw, th), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
+            label_y = max(int(y1) - 5, th + 2)
+            cv2.rectangle(img_vis, (int(x1), label_y - th - 2),
+                          (int(x1) + tw + 4, label_y + 2), color, -1)
+            cv2.putText(img_vis, label, (int(x1) + 2, label_y),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
+
+        out_path = output_dir / f"pred_{img_path.stem}.jpg"
+        cv2.imwrite(str(out_path), img_vis)
+        logger.info("  Saved visualization to %s", out_path)
 
         all_detections.append((img_path.name, file_detections))
 
@@ -240,16 +259,20 @@ def sahi_inference(
 
         all_detections.append((img_path.name, file_detections))
 
-        # Save visualization
+        # Save visualization — draw detections on original (not preprocessed) image
         img_vis = cv2.imread(str(img_path))
-        # Draw detections on original (not preprocessed) for reference
         for cls_id, score, x1, y1, x2, y2 in file_detections:
             cls_name = class_names[cls_id] if cls_id < len(class_names) else f"c{cls_id}"
             color = (0, 255, 0) if score > 0.5 else (0, 255, 255)
             cv2.rectangle(img_vis, (int(x1), int(y1)), (int(x2), int(y2)), color, 2)
-            label = f"{cls_name} {score:.2f}"
-            cv2.putText(img_vis, label, (int(x1), int(y1) - 5),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
+            label = f"{cls_name} {score:.0%}"
+            # Draw filled label background for readability
+            (tw, th), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
+            label_y = max(int(y1) - 5, th + 2)
+            cv2.rectangle(img_vis, (int(x1), label_y - th - 2),
+                          (int(x1) + tw + 4, label_y + 2), color, -1)
+            cv2.putText(img_vis, label, (int(x1) + 2, label_y),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
 
         out_path = output_dir / f"pred_{img_path.stem}.jpg"
         cv2.imwrite(str(out_path), img_vis)

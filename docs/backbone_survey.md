@@ -190,3 +190,9 @@
 2. **FasterNet PConv 适配** — 直接将 C3k2 中 Bottleneck 的 3×3 Conv 替换为 PConv
 3. **GhostNetV2 轻量替换** — 用 Ghost Module 替换标准 Conv，用 DFC 注意力增强 Head
 4. **StarNet + VanillaNet 混合** — 融合乘法交互 + 深度极简架构
+
+
+---
+
+## 9. MobileViT v1 / v2 / v3 (CNN-Transformer Hybrid)
+

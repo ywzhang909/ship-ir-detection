@@ -5,6 +5,8 @@
 - **标题**: LeConv: Decomposed Convolutional Kernel for Long-Range Embedded Vision
 - **作者**: Yuqi Wang, et al. (Tsinghua)
 - **时间**: 2024
+- **Zotero**: `5FMNE5L6`
+- **Zotero**: `5FMNE5L6`
 - **GitHub**: [THU-MIG/LeConv](https://github.com/THU-MIG/LeConv)
 
 ## StarNet 关联

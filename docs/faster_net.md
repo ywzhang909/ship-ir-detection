@@ -5,6 +5,7 @@
 - **标题**: Run, Don't Walk: Chasing Higher FLOPS for Faster Neural Networks
 - **作者**: Jierun Chen, et al.
 - **时间**: CVPR 2023
+- **Zotero**: `CMVYX5JX`
 - **GitHub**: [JierunChen/FasterNet](https://github.com/JierunChen/FasterNet)
 
 ## 方法概要
