@@ -43,6 +43,11 @@ Thumbs.db
 # ─── CodeGraph Index ──────────────────────────────────────
 .codegraph/
 
+# ─── Agent / Tool Artifacts ───────────────────────────────
+.sisyphus/
+.auto-update-history.json
+yolo-training/wandb/
+
 # ─── Logs ────────────────────────────────────────────────
 *.log
 *.pid
