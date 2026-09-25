@@ -517,6 +517,84 @@ def _make_fusion_monitor_callback():
     return {"on_val_epoch_end": on_val_epoch_end}
 
 
+def _make_confidence_monitor_callback(model, n_images: int = 32):
+    """Create a callback that logs the prediction-confidence distribution
+    (a "confidence curve") on a validation sample at each validation epoch.
+
+    Every val epoch we run inference on a small random sample of validation
+    images with ``conf=0`` (so weak detections are kept) and collect all
+    per-detection confidence scores, then log to wandb:
+
+      - ``val/conf_hist``      : per-epoch confidence histogram (distribution curve)
+      - ``val/conf_mean``      : mean confidence over all detections
+      - ``val/conf_p95``       : 95th-percentile confidence
+      - ``val/conf_max``       : max confidence
+      - ``val/conf_frac_0.25`` : fraction of detections with conf >= 0.25
+      - ``val/conf_frac_0.50`` : fraction of detections with conf >= 0.50
+      - ``val/n_dets``         : number of detections collected
+
+    This shows how the model's confidence distribution sharpens over training.
+    The callback never raises (fully guarded) so it cannot interrupt training.
+
+    Args:
+        model: The YOLO wrapper object (has ``.predict``); captured by closure.
+        n_images: Number of validation images to sample each epoch.
+    """
+
+    def on_val_epoch_end(trainer):
+        try:
+            import random
+
+            import numpy as np
+            import wandb
+
+            if wandb.run is None:
+                return
+
+            # Resolve validation image paths from the validator's dataset.
+            validator = getattr(trainer, "validator", None)
+            dataset = getattr(validator, "dataset", None) if validator is not None else None
+            img_paths = list(getattr(dataset, "img_paths", [])) if dataset is not None else []
+            if not img_paths:
+                return
+
+            sample = img_paths if len(img_paths) <= n_images else random.sample(img_paths, n_images)
+
+            all_conf: list = []
+            with torch.no_grad():
+                results = model.predict(sample, conf=0.0, verbose=False)
+                for res in results:
+                    boxes = getattr(res, "boxes", None)
+                    if boxes is None or len(boxes) == 0:
+                        continue
+                    # Boxes data layout: [x1, y1, x2, y2, conf, cls]
+                    try:
+                        confs = boxes.data[:, 4]
+                    except Exception:
+                        confs = getattr(boxes, "conf", None)
+                    if confs is None:
+                        continue
+                    all_conf.extend(confs.detach().cpu().tolist())
+
+            log_data: dict = {}
+            if all_conf:
+                arr = np.asarray(all_conf, dtype=np.float32)
+                log_data = {
+                    "val/conf_hist": wandb.Histogram(arr),
+                    "val/conf_mean": float(arr.mean()),
+                    "val/conf_p95": float(np.percentile(arr, 95)),
+                    "val/conf_max": float(arr.max()),
+                    "val/conf_frac_0.25": float((arr >= 0.25).mean()),
+                    "val/conf_frac_0.50": float((arr >= 0.50).mean()),
+                    "val/n_dets": int(arr.size),
+                }
+            wandb.log(log_data, step=trainer.epoch)
+        except Exception:
+            pass
+
+    return {"on_val_epoch_end": on_val_epoch_end}
+
+
 def _make_augment_jitter_callback(jitter_magnitude: float):
     """Create a callback that randomly jitters augmentation parameters each epoch.
 
@@ -1054,6 +1132,10 @@ def main():
         if args.use_fusion:
             fusion_monitor_callback = _make_fusion_monitor_callback()
             model.add_callback("on_val_epoch_end", fusion_monitor_callback["on_val_epoch_end"])
+        # Confidence-distribution curve: log per-epoch val confidence hist +
+        # summary stats (mean / p95 / max / frac@0.25 / frac@0.50) to wandb.
+        conf_monitor_callback = _make_confidence_monitor_callback(model, n_images=32)
+        model.add_callback("on_val_epoch_end", conf_monitor_callback["on_val_epoch_end"])
 
     # ── Augment jitter callback (randomize augment params each epoch) ──
     if args.augment_jitter > 0.0:
