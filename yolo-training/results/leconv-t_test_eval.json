@@ -1,0 +1,12 @@
+{
+  "single": {
+    "weights": "D:\\Projects\\AUVDect\\data\\ship\\runs\\detect\\ship-detection\\leconv-t\\weights\\best.pt",
+    "mode": "standard",
+    "metrics": {
+      "mAP50-95": 45.76,
+      "mAP50": 79.06,
+      "Precision": 75.47,
+      "Recall": 77.78
+    }
+  }
+}
