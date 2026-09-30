@@ -81,14 +81,6 @@ class FlakyDetector(FakeDetector):
 
 
 @pytest.fixture(scope="session")
-def qapp():
-    from PySide6.QtWidgets import QApplication
-
-    app = QApplication.instance() or QApplication([])
-    yield app
-
-
-@pytest.fixture(scope="session")
 def tiny_video(tmp_path_factory):
     """A 20-frame 320x180 greyscale-ish clip, enough to drive playback."""
     path = tmp_path_factory.mktemp("vid") / "tiny.mp4"
