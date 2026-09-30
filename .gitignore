@@ -79,3 +79,7 @@ off_sfesp.sh
 
 # ─── Test Data ───────────────────────────────────────────
 ship_annotation/tests/test_data/
+
+# ─── Generated Detection Videos ──────────────────────────
+# 标注结果视频体积大且可复现, 不入库 (用 ship_detector/export_results.py 重新生成)
+docs/论文/figures/video/data/*.mp4

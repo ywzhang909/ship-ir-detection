@@ -8,6 +8,7 @@ class Toolbar(QToolBar):
     run_detection = Signal()
     pause_video = Signal()
     save_result = Signal()
+    continuous_toggled = Signal(bool)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -24,6 +25,12 @@ class Toolbar(QToolBar):
         self.act_detect.triggered.connect(self.run_detection)
         self.addAction(self.act_detect)
 
+        self.act_continuous = QAction("连续检测", self)
+        self.act_continuous.setCheckable(True)
+        self.act_continuous.setToolTip("播放时逐帧实时识别，画面持续更新检测框")
+        self.act_continuous.toggled.connect(self.continuous_toggled)
+        self.addAction(self.act_continuous)
+
         self.act_pause = QAction("暂停", self)
         self.act_pause.setShortcut(QKeySequence("Space"))
         self.act_pause.triggered.connect(self.pause_video)
@@ -36,6 +43,12 @@ class Toolbar(QToolBar):
         self.act_save.setShortcut(QKeySequence("Ctrl+S"))
         self.act_save.triggered.connect(self.save_result)
         self.addAction(self.act_save)
+
+    def set_continuous(self, enabled: bool):
+        """同步按钮勾选态；屏蔽信号避免与 MainWindow 形成回环。"""
+        self.act_continuous.blockSignals(True)
+        self.act_continuous.setChecked(bool(enabled))
+        self.act_continuous.blockSignals(False)
 
     def set_detecting(self, detecting: bool):
         """切换检测/暂停状态"""

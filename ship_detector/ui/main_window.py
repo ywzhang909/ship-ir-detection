@@ -7,7 +7,7 @@ from ui.central_canvas import CentralCanvas
 from ui.right_panel import RightPanel
 from ui.bottom_panel import BottomPanel
 from core.yolo_detector import YoloDetector
-from core.worker import DetectionWorker
+from core.worker import DetectionWorker, VideoDetectWorker
 from config import DEFAULT_MODEL_PATH, DEFAULT_CONFIDENCE
 
 logger = logging.getLogger(__name__)
@@ -23,6 +23,11 @@ class MainWindow(QMainWindow):
         self.detector = YoloDetector()
         self._worker: DetectionWorker = None
         self._detecting = False
+
+        # 连续检测（播放中逐帧识别）
+        self._continuous = False
+        self._detection_generation = 0
+        self.detect_worker = VideoDetectWorker(self.detector, DEFAULT_CONFIDENCE)
 
         central = QWidget()
         self.setCentralWidget(central)
@@ -117,6 +122,19 @@ class MainWindow(QMainWindow):
             lambda u: self.left_panel.set_source_status(f"相机: {u}", True)
         )
 
+        # 连续检测：画布出帧 -> 直接调用 worker.submit（worker 无线程事件循环，
+        # 队列连接永远不会被派发）；worker 结果 -> 队列连接回 UI 线程。
+        self.canvas.frame_captured.connect(self._on_frame_captured)
+        self.detect_worker.result_ready.connect(self._on_continuous_result)
+        self.toolbar.continuous_toggled.connect(self.set_continuous_detection)
+
+        # 切换数据源时递增代次，丢弃上一段视频迟到回来的结果
+        for sig in (self.left_panel.image_selected,
+                    self.left_panel.video_selected,
+                    self.left_panel.camera_connected):
+            sig.connect(lambda *_: self.set_detection_generation(
+                self.detect_worker.advance_generation()))
+
     def _on_toolbar_open(self):
         """工具栏打开按钮 — 根据当前源类型打开对应对话框"""
         if self.left_panel.rb_image.isChecked():
@@ -144,8 +162,53 @@ class MainWindow(QMainWindow):
                 self.right_panel.display_ship(ship)
                 break
 
+    def set_continuous_detection(self, enabled: bool) -> None:
+        """开关「播放中连续识别」。
+
+        只停止投递帧、不销毁 worker 线程: QThread 结束后无法重启, 频繁开关
+        会把自己锁死; 线程空转等待下一帧的代价可以忽略。
+        """
+        enabled = bool(enabled)
+        self._continuous = enabled
+        self.toolbar.set_continuous(enabled)
+
+        # 检测器可能被外部替换过, 投递前统一同步引用
+        self.detect_worker.detector = self.detector
+
+        if enabled:
+            if not self.detect_worker.isRunning():
+                self.detect_worker.start()
+            self.set_detection_generation(self.detect_worker.advance_generation())
+            self.bottom_panel.append_log("连续检测: 开", "INFO")
+            self.status_bar.showMessage("连续检测已开启 — 播放视频即逐帧识别")
+        else:
+            self.detect_worker.clear_pending()
+            self.bottom_panel.append_log("连续检测: 关", "INFO")
+
+    def set_detection_generation(self, generation: int) -> None:
+        self._detection_generation = int(generation)
+
+    def _on_frame_captured(self, frame, frame_id: int) -> None:
+        """画布解码出一帧 — 直接调用 submit（worker 没有 Qt 事件循环）。"""
+        if not self._continuous:
+            return
+        self.detect_worker.detector = self.detector
+        self.detect_worker.submit(
+            frame, frame_id, self.left_panel.get_confidence(),
+            self._detection_generation,
+        )
+
+    def _on_continuous_result(self, generation: int, ships: list) -> None:
+        """worker 结果回到 UI 线程; 丢弃来自上一段视频的迟到结果。"""
+        if generation != self._detection_generation:
+            return
+        self.canvas.set_ships(ships)
+
     def _run_detection(self):
         """执行检测 — 在后台线程运行"""
+        if self._continuous:
+            self.bottom_panel.append_log("连续检测进行中，已忽略单帧检测", "WARN")
+            return
         if self._detecting:
             return
 
@@ -230,6 +293,7 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         """退出时清理"""
+        self.detect_worker.shutdown()
         if self._worker and self._worker.isRunning():
             self._worker.quit()
             self._worker.wait(2000)

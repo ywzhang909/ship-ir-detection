@@ -14,6 +14,10 @@ class CentralCanvas(QLabel):
     status_message = Signal(str)
     fps_updated = Signal(float)
     resolution_changed = Signal(int, int)
+    # 播放/相机每解出一帧发一次 (frame_ndarray, frame_id)。
+    # 必须发独立副本: cv2.VideoCapture 复用解码缓冲区, 而 numpy 跨 Qt 信号是按引用传递,
+    # 直接发 frame 会让后台线程读到被下一帧覆写的像素。别"简化"这里。
+    frame_captured = Signal(object, int)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -150,7 +154,9 @@ class CentralCanvas(QLabel):
             self.status_message.emit("视频播放结束")
             return
         self._frame_id += 1
-        self._current_frame = frame
+        # 画布与检测消费者各持一份独立副本, cv2 的解码缓冲区不外泄。
+        self._current_frame = frame.copy()
+        self.frame_captured.emit(frame.copy(), self._frame_id)
         self._set_frame_pixmap(frame)
         self._fps_counter += 1
 
@@ -168,7 +174,7 @@ class CentralCanvas(QLabel):
         """将 BGR ndarray 转为 QPixmap 显示"""
         h, w = frame.shape[:2]
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        qimg = QImage(rgb.data, w, h, w * 3, QImage.Format_RGB888)
+        qimg = QImage(rgb.data, w, h, w * 3, QImage.Format_RGB888).copy()
         self.display_pixmap = QPixmap.fromImage(qimg)
         self.resolution_changed.emit(w, h)
         self.update()
