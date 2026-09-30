@@ -318,6 +318,7 @@ def test_canvas_emits_frame_captured_with_a_copy(qapp, tiny_video):
     canvas = CentralCanvas()
     frames = []
     canvas.frame_captured.connect(lambda f, fid: frames.append((f, fid)))
+    canvas.set_frame_capture(True)
     canvas.load_video(str(tiny_video))
     try:
         canvas.pause()  # stop the timer; keep the single frame load_video did
@@ -334,6 +335,33 @@ def test_canvas_emits_frame_captured_with_a_copy(qapp, tiny_video):
         assert np.array_equal(canvas.current_frame, snapshot), (
             "emitted frame aliases canvas.current_frame — needs .copy()"
         )
+    finally:
+        canvas._stop_capture()
+        canvas.close()
+
+
+def test_canvas_frame_capture_is_opt_in(qapp, tiny_video):
+    """Plain playback must not copy+broadcast every frame when nobody consumes it.
+
+    1280x576x3 at 30fps is ~66MB/s of pointless allocation if frames are emitted
+    unconditionally, so capture is gated behind set_frame_capture().
+    """
+    from ui.central_canvas import CentralCanvas
+
+    canvas = CentralCanvas()
+    frames = []
+    canvas.frame_captured.connect(lambda f, fid: frames.append((f, fid)))
+    try:
+        canvas.load_video(str(tiny_video))
+        canvas.pause()
+        pump(150)
+        assert frames == [], "frame_captured fired while capture was disabled"
+
+        canvas.set_frame_capture(True)
+        canvas.load_video(str(tiny_video))
+        canvas.pause()
+        pump(150)
+        assert frames, "frame_captured never fired after capture was enabled"
     finally:
         canvas._stop_capture()
         canvas.close()

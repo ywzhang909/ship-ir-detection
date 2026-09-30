@@ -182,6 +182,7 @@ class MainWindow(QMainWindow):
 
         self._continuous = enabled
         self.toolbar.set_continuous(enabled)
+        self.canvas.set_frame_capture(enabled)
 
         # 检测器可能被外部替换过, 投递前统一同步引用
         self.detect_worker.detector = self.detector

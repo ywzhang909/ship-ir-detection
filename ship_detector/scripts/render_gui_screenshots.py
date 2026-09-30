@@ -30,7 +30,7 @@ def main() -> int:
     from PySide6.QtWidgets import QApplication
 
     # 顶层导入: 与 main.py 相同 —— cd ship_detector, core./ui./config 直接可见
-    sys.path.insert(0, str(_REPO.parent))
+    sys.path.insert(0, str(_REPO))
     os.chdir(str(_REPO))
     from core.yolo_detector import YoloDetector
     from ui.main_window import MainWindow

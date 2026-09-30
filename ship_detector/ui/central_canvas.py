@@ -42,6 +42,7 @@ class CentralCanvas(QLabel):
         self._is_playing = False
         self._frame_id = 0
         self._fps_counter = 0
+        self._capture_enabled = False
         self._fps_timer = QTimer(self)
         self._fps_timer.timeout.connect(self._calc_fps)
         self._fps_timer.start(1000)
@@ -73,6 +74,14 @@ class CentralCanvas(QLabel):
         return self.display_pixmap.height()
 
     # ========== 图片加载 ==========
+
+    def set_frame_capture(self, enabled: bool):
+        """是否把解码帧广播给检测消费者。
+
+        默认关闭: 单纯播放视频时没人消费这些帧, 每帧仍复制一份 2MB+ 的画面
+        纯属浪费 (1280x576x3 @30fps 约 66MB/s 的无谓分配)。开启连续检测时打开。
+        """
+        self._capture_enabled = bool(enabled)
 
     def load_image(self, path: str):
         self._stop_capture()
@@ -156,7 +165,8 @@ class CentralCanvas(QLabel):
         self._frame_id += 1
         # 画布与检测消费者各持一份独立副本, cv2 的解码缓冲区不外泄。
         self._current_frame = frame.copy()
-        self.frame_captured.emit(frame.copy(), self._frame_id)
+        if self._capture_enabled:
+            self.frame_captured.emit(frame.copy(), self._frame_id)
         self._set_frame_pixmap(frame)
         self._fps_counter += 1
 
