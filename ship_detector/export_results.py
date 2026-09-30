@@ -31,18 +31,19 @@ DEFAULT_DATASET_DIR = REPO / "dataset"
 DEFAULT_OUT_DIR = REPO / "docs" / "论文" / "figures" / "video" / "data"
 DEFAULT_WEIGHTS = REPO / "data" / "weights_staging" / "weights" / "T5_yolo11l_fusion_best.pt"
 
-_DEFAULT_BOX_COLOR = (255, 0, 0)  # BGR 蓝（与 GUI 截图一致）
+_DEFAULT_BOX_RGB = (0, 0, 255)  # 与 config.SHIP_CLASS_COLORS[0] 同色（RGB）
 _LABEL_TEXT_COLOR = (255, 255, 255)
 
 
 def _box_color(class_id: int):
     """config 里的类别色是 RGB（Qt 直接按 RGB 用），cv2 需要 BGR，这里翻转。"""
+    rgb = _DEFAULT_BOX_RGB
     try:
         from config import SHIP_CLASS_COLORS
-        rgb = SHIP_CLASS_COLORS.get(class_id % len(SHIP_CLASS_COLORS), _DEFAULT_BOX_COLOR)
-        return (rgb[2], rgb[1], rgb[0])
+        rgb = SHIP_CLASS_COLORS.get(class_id % len(SHIP_CLASS_COLORS), _DEFAULT_BOX_RGB)
     except Exception:  # noqa: BLE001 — 无 config 时退回默认色，不影响导出
-        return _DEFAULT_BOX_COLOR
+        pass
+    return (rgb[2], rgb[1], rgb[0])
 
 
 def _draw_ship(frame, ship) -> None:
@@ -128,6 +129,7 @@ def export_annotated_video(video_path, detector, out_video,
                            conf: float = 0.25, stride: int = 1,
                            use_sahi: Optional[bool] = None,
                            model_name: Optional[str] = None,
+                           preprocess: Optional[str] = None,
                            progress: Optional[Callable[[int, int], None]] = None) -> dict:
     """逐帧检测 -> 烧录置信度框 -> 写标注视频 -> 汇总统计。
 
@@ -143,6 +145,7 @@ def export_annotated_video(video_path, detector, out_video,
         stride = 1
 
     stats = _empty_stats(str(video_path), stride, conf, use_sahi, model_name)
+    stats["run"]["preprocess"] = preprocess
 
     if use_sahi is not None and hasattr(detector, "set_sahi"):
         detector.set_sahi(bool(use_sahi))
@@ -256,6 +259,16 @@ def _report_markdown(stats: dict) -> str:
     s = stats["summary"]
     src = Path(run.get("source") or "").name
 
+    if stats.get("error"):
+        return "\n".join([
+            f"# 检测结果报告 — {src}",
+            "",
+            f"**检测失败**：{stats['error']}",
+            "",
+            "本段视频未能读取，未产生任何检测结果。",
+            "",
+        ])
+
     lines = [
         f"# 检测结果报告 — {src}",
         "",
@@ -263,6 +276,7 @@ def _report_markdown(stats: dict) -> str:
         f"- 源视频: `{run.get('source')}`",
         f"- 标注视频: `{run.get('output_video')}`",
         f"- 模型: {run.get('model_name')}",
+        f"- 输入预处理: {run.get('preprocess')}（灰度归一化 BGR→GRAY→BGR 恒开）",
         f"- 置信度阈值: {run.get('confidence')}",
         f"- 抽帧步长: {run.get('stride')}",
         f"- SAHI: {run.get('use_sahi')}",
@@ -343,6 +357,9 @@ def main(argv=None) -> int:
     parser.add_argument("--sahi", dest="sahi", action="store_true", default=True)
     parser.add_argument("--no-sahi", dest="sahi", action="store_false")
     parser.add_argument("--model-name", default="T5_yolo11l_fusion")
+    parser.add_argument("--preprocess", default="raw",
+                        choices=["raw", "tophat", "butterworth", "dual", "wavelet", "rpca"],
+                        help="训练域对齐预处理流水线（灰度归一化恒开）")
     args = parser.parse_args(argv)
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -356,11 +373,16 @@ def main(argv=None) -> int:
     if not videos:
         logger.error("未找到视频（dataset/ 下无 mp4）")
         return 1
+    missing = [v for v in videos if not v.exists()]
+    if missing:
+        logger.error("视频不存在: %s", ", ".join(str(m) for m in missing))
+        return 1
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     detector = _build_detector(weights, args.sahi)
+    detector.set_preprocess(args.preprocess)
 
     for vpath in videos:
         if not vpath.exists():
@@ -370,7 +392,7 @@ def main(argv=None) -> int:
         stats = export_annotated_video(
             str(vpath), detector, str(out_video),
             conf=args.conf, stride=args.stride, use_sahi=args.sahi,
-            model_name=args.model_name,
+            model_name=args.model_name, preprocess=args.preprocess,
         )
         if stats.get("error"):
             logger.error("%s: %s", vpath.name, stats["error"])

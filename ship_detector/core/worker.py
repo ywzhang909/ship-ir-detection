@@ -51,6 +51,7 @@ class VideoDetectWorker(QThread):
         self._cond = threading.Condition()
         self._pending: Optional[Tuple[np.ndarray, int, float, int]] = None
         self._stop = False
+        self._busy = False
         self._generation = 0
         self.conf = float(conf)
 
@@ -70,18 +71,35 @@ class VideoDetectWorker(QThread):
         with self._cond:
             self.conf = float(conf)
 
-    def submit(self, frame: np.ndarray, frame_id: int, conf: float,
-               generation: int) -> None:
+    def submit(self, frame: np.ndarray, frame_id: int, conf: Optional[float] = None,
+               generation: int = 0) -> None:
         """提交一帧（UI 线程直接调用）。覆盖未处理的旧帧。
 
         这里必须 copy: 调用方（如 cv2 解码）可能复用同一块内存，而推理要等到
         本线程下一次循环才发生。不 copy 的话检测器可能读到已被覆写的像素。
         """
+        if conf is None:
+            with self._cond:
+                conf = self.conf
         payload = (np.array(frame, copy=True), int(frame_id), float(conf),
                    int(generation))
         with self._cond:
             self._pending = payload
             self._cond.notify_all()
+
+    def is_busy(self) -> bool:
+        """是否还有未处理帧或正在推理。
+
+        调用方用它保证「同一时刻只有一个推理」——共享的 Ultralytics 模型不是
+        线程安全的，并发调用可能直接崩掉 CUDA 上下文。
+        """
+        with self._cond:
+            return self._pending is not None or self._busy
+
+    def is_inferencing(self) -> bool:
+        """是否正处在一次推理调用中间（不含仅排队、尚未开始的帧）。"""
+        with self._cond:
+            return self._busy
 
     def clear_pending(self) -> None:
         with self._cond:
@@ -97,21 +115,34 @@ class VideoDetectWorker(QThread):
                     break
                 payload = self._pending
                 self._pending = None
+                self._busy = True
 
-            frame, _frame_id, conf, generation = payload
             try:
-                ships = self.detector.detect_frame(frame, conf=conf)
-            except Exception as exc:  # noqa: BLE001 — 检测失败不能弄死线程
-                self.error.emit(str(exc))
-                continue
-            self.result_ready.emit(generation, ships)
+                frame, _frame_id, conf, generation = payload
+                try:
+                    ships = self.detector.detect_frame(frame, conf=conf)
+                except Exception as exc:  # noqa: BLE001 — 检测失败不能弄死线程
+                    self.error.emit(str(exc))
+                    continue
+                self.result_ready.emit(generation, ships)
+            finally:
+                with self._cond:
+                    self._busy = False
 
-    def shutdown(self, timeout_ms: int = 2000) -> None:
-        """停止线程。必须唤醒 cond.wait()，否则线程会一直挂着。"""
+    def shutdown(self, timeout_ms: int = 5000) -> None:
+        """停止线程。必须唤醒 cond.wait()，否则线程会一直挂着。
+
+        超时预算给得较宽（默认 5s）: 首帧推理含 CUDA 预热可能较慢，若此处提前
+        返回，窗口销毁后线程仍在跑，Qt 会报 "QThread: Destroyed while thread is
+        still running" 并可能崩溃。超时未退出时至少留下明确日志。
+        """
         with self._cond:
             self._stop = True
             self._pending = None
             self._cond.notify_all()
         self.requestInterruption()
         if self.isRunning():
-            self.wait(timeout_ms)
+            if not self.wait(timeout_ms):
+                logger.warning(
+                    "VideoDetectWorker 在 %d ms 内未退出（推理可能仍在进行）", timeout_ms
+                )

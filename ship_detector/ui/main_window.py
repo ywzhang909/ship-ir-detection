@@ -126,6 +126,7 @@ class MainWindow(QMainWindow):
         # 队列连接永远不会被派发）；worker 结果 -> 队列连接回 UI 线程。
         self.canvas.frame_captured.connect(self._on_frame_captured)
         self.detect_worker.result_ready.connect(self._on_continuous_result)
+        self.detect_worker.error.connect(self._on_continuous_error)
         self.toolbar.continuous_toggled.connect(self.set_continuous_detection)
 
         # 切换数据源时递增代次，丢弃上一段视频迟到回来的结果
@@ -167,8 +168,18 @@ class MainWindow(QMainWindow):
 
         只停止投递帧、不销毁 worker 线程: QThread 结束后无法重启, 频繁开关
         会把自己锁死; 线程空转等待下一帧的代价可以忽略。
+
+        与单帧检测严格互斥: 共享的 Ultralytics 模型并非线程安全, 两个线程同时
+        推理可能损坏 CUDA 上下文而崩溃, 因此两个方向都要拦。
         """
         enabled = bool(enabled)
+
+        if enabled and self._detecting:
+            self.bottom_panel.append_log("单帧检测进行中，暂不开启连续检测", "WARN")
+            self.status_bar.showMessage("单帧检测进行中，请稍后再开启连续检测")
+            self.toolbar.set_continuous(False)
+            return
+
         self._continuous = enabled
         self.toolbar.set_continuous(enabled)
 
@@ -204,12 +215,22 @@ class MainWindow(QMainWindow):
             return
         self.canvas.set_ships(ships)
 
+    def _on_continuous_error(self, err: str) -> None:
+        """连续检测失败要可见, 否则画面只是不再更新, 用户无从察觉。"""
+        self.bottom_panel.append_log(f"连续检测失败: {err}", "ERROR")
+        self.status_bar.showMessage("连续检测失败")
+
     def _run_detection(self):
         """执行检测 — 在后台线程运行"""
         if self._continuous:
             self.bottom_panel.append_log("连续检测进行中，已忽略单帧检测", "WARN")
             return
         if self._detecting:
+            return
+
+        # 连续检测线程可能仍在推理上一帧（即便已切到关闭状态），同样不能并发
+        if self.detect_worker.is_busy():
+            self.bottom_panel.append_log("连续检测仍在推理，已忽略单帧检测", "WARN")
             return
 
         if not self.detector._is_loaded:

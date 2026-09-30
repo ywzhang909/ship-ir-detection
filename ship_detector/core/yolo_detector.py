@@ -30,6 +30,7 @@ class YoloDetector(DetectorBase):
         self._sahi_model = None
         self._use_sahi = False
         self._imgsz = 1280
+        self._prep = "raw"
 
     def load_model(self, model_path: str) -> bool:
         try:
@@ -52,6 +53,22 @@ class YoloDetector(DetectorBase):
         self._use_sahi = enabled
         if enabled:
             self._init_sahi_model()
+
+    def set_preprocess(self, prep: str):
+        """设置训练域对齐预处理 (raw/tophat/butterworth/dual/wavelet/rpca)。
+
+        灰度归一化 (BGR→GRAY→BGR) 无论 prep 为何都会执行, 与仓库既有推理链一致。
+        """
+        from .preprocess import KNOWN_PREPS
+
+        prep = (prep or "raw").lower()
+        if prep not in KNOWN_PREPS:
+            raise ValueError(f"未知预处理 {prep!r}, 可选: {KNOWN_PREPS}")
+        self._prep = prep
+
+    @property
+    def preprocess(self) -> str:
+        return self._prep
 
     def _init_sahi_model(self):
         """延迟初始化 SAHI 模型"""
@@ -112,10 +129,13 @@ class YoloDetector(DetectorBase):
             class_names = self._model_class_names()
             _, class_colors = _get_class_info()
 
+            from .preprocess import preprocess_frame
+            proc = preprocess_frame(frame, self._prep)
+
             if self._use_sahi and self._sahi_model is not None:
-                return self._detect_sahi(frame, conf, class_names, class_colors)
+                return self._detect_sahi(proc, conf, class_names, class_colors)
             else:
-                return self._detect_standard(frame, conf, class_names, class_colors)
+                return self._detect_standard(proc, conf, class_names, class_colors)
         except Exception as e:
             logger.error("帧检测失败: %s", e)
             return []

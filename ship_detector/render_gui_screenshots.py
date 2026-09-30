@@ -197,10 +197,16 @@ def _render_video_screenshots(win, app, detector, videos, out_dir) -> list[Path]
         if not indices:
             logger.warning("无可用抽帧: %s", vpath)
             continue
+
+        # 抽帧位置可能随参数变化, 先清掉该视频上一轮留下的截图, 避免孤儿图
+        prefix = f"gui_{vpath.stem}"
+        for stale in out_dir.glob(f"{prefix}_f*.png"):
+            stale.unlink()
+
         shots = render_video_frames(
             win=win, app=app, detector=detector,
             video_path=str(vpath), frame_indices=indices,
-            conf=VIDEO_CONF, out_dir=out_dir, prefix=f"gui_{vpath.stem}",
+            conf=VIDEO_CONF, out_dir=out_dir, prefix=prefix,
         )
         made.extend(shots)
         logger.info("%s: 抽帧 %s -> 截图 %d 张", vpath.name, indices, len(shots))
@@ -286,6 +292,9 @@ def main(argv=None):
     parser.add_argument("--videos", nargs="*", default=None,
                         help="只渲染指定视频（默认 dataset/ 下全部 *.mp4）")
     parser.add_argument("--no-stills", action="store_true", help="跳过 NSLSR 静态帧")
+    parser.add_argument("--preprocess", default="raw",
+                        choices=["raw", "tophat", "butterworth", "dual", "wavelet", "rpca"],
+                        help="训练域对齐预处理流水线（灰度归一化恒开）")
     args = parser.parse_args(argv)
 
     sys.path.insert(0, str(SHIP_DETECTOR_DIR))
@@ -309,7 +318,9 @@ def main(argv=None):
     if not detector.load_model(str(best)):
         logger.error("最佳模型加载失败: %s", best)
         return 1
+    detector.set_preprocess(args.preprocess)
     detector.set_sahi(True)
+    logger.info("输入预处理: %s (灰度归一化恒开)", args.preprocess)
 
     win = MainWindow()
     win.resize(1400, 900)

@@ -430,6 +430,84 @@ def test_main_window_manual_detection_is_blocked_during_continuous(qapp):
         win.close()
 
 
+def test_continuous_detection_refused_while_manual_detection_running(qapp):
+    """BLOCKING invariant: the shared model must never run two inferences at once.
+
+    Pressing F5 and then toggling 连续检测 on must NOT start a second inference
+    while the one-shot worker is still in flight — Ultralytics models are not
+    thread-safe and concurrent calls can corrupt the CUDA context.
+    """
+    from ui.main_window import MainWindow
+
+    win = MainWindow()
+    win.detector = FakeDetector(n_ships=0, delay=0.1)
+    win.detector._is_loaded = True
+    try:
+        win.canvas.set_frame(np.full((32, 32, 3), 11, np.uint8))
+        win._run_detection()
+        assert win._detecting is True, "one-shot detection should have started"
+
+        win.set_continuous_detection(True)
+
+        assert win._continuous is False, (
+            "continuous detection started while a manual detection was in flight"
+        )
+        assert win.toolbar.act_continuous.isChecked() is False, (
+            "toolbar toggle left on even though continuous mode was refused"
+        )
+    finally:
+        if win._worker is not None and win._worker.isRunning():
+            wait_for(lambda: not win._worker.isRunning(), timeout=3.0)
+        win.set_continuous_detection(False)
+        win.close()
+
+
+def test_manual_detection_refused_while_continuous_worker_busy(qapp):
+    """The reverse direction: a continuous worker mid-frame must also block F5.
+
+    Turning continuous mode off does not cancel an in-flight inference, so the
+    guard must consult the worker's busy state rather than only ``_continuous``.
+    """
+    from ui.main_window import MainWindow
+
+    win = MainWindow()
+    win.detector = FakeDetector(n_ships=0, delay=0.3)
+    win.detector._is_loaded = True
+    try:
+        win.set_continuous_detection(True)
+        win.canvas.frame_captured.emit(np.full((32, 32, 3), 5, np.uint8), 1)
+        assert wait_for(lambda: win.detect_worker.is_inferencing()), "never started inferring"
+
+        win.set_continuous_detection(False)
+        win.canvas.set_frame(np.full((32, 32, 3), 7, np.uint8))
+        win._run_detection()
+
+        assert win._detecting is False, (
+            "manual detection ran concurrently with an in-flight continuous inference"
+        )
+    finally:
+        win.set_continuous_detection(False)
+        win.close()
+
+
+def test_continuous_detection_reports_worker_errors(qapp):
+    """A failing continuous worker must surface, not silently stop updating."""
+    from ui.main_window import MainWindow
+
+    win = MainWindow()
+    win.detector = FlakyDetector()
+    win.detector._is_loaded = True
+    try:
+        win.set_continuous_detection(True)
+        win.canvas.frame_captured.emit(np.full((32, 32, 3), 5, np.uint8), 1)
+        pump(400)
+        text = win.bottom_panel.log.toPlainText()
+        assert "cuda oom" in text, f"worker error never surfaced in the log: {text!r}"
+    finally:
+        win.set_continuous_detection(False)
+        win.close()
+
+
 # ===========================================================================
 # render_gui_screenshots.py — deterministic MP4 seek + screenshots
 # ===========================================================================
