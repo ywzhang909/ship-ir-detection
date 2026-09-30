@@ -300,3 +300,35 @@ def test_module_imports_without_a_display():
     mod = importlib.import_module("export_results")
     assert hasattr(mod, "export_annotated_video")
     assert hasattr(mod, "write_report")
+
+
+def test_cli_fails_fast_on_an_unreadable_video(tmp_path):
+    """A present-but-corrupt video must yield a non-zero exit code.
+
+    Also guards the ordering: input validation must happen BEFORE the (slow) GPU
+    model load, so bad input fails immediately instead of after a wasted warmup.
+    """
+    import time
+
+    import export_results as ex
+
+    bad = tmp_path / "corrupt.mp4"
+    bad.write_bytes(b"definitely not a video")
+    out = tmp_path / "out"
+
+    start = time.monotonic()
+    rc = ex.main(["--video", str(bad), "--out-dir", str(out)])
+    elapsed = time.monotonic() - start
+
+    assert rc == 1, "CLI reported success for an unreadable video"
+    assert not list(out.glob("annotated_*.mp4")), "wrote an annotated video for a bad source"
+    assert elapsed < 15.0, f"took {elapsed:.1f}s — model was loaded before validating input"
+
+
+def test_cli_fails_fast_on_a_missing_video(tmp_path):
+    import export_results as ex
+
+    out = tmp_path / "out"
+    rc = ex.main(["--video", str(tmp_path / "nope.mp4"), "--out-dir", str(out)])
+    assert rc == 1
+    assert not out.exists(), "output dir created despite invalid input"

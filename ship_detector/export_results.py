@@ -378,12 +378,27 @@ def main(argv=None) -> int:
         logger.error("视频不存在: %s", ", ".join(str(m) for m in missing))
         return 1
 
+    # 先做一次廉价的可打开性校验：为坏输入白等一次 GPU 模型加载没有意义
+    import cv2
+
+    unreadable = []
+    for v in videos:
+        cap = cv2.VideoCapture(str(v))
+        opened = cap.isOpened()
+        cap.release()
+        if not opened:
+            unreadable.append(v)
+    if unreadable:
+        logger.error("视频无法打开: %s", ", ".join(str(u) for u in unreadable))
+        return 1
+
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     detector = _build_detector(weights, args.sahi)
     detector.set_preprocess(args.preprocess)
 
+    had_error = False
     for vpath in videos:
         if not vpath.exists():
             logger.warning("跳过缺失视频: %s", vpath)
@@ -397,6 +412,7 @@ def main(argv=None) -> int:
         if stats.get("error"):
             logger.error("%s: %s", vpath.name, stats["error"])
             write_report(stats, out_dir, stem=f"report_{vpath.stem}")
+            had_error = True
             continue
 
         paths = write_report(stats, out_dir, stem=f"report_{vpath.stem}")
@@ -408,7 +424,7 @@ def main(argv=None) -> int:
         for p in paths:
             print(f"  报告: {p}")
 
-    return 0
+    return 1 if had_error else 0
 
 
 if __name__ == "__main__":
