@@ -1,0 +1,108 @@
+/* 全局样式表 - 舰船识别展示系统 */
+QMainWindow {
+    background-color: #f5f5f5;
+}
+
+QToolBar {
+    background-color: #e8e8e8;
+    border-bottom: 1px solid #cccccc;
+    spacing: 4px;
+    padding: 2px;
+}
+
+QToolBar QToolButton {
+    padding: 4px 8px;
+    border-radius: 3px;
+}
+
+QToolBar QToolButton:hover {
+    background-color: #d0d0d0;
+}
+
+QGroupBox {
+    font-weight: bold;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    margin-top: 8px;
+    padding-top: 8px;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px;
+}
+
+QSplitter::handle {
+    background-color: #cccccc;
+}
+
+QSplitter::handle:horizontal {
+    width: 3px;
+}
+
+QTreeWidget, QListWidget {
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    background-color: white;
+}
+
+QTreeWidget::item:selected, QListWidget::item:selected {
+    background-color: #b0c4de;
+}
+
+QPushButton {
+    padding: 4px 12px;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    background-color: #f0f0f0;
+}
+
+QPushButton:hover {
+    background-color: #e0e0e0;
+}
+
+QPushButton:pressed {
+    background-color: #d0d0d0;
+}
+
+QPlainTextEdit {
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    background-color: #fafafa;
+    font-family: monospace;
+    font-size: 11px;
+}
+
+QStatusBar {
+    background-color: #e8e8e8;
+    border-top: 1px solid #cccccc;
+}
+
+QLabel {
+    font-size: 12px;
+}
+
+QComboBox {
+    padding: 3px;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    background-color: white;
+}
+
+QDoubleSpinBox, QLineEdit {
+    padding: 3px;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+}
+
+QProgressBar {
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    text-align: center;
+}
+
+QProgressBar::chunk {
+    background-color: #4CAF50;
+    border-radius: 2px;
+}

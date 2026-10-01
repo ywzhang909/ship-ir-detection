@@ -1,0 +1,289 @@
+{
+  "frames": [
+    "val_batch0_pred_101.jpg",
+    "val_batch1_pred_101.jpg",
+    "val_batch2_pred_101.jpg"
+  ],
+  "models": {
+    "T16_crrp_best": {
+      "display_name": "YOLO11l + 空频融合 + CRRP",
+      "params_m": 25.31,
+      "file_mb": 51.2,
+      "latency_ms_640": 12.63,
+      "latency_ms_1280": 14.6,
+      "fps_640": 79.19,
+      "detections_per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 6,
+          "avg_conf": 0.4488,
+          "max_conf": 0.7238
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 3,
+          "avg_conf": 0.3725,
+          "max_conf": 0.5783
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 15,
+          "avg_conf": 0.4568,
+          "max_conf": 0.8185
+        }
+      },
+      "fps_1280": 68.49,
+      "avg_conf": 0.3698,
+      "max_conf": 0.8185
+    },
+    "T1_fusion_h32_l3_cbam_best": {
+      "display_name": "YOLO11m + 大空频融合架构（过拟合）",
+      "params_m": 20.05,
+      "file_mb": 40.52,
+      "latency_ms_640": 9.99,
+      "latency_ms_1280": 12.63,
+      "fps_640": 100.08,
+      "detections_per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 51,
+          "avg_conf": 0.4031,
+          "max_conf": 0.789
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 54,
+          "avg_conf": 0.3823,
+          "max_conf": 0.7384
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 41,
+          "avg_conf": 0.474,
+          "max_conf": 0.8181
+        }
+      },
+      "fps_1280": 79.15,
+      "avg_conf": 0.4092,
+      "max_conf": 0.8181
+    },
+    "T20_dynamic_head_best": {
+      "display_name": "YOLO11l + 动态检测头",
+      "params_m": 25.31,
+      "file_mb": 51.19,
+      "latency_ms_640": 12.72,
+      "latency_ms_1280": 14.32,
+      "fps_640": 78.64,
+      "detections_per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 37,
+          "avg_conf": 0.5249,
+          "max_conf": 0.8765
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 33,
+          "avg_conf": 0.5399,
+          "max_conf": 0.8838
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 28,
+          "avg_conf": 0.5213,
+          "max_conf": 0.8623
+        }
+      },
+      "fps_1280": 69.81,
+      "avg_conf": 0.5968,
+      "max_conf": 0.8973
+    },
+    "T22_large_best": {
+      "display_name": "YOLO11l + 大容量融合",
+      "params_m": 25.31,
+      "file_mb": 51.2,
+      "latency_ms_640": 12.69,
+      "latency_ms_1280": 14.27,
+      "fps_640": 78.82,
+      "detections_per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 5,
+          "avg_conf": 0.0963,
+          "max_conf": 0.1301
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 4,
+          "avg_conf": 0.0811,
+          "max_conf": 0.0931
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 4,
+          "avg_conf": 0.099,
+          "max_conf": 0.175
+        }
+      },
+      "fps_1280": 70.09,
+      "avg_conf": 0.2336,
+      "max_conf": 0.7543
+    },
+    "T2_fusion_residual07_best": {
+      "display_name": "YOLO11m + 空频残差搜索架构（过拟合）",
+      "params_m": 20.05,
+      "file_mb": 40.52,
+      "latency_ms_640": 9.98,
+      "latency_ms_1280": 12.72,
+      "fps_640": 100.17,
+      "detections_per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 51,
+          "avg_conf": 0.4031,
+          "max_conf": 0.789
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 54,
+          "avg_conf": 0.3823,
+          "max_conf": 0.7384
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 41,
+          "avg_conf": 0.474,
+          "max_conf": 0.8181
+        }
+      },
+      "fps_1280": 78.6,
+      "avg_conf": 0.4092,
+      "max_conf": 0.8181
+    },
+    "T4_wavelet_dual_best": {
+      "display_name": "YOLO11m + 小波双流融合",
+      "params_m": 20.05,
+      "file_mb": 40.52,
+      "latency_ms_640": 10.28,
+      "latency_ms_1280": 12.63,
+      "fps_640": 97.31,
+      "detections_per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 22,
+          "avg_conf": 0.4459,
+          "max_conf": 0.7916
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 20,
+          "avg_conf": 0.3524,
+          "max_conf": 0.7252
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 17,
+          "avg_conf": 0.344,
+          "max_conf": 0.7665
+        }
+      },
+      "fps_1280": 79.19,
+      "avg_conf": 0.3967,
+      "max_conf": 0.8068
+    },
+    "T5_yolo11l_fusion_best": {
+      "display_name": "YOLO11l + 空频融合",
+      "params_m": 25.31,
+      "file_mb": 51.2,
+      "latency_ms_640": 12.64,
+      "latency_ms_1280": 14.42,
+      "fps_640": 79.13,
+      "detections_per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 56,
+          "avg_conf": 0.3495,
+          "max_conf": 0.7998
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 54,
+          "avg_conf": 0.3313,
+          "max_conf": 0.7944
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 62,
+          "avg_conf": 0.3495,
+          "max_conf": 0.8061
+        }
+      },
+      "fps_1280": 69.35,
+      "avg_conf": 0.2971,
+      "max_conf": 0.8061
+    },
+    "T7_augment_jitter_best": {
+      "display_name": "YOLO11m + 空频融合 + 增强双随机化",
+      "params_m": 20.05,
+      "file_mb": 40.52,
+      "latency_ms_640": 10.03,
+      "latency_ms_1280": 12.75,
+      "fps_640": 99.73,
+      "detections_per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 31,
+          "avg_conf": 0.511,
+          "max_conf": 0.7784
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 34,
+          "avg_conf": 0.4778,
+          "max_conf": 0.7987
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 34,
+          "avg_conf": 0.4764,
+          "max_conf": 0.7822
+        }
+      },
+      "fps_1280": 78.46,
+      "avg_conf": 0.4835,
+      "max_conf": 0.7987
+    },
+    "baseline_yolo11m_best": {
+      "display_name": "YOLO11m + 空频融合 基线",
+      "params_m": 20.06,
+      "file_mb": 40.51,
+      "latency_ms_640": 10.13,
+      "latency_ms_1280": 12.72,
+      "fps_640": 98.68,
+      "detections_per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 18,
+          "avg_conf": 0.1862,
+          "max_conf": 0.4392
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 23,
+          "avg_conf": 0.1951,
+          "max_conf": 0.3593
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 25,
+          "avg_conf": 0.1939,
+          "max_conf": 0.4493
+        }
+      },
+      "fps_1280": 78.6,
+      "avg_conf": 0.1922,
+      "max_conf": 0.4493
+    },
+    "starnet_s1_best": {
+      "display_name": "StarNet S1",
+      "params_m": 20.06,
+      "file_mb": 40.5,
+      "latency_ms_640": 9.89,
+      "latency_ms_1280": 12.64,
+      "fps_640": 101.07,
+      "detections_per_frame": {
+        "val_batch0_pred_101.jpg": {
+          "detections": 21,
+          "avg_conf": 0.1107,
+          "max_conf": 0.3571
+        },
+        "val_batch1_pred_101.jpg": {
+          "detections": 24,
+          "avg_conf": 0.1147,
+          "max_conf": 0.3553
+        },
+        "val_batch2_pred_101.jpg": {
+          "detections": 25,
+          "avg_conf": 0.1279,
+          "max_conf": 0.4063
+        }
+      },
+      "fps_1280": 79.13,
+      "avg_conf": 0.1182,
+      "max_conf": 0.4063
+    }
+  }
+}

@@ -1,0 +1,622 @@
+{
+  "frames": [
+    "val_batch0_pred_101_clean.jpg",
+    "val_batch1_pred_101_clean.jpg",
+    "val_batch2_pred_101_clean.jpg"
+  ],
+  "methods": [
+    "原始",
+    "空域Top-hat+CLAHE",
+    "AWB+空域Top-hat+CLAHE",
+    "AWB+频域Butterworth+CLAHE",
+    "AWB+小波+CLAHE",
+    "AWB+双流空频融合",
+    "Top-hat+底帽",
+    "DoG高斯差分",
+    "Retinex+Gamma",
+    "中值+CLAHE",
+    "双边滤波+Gamma",
+    "海天线自适应",
+    "AWB+频域Butterworth+Retinex",
+    "AWB+小波双流融合",
+    "AWB+RPCA双流融合"
+  ],
+  "method_keys": [
+    "none",
+    "tophat_clahe",
+    "awb_tophat_clahe",
+    "awb_butterworth_clahe",
+    "awb_wavelet_clahe",
+    "awb_dual_fusion",
+    "tophat_detail",
+    "dog_retinex",
+    "retinex_gamma",
+    "median_clahe",
+    "bilateral_gamma",
+    "ssl_adaptive",
+    "awb_butterworth_retinex",
+    "awb_wavelet_dual_fusion",
+    "awb_rpca_dual_fusion"
+  ],
+  "stats": {
+    "none": {
+      "frame0": {
+        "mean": 41.49,
+        "std": 46.406,
+        "contrast_ratio": 1.1185,
+        "entropy": 5.7416,
+        "p99": 255.0,
+        "peak_hist_frac": 0.0657,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame1": {
+        "mean": 43.68,
+        "std": 45.176,
+        "contrast_ratio": 1.0343,
+        "entropy": 5.4559,
+        "p99": 255.0,
+        "peak_hist_frac": 0.0948,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame2": {
+        "mean": 43.468,
+        "std": 46.198,
+        "contrast_ratio": 1.0628,
+        "entropy": 5.8388,
+        "p99": 255.0,
+        "peak_hist_frac": 0.0685,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      }
+    },
+    "tophat_clahe": {
+      "frame0": {
+        "mean": 31.693,
+        "std": 48.734,
+        "contrast_ratio": 1.5377,
+        "entropy": 5.6379,
+        "p99": 249.0,
+        "peak_hist_frac": 0.149,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame1": {
+        "mean": 28.556,
+        "std": 46.826,
+        "contrast_ratio": 1.6398,
+        "entropy": 5.2138,
+        "p99": 246.0,
+        "peak_hist_frac": 0.2084,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame2": {
+        "mean": 31.079,
+        "std": 47.756,
+        "contrast_ratio": 1.5366,
+        "entropy": 5.5932,
+        "p99": 248.0,
+        "peak_hist_frac": 0.1818,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      }
+    },
+    "tophat_detail": {
+      "frame0": {
+        "mean": 72.177,
+        "std": 62.237,
+        "contrast_ratio": 0.8623,
+        "entropy": 7.0069,
+        "p99": 255.0,
+        "peak_hist_frac": 0.0314,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame1": {
+        "mean": 72.939,
+        "std": 59.769,
+        "contrast_ratio": 0.8194,
+        "entropy": 6.8784,
+        "p99": 255.0,
+        "peak_hist_frac": 0.0272,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame2": {
+        "mean": 71.701,
+        "std": 63.163,
+        "contrast_ratio": 0.8809,
+        "entropy": 7.0522,
+        "p99": 255.0,
+        "peak_hist_frac": 0.0365,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      }
+    },
+    "dog_retinex": {
+      "frame0": {
+        "mean": 64.62,
+        "std": 43.49,
+        "contrast_ratio": 0.673,
+        "entropy": 6.7146,
+        "p99": 218.0,
+        "peak_hist_frac": 0.0412,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame1": {
+        "mean": 63.621,
+        "std": 40.665,
+        "contrast_ratio": 0.6392,
+        "entropy": 6.547,
+        "p99": 214.0,
+        "peak_hist_frac": 0.0373,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame2": {
+        "mean": 65.804,
+        "std": 42.705,
+        "contrast_ratio": 0.649,
+        "entropy": 6.7875,
+        "p99": 216.0,
+        "peak_hist_frac": 0.0342,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      }
+    },
+    "retinex_gamma": {
+      "frame0": {
+        "mean": 161.942,
+        "std": 25.81,
+        "contrast_ratio": 0.1594,
+        "entropy": 6.2596,
+        "p99": 239.0,
+        "peak_hist_frac": 0.0463,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame1": {
+        "mean": 160.217,
+        "std": 22.098,
+        "contrast_ratio": 0.1379,
+        "entropy": 5.8762,
+        "p99": 232.0,
+        "peak_hist_frac": 0.0569,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame2": {
+        "mean": 156.137,
+        "std": 30.6,
+        "contrast_ratio": 0.196,
+        "entropy": 6.4451,
+        "p99": 233.0,
+        "peak_hist_frac": 0.0397,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      }
+    },
+    "median_clahe": {
+      "frame0": {
+        "mean": 50.542,
+        "std": 46.808,
+        "contrast_ratio": 0.9261,
+        "entropy": 6.2895,
+        "p99": 255.0,
+        "peak_hist_frac": 0.0324,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame1": {
+        "mean": 53.234,
+        "std": 45.094,
+        "contrast_ratio": 0.8471,
+        "entropy": 6.0594,
+        "p99": 255.0,
+        "peak_hist_frac": 0.0479,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame2": {
+        "mean": 54.837,
+        "std": 46.213,
+        "contrast_ratio": 0.8427,
+        "entropy": 6.3748,
+        "p99": 255.0,
+        "peak_hist_frac": 0.035,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      }
+    },
+    "bilateral_gamma": {
+      "frame0": {
+        "mean": 40.32,
+        "std": 48.027,
+        "contrast_ratio": 1.1912,
+        "entropy": 5.9211,
+        "p99": 255.0,
+        "peak_hist_frac": 0.0494,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame1": {
+        "mean": 42.555,
+        "std": 46.6,
+        "contrast_ratio": 1.0951,
+        "entropy": 5.6839,
+        "p99": 255.0,
+        "peak_hist_frac": 0.0764,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame2": {
+        "mean": 42.38,
+        "std": 47.611,
+        "contrast_ratio": 1.1234,
+        "entropy": 5.9566,
+        "p99": 255.0,
+        "peak_hist_frac": 0.0579,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      }
+    },
+    "ssl_adaptive": {
+      "frame0": {
+        "mean": 27.534,
+        "std": 46.377,
+        "contrast_ratio": 1.6844,
+        "entropy": 5.3768,
+        "p99": 241.0,
+        "peak_hist_frac": 0.1744,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame1": {
+        "mean": 24.984,
+        "std": 44.725,
+        "contrast_ratio": 1.7901,
+        "entropy": 4.9385,
+        "p99": 240.0,
+        "peak_hist_frac": 0.2366,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame2": {
+        "mean": 27.065,
+        "std": 45.406,
+        "contrast_ratio": 1.6777,
+        "entropy": 5.3842,
+        "p99": 240.0,
+        "peak_hist_frac": 0.2077,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      }
+    },
+    "awb_tophat_clahe": {
+      "frame0": {
+        "mean": 31.693,
+        "std": 48.734,
+        "contrast_ratio": 1.5377,
+        "entropy": 5.6379,
+        "p99": 249.0,
+        "peak_hist_frac": 0.149,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame1": {
+        "mean": 28.556,
+        "std": 46.826,
+        "contrast_ratio": 1.6398,
+        "entropy": 5.2138,
+        "p99": 246.0,
+        "peak_hist_frac": 0.2084,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame2": {
+        "mean": 31.079,
+        "std": 47.756,
+        "contrast_ratio": 1.5366,
+        "entropy": 5.5932,
+        "p99": 248.0,
+        "peak_hist_frac": 0.1818,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      }
+    },
+    "awb_butterworth_clahe": {
+      "frame0": {
+        "mean": 116.957,
+        "std": 51.732,
+        "contrast_ratio": 0.4423,
+        "entropy": 7.4555,
+        "p99": 232.0,
+        "peak_hist_frac": 0.0181,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame1": {
+        "mean": 117.121,
+        "std": 51.351,
+        "contrast_ratio": 0.4384,
+        "entropy": 7.4489,
+        "p99": 232.0,
+        "peak_hist_frac": 0.0161,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame2": {
+        "mean": 117.88,
+        "std": 53.754,
+        "contrast_ratio": 0.456,
+        "entropy": 7.5365,
+        "p99": 235.0,
+        "peak_hist_frac": 0.0138,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      }
+    },
+    "awb_butterworth_retinex": {
+      "frame0": {
+        "mean": 206.887,
+        "std": 15.727,
+        "contrast_ratio": 0.076,
+        "entropy": 5.5627,
+        "p99": 248.0,
+        "peak_hist_frac": 0.098,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame1": {
+        "mean": 205.714,
+        "std": 15.783,
+        "contrast_ratio": 0.0767,
+        "entropy": 5.5575,
+        "p99": 247.0,
+        "peak_hist_frac": 0.0962,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame2": {
+        "mean": 205.245,
+        "std": 15.582,
+        "contrast_ratio": 0.0759,
+        "entropy": 5.6531,
+        "p99": 246.0,
+        "peak_hist_frac": 0.0746,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      }
+    },
+    "awb_dual_fusion": {
+      "frame0": {
+        "mean": 93.878,
+        "std": 52.762,
+        "contrast_ratio": 0.562,
+        "entropy": 7.4036,
+        "p99": 227.0,
+        "peak_hist_frac": 0.0129,
+        "out_shape": [
+          1008,
+          1920,
+          3
+        ]
+      },
+      "frame1": {
+        "mean": 93.154,
+        "std": 51.822,
+        "contrast_ratio": 0.5563,
+        "entropy": 7.3662,
+        "p99": 223.0,
+        "peak_hist_frac": 0.013,
+        "out_shape": [
+          1008,
+          1920,
+          3
+        ]
+      },
+      "frame2": {
+        "mean": 92.445,
+        "std": 52.779,
+        "contrast_ratio": 0.5709,
+        "entropy": 7.4358,
+        "p99": 229.0,
+        "peak_hist_frac": 0.0125,
+        "out_shape": [
+          1008,
+          1920,
+          3
+        ]
+      }
+    },
+    "awb_wavelet_clahe": {
+      "frame0": {
+        "mean": 30.946,
+        "std": 29.583,
+        "contrast_ratio": 0.956,
+        "entropy": 5.8096,
+        "p99": 151.0,
+        "peak_hist_frac": 0.0658,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame1": {
+        "mean": 32.099,
+        "std": 28.599,
+        "contrast_ratio": 0.891,
+        "entropy": 5.7092,
+        "p99": 148.0,
+        "peak_hist_frac": 0.0798,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      },
+      "frame2": {
+        "mean": 35.103,
+        "std": 30.352,
+        "contrast_ratio": 0.8647,
+        "entropy": 6.0497,
+        "p99": 155.0,
+        "peak_hist_frac": 0.0494,
+        "out_shape": [
+          1008,
+          1920
+        ]
+      }
+    },
+    "awb_wavelet_dual_fusion": {
+      "frame0": {
+        "mean": 50.827,
+        "std": 43.808,
+        "contrast_ratio": 0.8619,
+        "entropy": 6.6543,
+        "p99": 177.0,
+        "peak_hist_frac": 0.0329,
+        "out_shape": [
+          1008,
+          1920,
+          3
+        ]
+      },
+      "frame1": {
+        "mean": 50.354,
+        "std": 41.371,
+        "contrast_ratio": 0.8216,
+        "entropy": 6.4836,
+        "p99": 169.0,
+        "peak_hist_frac": 0.0383,
+        "out_shape": [
+          1008,
+          1920,
+          3
+        ]
+      },
+      "frame2": {
+        "mean": 48.037,
+        "std": 43.209,
+        "contrast_ratio": 0.8995,
+        "entropy": 6.7251,
+        "p99": 182.0,
+        "peak_hist_frac": 0.0318,
+        "out_shape": [
+          1008,
+          1920,
+          3
+        ]
+      }
+    },
+    "awb_rpca_dual_fusion": {
+      "frame0": {
+        "mean": 33.983,
+        "std": 27.945,
+        "contrast_ratio": 0.8223,
+        "entropy": 6.2619,
+        "p99": 128.0,
+        "peak_hist_frac": 0.0319,
+        "out_shape": [
+          1008,
+          1920,
+          3
+        ]
+      },
+      "frame1": {
+        "mean": 32.053,
+        "std": 27.412,
+        "contrast_ratio": 0.8552,
+        "entropy": 6.1525,
+        "p99": 124.0,
+        "peak_hist_frac": 0.035,
+        "out_shape": [
+          1008,
+          1920,
+          3
+        ]
+      },
+      "frame2": {
+        "mean": 32.892,
+        "std": 28.305,
+        "contrast_ratio": 0.8605,
+        "entropy": 6.2578,
+        "p99": 127.0,
+        "peak_hist_frac": 0.0345,
+        "out_shape": [
+          1008,
+          1920,
+          3
+        ]
+      }
+    }
+  }
+}
