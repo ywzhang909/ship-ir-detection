@@ -39,6 +39,7 @@ Thumbs.db
 .idea/
 .vscode/
 *.sublime-*
+.kilo/*
 
 # ─── CodeGraph Index ──────────────────────────────────────
 .codegraph/

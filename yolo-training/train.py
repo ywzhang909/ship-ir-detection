@@ -1019,6 +1019,8 @@ def main():
     # during model.train() (Ultralytics internally recreates the model from
     # YAML — we override get_model() to insert fusion at that point)
     fusion_info = None
+    fusion_kwargs = None
+    surgery_base_cls = None
     if args.use_fusion:
         from ultralytics.models.yolo.detect import DetectionTrainer
 
@@ -1036,7 +1038,9 @@ def main():
             residual_warmup_epochs=args.fusion_residual_warmup,
             residual_alpha_target=args.fusion_residual_target,
         )
-        model.trainer_class = FusionTrainer
+        # Architecture surgery (if requested) is layered on top of this
+        # trainer below, so keep it as a base class instead of assigning.
+        surgery_base_cls = FusionTrainer
 
         n_fusion_params = sum(
             p.numel()
@@ -1061,65 +1065,38 @@ def main():
             "n_params": n_fusion_params,
         }
 
-    # ── Attention module insertion into backbone ────────────────────
-    if args.attention_type:
-        from attention_modules import insert_attention_into_backbone
-        n_attn = insert_attention_into_backbone(model, args.attention_type)
-        logger.info("=" * 60)
-        logger.info("ATTENTION IN BACKBONE")
-        logger.info("Type:      %s (%d modules inserted after C3k2 stages)",
-                     args.attention_type.upper(), n_attn)
-        logger.info("=" * 60)
+    # ── Architecture surgery ────────────────────────────────────────
+    # Ultralytics rebuilds the model from the checkpoint YAML when training
+    # starts (BaseTrainer.setup_model -> get_model), so surgery applied to
+    # `model` here would be silently discarded and the run would train a
+    # stock detector.  Register a trainer that applies the surgery to the
+    # freshly built model instead.
+    from surgery_trainer import needs_surgery
 
-    # ── Neck architecture replacement ───────────────────────────────
-    if args.neck_type == "c2ema":
-        from c2ema import replace_neck_with_c2ema
-        n_replaced = replace_neck_with_c2ema(model)
-        logger.info("=" * 60)
-        logger.info("NECK REPLACEMENT")
-        logger.info("Type:      C2EMA (%d neck blocks replaced)", n_replaced)
-        logger.info("=" * 60)
-    elif args.neck_type == "asff":
-        from asff import replace_concat_with_asff
-        n_replaced = replace_concat_with_asff(model)
-        logger.info("=" * 60)
-        logger.info("NECK REPLACEMENT")
-        logger.info("Type:      ASFF (%d Concat layers replaced)", n_replaced)
-        logger.info("=" * 60)
-    elif args.neck_type == "c3k3":
-        from c3k3 import replace_c3k2_with_c3k
-        n_replaced = replace_c3k2_with_c3k(model, kernel_size=3)
-        logger.info("=" * 60)
-        logger.info("NECK REPLACEMENT")
-        logger.info("Type:      C3K3 (%d C3k2 blocks replaced, k=3)", n_replaced)
-        logger.info("=" * 60)
+    surgery_spec = {
+        "attention_type": args.attention_type,
+        "neck_type": args.neck_type,
+        "backbone": args.backbone,
+        "head_type": args.head_type,
+    }
+    if needs_surgery(surgery_spec):
+        from ultralytics.models.yolo.detect import DetectionTrainer
 
-    # ── Backbone replacement ─────────────────────────────────────────
-    if args.backbone == "starnet":
-        from starnet_backbone import replace_backbone_with_starnet
-        n_replaced = replace_backbone_with_starnet(model)
-        logger.info("=" * 60)
-        logger.info("BACKBONE REPLACEMENT")
-        logger.info("Type:      StarNet (%d C3k2 blocks → C3k2Star)", n_replaced)
-        logger.info("=" * 60)
+        from surgery_trainer import make_surgery_trainer_class
 
-    if args.backbone == "leconv":
-        from leconv_backbone import replace_backbone_with_leconv
-        n_replaced = replace_backbone_with_leconv(model)
+        base_cls = surgery_base_cls or DetectionTrainer
+        model.trainer_class = make_surgery_trainer_class(base_cls, surgery_spec, fusion_kwargs)
         logger.info("=" * 60)
-        logger.info("BACKBONE REPLACEMENT")
-        logger.info("Type:      LeConv (%d C3k2 blocks → C3k2LeConv)", n_replaced)
+        logger.info("ARCHITECTURE SURGERY")
+        logger.info("Trainer:   %s", model.trainer_class.__name__)
+        logger.info(
+            "Applied in get_model(): %s",
+            ", ".join(f"{k}={v}" for k, v in surgery_spec.items() if v),
+        )
         logger.info("=" * 60)
+    elif surgery_base_cls is not None:
+        model.trainer_class = surgery_base_cls
 
-    # ── Detection head replacement ──────────────────────────────────
-    if args.head_type == "dynamic":
-        from dynamic_head import replace_detect_with_dynamic_head
-        success = replace_detect_with_dynamic_head(model)
-        logger.info("=" * 60)
-        logger.info("HEAD REPLACEMENT")
-        logger.info("Type:      DynamicHead (scale + spatial attention)")
-        logger.info("Result:    %s", "✓ replaced" if success else "✗ failed")
-        logger.info("=" * 60)
 
     # -------------------------------------------------------------------
     # Wandb setup — create callback with preprocessing + fusion info

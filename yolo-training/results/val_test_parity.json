@@ -1,0 +1,44 @@
+{
+  "baseline-yolo11m": {
+    "val": {
+      "mAP50-95": 81.39,
+      "mAP50": 99.09,
+      "Precision": 95.34,
+      "Recall": 96.97
+    },
+    "test": {
+      "mAP50-95": 81.75,
+      "mAP50": 99.25,
+      "Precision": 96.23,
+      "Recall": 96.92
+    }
+  },
+  "starnet-s1": {
+    "val": {
+      "mAP50-95": 56.27,
+      "mAP50": 87.09,
+      "Precision": 87.54,
+      "Recall": 81.65
+    },
+    "test": {
+      "mAP50-95": 56.61,
+      "mAP50": 86.94,
+      "Precision": 87.04,
+      "Recall": 81.86
+    }
+  },
+  "leconv-t": {
+    "val": {
+      "mAP50-95": 44.92,
+      "mAP50": 78.56,
+      "Precision": 74.08,
+      "Recall": 77.11
+    },
+    "test": {
+      "mAP50-95": 45.76,
+      "mAP50": 79.06,
+      "Precision": 75.47,
+      "Recall": 77.78
+    }
+  }
+}
