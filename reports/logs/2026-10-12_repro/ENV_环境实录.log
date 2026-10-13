@@ -1,0 +1,46 @@
+==== 测试环境实录 2026-10-13 10:46:26 +0800 ====
+hostname: ws-MZ73-LM1-000
+user: ws
+pwd: /home/ws/code/ship
+date: 2026年 10月 13日 星期二 10:46:26 CST
+os: Ubuntu 24.04.5 LTS
+kernel: 7.0.0-31-generic
+arch: x86_64
+--- python ---
+Python 3.13.13
+--- uv ---
+uv 0.12.7 (x86_64-unknown-linux-gnu)
+--- git ---
+git version 2.43.0
+176b702
+--- nvidia-smi ---
+index, name, driver_version, memory.total [MiB], memory.used [MiB]
+0, NVIDIA GeForce RTX 4090, 595.84, 24564 MiB, 17104 MiB
+1, NVIDIA GeForce RTX 4090, 595.84, 24564 MiB, 16430 MiB
+--- torch ---
+torch 2.11.0+cu128
+cuda_available True
+cuda_version 12.8
+device0 NVIDIA GeForce RTX 4090
+--- versions ---
+ultralytics 8.4.53
+torch 2.11.0+cu128
+torchvision 0.26.0+cu128
+ultralytics 8.4.53
+opencv-python 4.11.0.86
+PySide6 6.11.2
+streamlit 1.62.0
+numpy 2.4.6
+pandas 3.0.5
+PyWavelets 1.9.0
+sahi 0.11.36
+pytest 9.0.3
+Pillow 12.2.0
+PyYAML 6.0.3
+matplotlib 3.10.9
+wandb 0.27.0
+tqdm 4.67.3
+--- env vars ---
+QT_QPA_PLATFORM=<unset>
+CUDA_VISIBLE_DEVICES=<unset>
+CUDNN_V8_API_ENABLED=<unset>

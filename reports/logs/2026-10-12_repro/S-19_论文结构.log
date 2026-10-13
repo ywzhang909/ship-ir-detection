@@ -1,0 +1,25 @@
+==== S-19_论文结构 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest docs/论文/tests/test_paper.py -v
+START: 2026-10-13 10:47:21
+============================= test session starts ==============================
+platform linux -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- /home/ws/code/ship/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ws/code/ship
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... collected 9 items
+
+docs/论文/tests/test_paper.py::test_01_structure_headings_ordered PASSED [ 11%]
+docs/论文/tests/test_paper.py::test_02_method_coverage PASSED            [ 22%]
+docs/论文/tests/test_paper.py::test_03_four_element_blocks PASSED        [ 33%]
+docs/论文/tests/test_paper.py::test_04_figure_integrity PASSED           [ 44%]
+docs/论文/tests/test_paper.py::test_05_landmark_numbers PASSED           [ 55%]
+docs/论文/tests/test_paper.py::test_06_no_placeholders PASSED            [ 66%]
+docs/论文/tests/test_paper.py::test_07_keywords_abstract_figure_count PASSED [ 77%]
+docs/论文/tests/test_paper.py::test_08_common_style_cjk_smoke PASSED     [ 88%]
+docs/论文/tests/test_paper.py::test_09_manifest_valid PASSED             [100%]
+
+============================== 9 passed in 0.40s ===============================
+EXIT: 0
+END: 2026-10-13 10:47:21

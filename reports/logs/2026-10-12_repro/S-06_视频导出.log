@@ -1,0 +1,32 @@
+==== S-06_视频导出 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest ship_detector/tests/test_export_results.py -v
+START: 2026-10-13 10:47:01
+============================= test session starts ==============================
+platform linux -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- /home/ws/code/ship/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ws/code/ship
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... collected 16 items
+
+ship_detector/tests/test_export_results.py::test_annotated_video_is_written_with_every_source_frame PASSED [  6%]
+ship_detector/tests/test_export_results.py::test_annotated_frames_visibly_differ_from_the_source PASSED [ 12%]
+ship_detector/tests/test_export_results.py::test_stride_controls_sampling PASSED [ 18%]
+ship_detector/tests/test_export_results.py::test_zero_detection_frames_still_produce_a_video_and_report PASSED [ 25%]
+ship_detector/tests/test_export_results.py::test_missing_source_video_is_reported_not_raised PASSED [ 31%]
+ship_detector/tests/test_export_results.py::test_stride_zero_or_negative_falls_back_to_one PASSED [ 37%]
+ship_detector/tests/test_export_results.py::test_per_frame_stats_carry_timestamps_confidences_and_boxes PASSED [ 43%]
+ship_detector/tests/test_export_results.py::test_summary_aggregates_are_consistent PASSED [ 50%]
+ship_detector/tests/test_export_results.py::test_report_records_the_run_configuration PASSED [ 56%]
+ship_detector/tests/test_export_results.py::test_conf_threshold_is_forwarded_to_the_detector PASSED [ 62%]
+ship_detector/tests/test_export_results.py::test_use_sahi_toggles_detector_sahi PASSED [ 68%]
+ship_detector/tests/test_export_results.py::test_write_report_emits_both_json_and_markdown PASSED [ 75%]
+ship_detector/tests/test_export_results.py::test_write_report_rejects_a_stats_dict_without_summary PASSED [ 81%]
+ship_detector/tests/test_export_results.py::test_module_imports_without_a_display PASSED [ 87%]
+ship_detector/tests/test_export_results.py::test_cli_fails_fast_on_an_unreadable_video PASSED [ 93%]
+ship_detector/tests/test_export_results.py::test_cli_fails_fast_on_a_missing_video PASSED [100%]
+
+============================== 16 passed in 0.23s ==============================
+EXIT: 0
+END: 2026-10-13 10:47:01

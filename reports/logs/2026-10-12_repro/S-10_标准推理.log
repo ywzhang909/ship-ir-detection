@@ -1,0 +1,370 @@
+==== S-10_标准推理 ====
+CWD: /home/ws/code/ship/yolo-training
+CMD: timeout 600 /home/ws/code/ship/.venv/bin/python predict.py --mode standard --source ../dataset/simple/LWIR --weights ../data/weights_staging/weights/T5_yolo11l_fusion_best.pt --conf 0.25 --imgsz 1280 --output-csv /tmp/opencode/repro/standard_simple.csv
+START: 2026-10-13 10:50:42
+2026-10-13 10:50:42,676 [INFO] Dataset: ship (9 classes)
+2026-10-13 10:50:42,676 [INFO] Mode: standard
+2026-10-13 10:50:42,676 [INFO] Preprocessing: disabled
+2026-10-13 10:50:44,371 [INFO] Loading model from ../data/weights_staging/weights/T5_yolo11l_fusion_best.pt ...
+2026-10-13 10:50:44,580 [INFO] Processing 1030.jpg ...
+
+0: 1024x1280 2 ships, 52.1ms
+Speed: 6.6ms preprocess, 52.1ms inference, 10.8ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,463 [INFO]   2 detections
+2026-10-13 10:50:45,464 [INFO]   ship: conf=0.874, xyxy=[258,172,347,283]
+2026-10-13 10:50:45,464 [INFO]   ship: conf=0.837, xyxy=[571,208,594,234]
+2026-10-13 10:50:45,467 [INFO]   Saved visualization to runs/detect/predict/pred_1030.jpg
+2026-10-13 10:50:45,467 [INFO] Processing 0440.jpg ...
+
+0: 1024x1280 3 ships, 11.5ms
+Speed: 5.8ms preprocess, 11.5ms inference, 1.1ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,487 [INFO]   3 detections
+2026-10-13 10:50:45,487 [INFO]   ship: conf=0.851, xyxy=[326,234,623,500]
+2026-10-13 10:50:45,487 [INFO]   ship: conf=0.637, xyxy=[376,181,627,473]
+2026-10-13 10:50:45,487 [INFO]   ship: conf=0.373, xyxy=[177,231,287,269]
+2026-10-13 10:50:45,489 [INFO]   Saved visualization to runs/detect/predict/pred_0440.jpg
+2026-10-13 10:50:45,490 [INFO] Processing 1060.jpg ...
+
+0: 1024x1280 2 ships, 12.3ms
+Speed: 3.4ms preprocess, 12.3ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,507 [INFO]   2 detections
+2026-10-13 10:50:45,507 [INFO]   ship: conf=0.885, xyxy=[427,326,468,381]
+2026-10-13 10:50:45,507 [INFO]   ship: conf=0.679, xyxy=[88,334,115,360]
+2026-10-13 10:50:45,509 [INFO]   Saved visualization to runs/detect/predict/pred_1060.jpg
+2026-10-13 10:50:45,509 [INFO] Processing 0260.jpg ...
+
+0: 1024x1280 (no detections), 12.6ms
+Speed: 3.0ms preprocess, 12.6ms inference, 0.3ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,526 [INFO]   no detections
+2026-10-13 10:50:45,528 [INFO]   Saved visualization to runs/detect/predict/pred_0260.jpg
+2026-10-13 10:50:45,528 [INFO] Processing 1120.jpg ...
+
+0: 1024x1280 1 ship, 12.7ms
+Speed: 3.0ms preprocess, 12.7ms inference, 0.7ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,546 [INFO]   1 detections
+2026-10-13 10:50:45,546 [INFO]   ship: conf=0.823, xyxy=[336,248,374,286]
+2026-10-13 10:50:45,548 [INFO]   Saved visualization to runs/detect/predict/pred_1120.jpg
+2026-10-13 10:50:45,548 [INFO] Processing 0500.jpg ...
+
+0: 1024x1280 2 ships, 11.7ms
+Speed: 3.2ms preprocess, 11.7ms inference, 0.8ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,565 [INFO]   2 detections
+2026-10-13 10:50:45,565 [INFO]   ship: conf=0.863, xyxy=[63,205,111,237]
+2026-10-13 10:50:45,566 [INFO]   ship: conf=0.745, xyxy=[377,210,405,235]
+2026-10-13 10:50:45,568 [INFO]   Saved visualization to runs/detect/predict/pred_0500.jpg
+2026-10-13 10:50:45,568 [INFO] Processing 0360.jpg ...
+
+0: 1024x1280 2 ships, 11.1ms
+Speed: 3.0ms preprocess, 11.1ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,584 [INFO]   2 detections
+2026-10-13 10:50:45,584 [INFO]   ship: conf=0.739, xyxy=[63,174,175,401]
+2026-10-13 10:50:45,585 [INFO]   ship: conf=0.294, xyxy=[56,170,270,458]
+2026-10-13 10:50:45,587 [INFO]   Saved visualization to runs/detect/predict/pred_0360.jpg
+2026-10-13 10:50:45,587 [INFO] Processing 0860.jpg ...
+
+0: 1024x1280 2 ships, 11.6ms
+Speed: 3.0ms preprocess, 11.6ms inference, 1.0ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,604 [INFO]   2 detections
+2026-10-13 10:50:45,604 [INFO]   ship: conf=0.885, xyxy=[315,290,352,342]
+2026-10-13 10:50:45,604 [INFO]   ship: conf=0.704, xyxy=[230,297,256,321]
+2026-10-13 10:50:45,606 [INFO]   Saved visualization to runs/detect/predict/pred_0860.jpg
+2026-10-13 10:50:45,606 [INFO] Processing 0070.jpg ...
+
+0: 1024x1280 (no detections), 10.8ms
+Speed: 3.0ms preprocess, 10.8ms inference, 0.7ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,621 [INFO]   no detections
+2026-10-13 10:50:45,623 [INFO]   Saved visualization to runs/detect/predict/pred_0070.jpg
+2026-10-13 10:50:45,623 [INFO] Processing 1000.jpg ...
+
+0: 1024x1280 2 ships, 11.3ms
+Speed: 2.9ms preprocess, 11.3ms inference, 0.9ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,640 [INFO]   2 detections
+2026-10-13 10:50:45,640 [INFO]   ship: conf=0.889, xyxy=[351,278,387,321]
+2026-10-13 10:50:45,640 [INFO]   ship: conf=0.725, xyxy=[200,280,225,304]
+2026-10-13 10:50:45,642 [INFO]   Saved visualization to runs/detect/predict/pred_1000.jpg
+2026-10-13 10:50:45,642 [INFO] Processing 0610.jpg ...
+
+0: 1024x1280 1 ship, 11.3ms
+Speed: 2.9ms preprocess, 11.3ms inference, 0.8ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,658 [INFO]   1 detections
+2026-10-13 10:50:45,658 [INFO]   ship: conf=0.797, xyxy=[281,260,321,280]
+2026-10-13 10:50:45,660 [INFO]   Saved visualization to runs/detect/predict/pred_0610.jpg
+2026-10-13 10:50:45,660 [INFO] Processing 0090.jpg ...
+
+0: 1024x1280 (no detections), 11.3ms
+Speed: 2.9ms preprocess, 11.3ms inference, 0.3ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,676 [INFO]   no detections
+2026-10-13 10:50:45,678 [INFO]   Saved visualization to runs/detect/predict/pred_0090.jpg
+2026-10-13 10:50:45,678 [INFO] Processing 1010.jpg ...
+
+0: 1024x1280 3 ships, 16.1ms
+Speed: 2.9ms preprocess, 16.1ms inference, 1.1ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,699 [INFO]   3 detections
+2026-10-13 10:50:45,700 [INFO]   ship: conf=0.897, xyxy=[253,206,298,262]
+2026-10-13 10:50:45,700 [INFO]   ship: conf=0.651, xyxy=[395,219,418,241]
+2026-10-13 10:50:45,700 [INFO]   ship: conf=0.535, xyxy=[122,212,146,236]
+2026-10-13 10:50:45,702 [INFO]   Saved visualization to runs/detect/predict/pred_1010.jpg
+2026-10-13 10:50:45,702 [INFO] Processing 0950.jpg ...
+
+0: 1024x1280 (no detections), 10.4ms
+Speed: 3.0ms preprocess, 10.4ms inference, 0.3ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,717 [INFO]   no detections
+2026-10-13 10:50:45,718 [INFO]   Saved visualization to runs/detect/predict/pred_0950.jpg
+2026-10-13 10:50:45,718 [INFO] Processing 0310.jpg ...
+
+0: 1024x1280 (no detections), 10.4ms
+Speed: 2.9ms preprocess, 10.4ms inference, 0.3ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,733 [INFO]   no detections
+2026-10-13 10:50:45,735 [INFO]   Saved visualization to runs/detect/predict/pred_0310.jpg
+2026-10-13 10:50:45,735 [INFO] Processing 0890.jpg ...
+
+0: 1024x1280 2 ships, 10.4ms
+Speed: 2.9ms preprocess, 10.4ms inference, 0.7ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,750 [INFO]   2 detections
+2026-10-13 10:50:45,750 [INFO]   ship: conf=0.899, xyxy=[223,255,282,292]
+2026-10-13 10:50:45,750 [INFO]   ship: conf=0.894, xyxy=[285,252,372,299]
+2026-10-13 10:50:45,752 [INFO]   Saved visualization to runs/detect/predict/pred_0890.jpg
+2026-10-13 10:50:45,752 [INFO] Processing 1090.jpg ...
+
+0: 1024x1280 2 ships, 10.4ms
+Speed: 2.9ms preprocess, 10.4ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,767 [INFO]   2 detections
+2026-10-13 10:50:45,768 [INFO]   ship: conf=0.912, xyxy=[207,264,371,384]
+2026-10-13 10:50:45,768 [INFO]   ship: conf=0.685, xyxy=[175,249,200,271]
+2026-10-13 10:50:45,770 [INFO]   Saved visualization to runs/detect/predict/pred_1090.jpg
+2026-10-13 10:50:45,770 [INFO] Processing 1140.jpg ...
+
+0: 1024x1280 1 ship, 10.4ms
+Speed: 2.9ms preprocess, 10.4ms inference, 0.8ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,785 [INFO]   1 detections
+2026-10-13 10:50:45,785 [INFO]   ship: conf=0.861, xyxy=[185,310,248,356]
+2026-10-13 10:50:45,787 [INFO]   Saved visualization to runs/detect/predict/pred_1140.jpg
+2026-10-13 10:50:45,787 [INFO] Processing 0180.jpg ...
+
+0: 1024x1280 (no detections), 10.4ms
+Speed: 3.0ms preprocess, 10.4ms inference, 0.3ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,802 [INFO]   no detections
+2026-10-13 10:50:45,803 [INFO]   Saved visualization to runs/detect/predict/pred_0180.jpg
+2026-10-13 10:50:45,804 [INFO] Processing 0030.jpg ...
+
+0: 1024x1280 (no detections), 10.4ms
+Speed: 2.9ms preprocess, 10.4ms inference, 0.3ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,818 [INFO]   no detections
+2026-10-13 10:50:45,820 [INFO]   Saved visualization to runs/detect/predict/pred_0030.jpg
+2026-10-13 10:50:45,820 [INFO] Processing 0140.jpg ...
+
+0: 1024x1280 1 ship, 10.6ms
+Speed: 2.9ms preprocess, 10.6ms inference, 0.8ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,836 [INFO]   1 detections
+2026-10-13 10:50:45,836 [INFO]   ship: conf=0.809, xyxy=[333,225,460,274]
+2026-10-13 10:50:45,838 [INFO]   Saved visualization to runs/detect/predict/pred_0140.jpg
+2026-10-13 10:50:45,838 [INFO] Processing 0940.jpg ...
+
+0: 1024x1280 1 ship, 10.6ms
+Speed: 2.9ms preprocess, 10.6ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,853 [INFO]   1 detections
+2026-10-13 10:50:45,853 [INFO]   ship: conf=0.837, xyxy=[322,232,370,264]
+2026-10-13 10:50:45,855 [INFO]   Saved visualization to runs/detect/predict/pred_0940.jpg
+2026-10-13 10:50:45,855 [INFO] Processing 0470.jpg ...
+
+0: 1024x1280 2 ships, 10.6ms
+Speed: 2.9ms preprocess, 10.6ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,871 [INFO]   2 detections
+2026-10-13 10:50:45,871 [INFO]   ship: conf=0.459, xyxy=[424,196,570,431]
+2026-10-13 10:50:45,871 [INFO]   ship: conf=0.269, xyxy=[375,258,640,511]
+2026-10-13 10:50:45,873 [INFO]   Saved visualization to runs/detect/predict/pred_0470.jpg
+2026-10-13 10:50:45,873 [INFO] Processing 1050.jpg ...
+
+0: 1024x1280 2 ships, 10.6ms
+Speed: 2.9ms preprocess, 10.6ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,888 [INFO]   2 detections
+2026-10-13 10:50:45,888 [INFO]   ship: conf=0.867, xyxy=[356,274,387,313]
+2026-10-13 10:50:45,888 [INFO]   ship: conf=0.399, xyxy=[37,283,63,306]
+2026-10-13 10:50:45,890 [INFO]   Saved visualization to runs/detect/predict/pred_1050.jpg
+2026-10-13 10:50:45,890 [INFO] Processing 0930.jpg ...
+
+0: 1024x1280 1 ship, 10.8ms
+Speed: 2.9ms preprocess, 10.8ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,906 [INFO]   1 detections
+2026-10-13 10:50:45,906 [INFO]   ship: conf=0.901, xyxy=[349,231,405,266]
+2026-10-13 10:50:45,908 [INFO]   Saved visualization to runs/detect/predict/pred_0930.jpg
+2026-10-13 10:50:45,908 [INFO] Processing 0710.jpg ...
+
+0: 1024x1280 2 ships, 10.9ms
+Speed: 2.9ms preprocess, 10.9ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,924 [INFO]   2 detections
+2026-10-13 10:50:45,924 [INFO]   ship: conf=0.863, xyxy=[313,257,370,328]
+2026-10-13 10:50:45,924 [INFO]   ship: conf=0.389, xyxy=[565,264,596,282]
+2026-10-13 10:50:45,926 [INFO]   Saved visualization to runs/detect/predict/pred_0710.jpg
+2026-10-13 10:50:45,926 [INFO] Processing 0740.jpg ...
+
+0: 1024x1280 1 ship, 10.8ms
+Speed: 2.9ms preprocess, 10.8ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,942 [INFO]   1 detections
+2026-10-13 10:50:45,942 [INFO]   ship: conf=0.526, xyxy=[252,192,337,314]
+2026-10-13 10:50:45,944 [INFO]   Saved visualization to runs/detect/predict/pred_0740.jpg
+2026-10-13 10:50:45,944 [INFO] Processing 0110.jpg ...
+
+0: 1024x1280 (no detections), 10.8ms
+Speed: 2.9ms preprocess, 10.8ms inference, 0.3ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,959 [INFO]   no detections
+2026-10-13 10:50:45,961 [INFO]   Saved visualization to runs/detect/predict/pred_0110.jpg
+2026-10-13 10:50:45,961 [INFO] Processing 0720.jpg ...
+
+0: 1024x1280 2 ships, 10.9ms
+Speed: 2.9ms preprocess, 10.9ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,977 [INFO]   2 detections
+2026-10-13 10:50:45,977 [INFO]   ship: conf=0.835, xyxy=[324,275,384,357]
+2026-10-13 10:50:45,977 [INFO]   ship: conf=0.263, xyxy=[505,293,539,312]
+2026-10-13 10:50:45,979 [INFO]   Saved visualization to runs/detect/predict/pred_0720.jpg
+2026-10-13 10:50:45,979 [INFO] Processing 0530.jpg ...
+
+0: 1024x1280 1 ship, 10.9ms
+Speed: 2.9ms preprocess, 10.9ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:45,995 [INFO]   1 detections
+2026-10-13 10:50:45,995 [INFO]   ship: conf=0.576, xyxy=[218,235,270,269]
+2026-10-13 10:50:45,997 [INFO]   Saved visualization to runs/detect/predict/pred_0530.jpg
+2026-10-13 10:50:45,997 [INFO] Processing 0190.jpg ...
+
+0: 1024x1280 1 ship, 10.8ms
+Speed: 2.9ms preprocess, 10.8ms inference, 0.8ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,013 [INFO]   1 detections
+2026-10-13 10:50:46,013 [INFO]   ship: conf=0.364, xyxy=[222,294,423,361]
+2026-10-13 10:50:46,014 [INFO]   Saved visualization to runs/detect/predict/pred_0190.jpg
+2026-10-13 10:50:46,015 [INFO] Processing 0790.jpg ...
+
+0: 1024x1280 2 ships, 10.4ms
+Speed: 3.2ms preprocess, 10.4ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,030 [INFO]   2 detections
+2026-10-13 10:50:46,030 [INFO]   ship: conf=0.896, xyxy=[281,293,350,334]
+2026-10-13 10:50:46,030 [INFO]   ship: conf=0.614, xyxy=[219,279,276,316]
+2026-10-13 10:50:46,032 [INFO]   Saved visualization to runs/detect/predict/pred_0790.jpg
+2026-10-13 10:50:46,032 [INFO] Processing 0580.jpg ...
+
+0: 1024x1280 1 ship, 10.4ms
+Speed: 3.2ms preprocess, 10.4ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,047 [INFO]   1 detections
+2026-10-13 10:50:46,048 [INFO]   ship: conf=0.877, xyxy=[187,366,220,387]
+2026-10-13 10:50:46,049 [INFO]   Saved visualization to runs/detect/predict/pred_0580.jpg
+2026-10-13 10:50:46,049 [INFO] Processing 0900.jpg ...
+
+0: 1024x1280 1 ship, 10.4ms
+Speed: 3.2ms preprocess, 10.4ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,065 [INFO]   1 detections
+2026-10-13 10:50:46,065 [INFO]   ship: conf=0.907, xyxy=[56,212,106,256]
+2026-10-13 10:50:46,067 [INFO]   Saved visualization to runs/detect/predict/pred_0900.jpg
+2026-10-13 10:50:46,067 [INFO] Processing 0850.jpg ...
+
+0: 1024x1280 2 ships, 10.4ms
+Speed: 3.1ms preprocess, 10.4ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,082 [INFO]   2 detections
+2026-10-13 10:50:46,082 [INFO]   ship: conf=0.813, xyxy=[340,249,394,317]
+2026-10-13 10:50:46,082 [INFO]   ship: conf=0.699, xyxy=[295,257,321,281]
+2026-10-13 10:50:46,084 [INFO]   Saved visualization to runs/detect/predict/pred_0850.jpg
+2026-10-13 10:50:46,084 [INFO] Processing 0410.jpg ...
+
+0: 1024x1280 (no detections), 10.4ms
+Speed: 3.2ms preprocess, 10.4ms inference, 0.3ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,099 [INFO]   no detections
+2026-10-13 10:50:46,101 [INFO]   Saved visualization to runs/detect/predict/pred_0410.jpg
+2026-10-13 10:50:46,101 [INFO] Processing 0600.jpg ...
+
+0: 1024x1280 2 ships, 10.4ms
+Speed: 3.1ms preprocess, 10.4ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,116 [INFO]   2 detections
+2026-10-13 10:50:46,116 [INFO]   ship: conf=0.862, xyxy=[381,253,418,275]
+2026-10-13 10:50:46,117 [INFO]   ship: conf=0.807, xyxy=[90,251,118,274]
+2026-10-13 10:50:46,119 [INFO]   Saved visualization to runs/detect/predict/pred_0600.jpg
+2026-10-13 10:50:46,119 [INFO] Processing 0884.jpg ...
+
+0: 1024x1280 1 ship, 10.4ms
+Speed: 3.2ms preprocess, 10.4ms inference, 0.8ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,134 [INFO]   1 detections
+2026-10-13 10:50:46,134 [INFO]   ship: conf=0.694, xyxy=[165,205,290,254]
+2026-10-13 10:50:46,136 [INFO]   Saved visualization to runs/detect/predict/pred_0884.jpg
+2026-10-13 10:50:46,136 [INFO] Processing 0670.jpg ...
+
+0: 1024x1280 (no detections), 10.4ms
+Speed: 3.1ms preprocess, 10.4ms inference, 0.3ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,151 [INFO]   no detections
+2026-10-13 10:50:46,153 [INFO]   Saved visualization to runs/detect/predict/pred_0670.jpg
+2026-10-13 10:50:46,153 [INFO] Processing 0490.jpg ...
+
+0: 1024x1280 2 ships, 10.4ms
+Speed: 3.2ms preprocess, 10.4ms inference, 0.8ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,169 [INFO]   2 detections
+2026-10-13 10:50:46,169 [INFO]   ship: conf=0.885, xyxy=[238,215,282,251]
+2026-10-13 10:50:46,169 [INFO]   ship: conf=0.360, xyxy=[596,219,623,243]
+2026-10-13 10:50:46,171 [INFO]   Saved visualization to runs/detect/predict/pred_0490.jpg
+2026-10-13 10:50:46,171 [INFO] Processing 0320.jpg ...
+
+0: 1024x1280 1 ship, 10.6ms
+Speed: 3.2ms preprocess, 10.6ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,187 [INFO]   1 detections
+2026-10-13 10:50:46,187 [INFO]   ship: conf=0.810, xyxy=[447,336,511,363]
+2026-10-13 10:50:46,189 [INFO]   Saved visualization to runs/detect/predict/pred_0320.jpg
+2026-10-13 10:50:46,189 [INFO] Processing 0780.jpg ...
+
+0: 1024x1280 2 ships, 10.6ms
+Speed: 3.1ms preprocess, 10.6ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,204 [INFO]   2 detections
+2026-10-13 10:50:46,205 [INFO]   ship: conf=0.396, xyxy=[0,108,288,282]
+2026-10-13 10:50:46,205 [INFO]   ship: conf=0.315, xyxy=[391,228,445,261]
+2026-10-13 10:50:46,207 [INFO]   Saved visualization to runs/detect/predict/pred_0780.jpg
+2026-10-13 10:50:46,207 [INFO] Processing 1080.jpg ...
+
+0: 1024x1280 2 ships, 10.9ms
+Speed: 3.1ms preprocess, 10.9ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,223 [INFO]   2 detections
+2026-10-13 10:50:46,223 [INFO]   ship: conf=0.872, xyxy=[317,302,421,400]
+2026-10-13 10:50:46,223 [INFO]   ship: conf=0.804, xyxy=[88,294,113,317]
+2026-10-13 10:50:46,225 [INFO]   Saved visualization to runs/detect/predict/pred_1080.jpg
+2026-10-13 10:50:46,225 [INFO] Processing 0050.jpg ...
+
+0: 1024x1280 (no detections), 10.9ms
+Speed: 3.1ms preprocess, 10.9ms inference, 0.3ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,240 [INFO]   no detections
+2026-10-13 10:50:46,242 [INFO]   Saved visualization to runs/detect/predict/pred_0050.jpg
+2026-10-13 10:50:46,242 [INFO] Processing 0250.jpg ...
+
+0: 1024x1280 1 ship, 10.9ms
+Speed: 3.1ms preprocess, 10.9ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,258 [INFO]   1 detections
+2026-10-13 10:50:46,258 [INFO]   ship: conf=0.298, xyxy=[132,212,197,246]
+2026-10-13 10:50:46,260 [INFO]   Saved visualization to runs/detect/predict/pred_0250.jpg
+2026-10-13 10:50:46,260 [INFO] Processing 0330.jpg ...
+
+0: 1024x1280 (no detections), 10.8ms
+Speed: 3.1ms preprocess, 10.8ms inference, 0.3ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,275 [INFO]   no detections
+2026-10-13 10:50:46,277 [INFO]   Saved visualization to runs/detect/predict/pred_0330.jpg
+2026-10-13 10:50:46,277 [INFO] Processing 0170.jpg ...
+
+0: 1024x1280 (no detections), 10.8ms
+Speed: 3.1ms preprocess, 10.8ms inference, 0.3ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,292 [INFO]   no detections
+2026-10-13 10:50:46,294 [INFO]   Saved visualization to runs/detect/predict/pred_0170.jpg
+2026-10-13 10:50:46,294 [INFO] Processing 1160.jpg ...
+
+0: 1024x1280 (no detections), 10.9ms
+Speed: 3.1ms preprocess, 10.9ms inference, 0.3ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,310 [INFO]   no detections
+2026-10-13 10:50:46,311 [INFO]   Saved visualization to runs/detect/predict/pred_1160.jpg
+2026-10-13 10:50:46,311 [INFO] Processing 0120.jpg ...
+
+0: 1024x1280 1 ship, 10.9ms
+Speed: 3.1ms preprocess, 10.9ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,328 [INFO]   1 detections
+2026-10-13 10:50:46,328 [INFO]   ship: conf=0.879, xyxy=[236,229,307,263]
+2026-10-13 10:50:46,330 [INFO]   Saved visualization to runs/detect/predict/pred_0120.jpg
+2026-10-13 10:50:46,330 [INFO] Processing 0960.jpg ...
+
+0: 1024x1280 1 ship, 10.6ms
+Speed: 3.2ms preprocess, 10.6ms inference, 0.6ms postprocess per image at shape (1, 3, 1024, 1280)
+2026-10-13 10:50:46,346 [INFO]   1 detections
+2026-10-13 10:50:46,346 [INFO]   ship: conf=0.890, xyxy=[177,310,340,386]
+2026-10-13 10:50:46,347 [INFO]   Saved visualization to runs/detect/predict/pred_0960.jpg
+2026-10-13 10:50:46,347 [INFO] Results saved in runs/detect/predict
+2026-10-13 10:50:46,348 [INFO] CSV saved to /tmp/opencode/repro/standard_simple.csv
+EXIT: 0
+END: 2026-10-13 10:50:47

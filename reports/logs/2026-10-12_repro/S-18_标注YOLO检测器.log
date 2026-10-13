@@ -1,0 +1,48 @@
+==== S-18_标注YOLO检测器 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest ship_annotation/tests/test_yolo_detector.py -v
+START: 2026-10-13 10:47:20
+============================= test session starts ==============================
+platform linux -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- /home/ws/code/ship/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ws/code/ship
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... collected 11 items
+
+ship_annotation/tests/test_yolo_detector.py::TestModelDiscovery::test_discover_returns_sorted_models FAILED [  9%]
+ship_annotation/tests/test_yolo_detector.py::TestModelDiscovery::test_best_model_is_t5_fusion SKIPPED [ 18%]
+ship_annotation/tests/test_yolo_detector.py::TestModelDiscovery::test_model_info_label_format SKIPPED [ 27%]
+ship_annotation/tests/test_yolo_detector.py::TestUnloadedBehavior::test_detect_before_load_returns_empty PASSED [ 36%]
+ship_annotation/tests/test_yolo_detector.py::TestUnloadedBehavior::test_model_label_unloaded PASSED [ 45%]
+ship_annotation/tests/test_yolo_detector.py::TestUnloadedBehavior::test_prep_unloaded_is_none PASSED [ 54%]
+ship_annotation/tests/test_yolo_detector.py::TestTargetConversion::test_bbox_normalization_math PASSED [ 63%]
+ship_annotation/tests/test_yolo_detector.py::TestTargetConversion::test_target_object_fields PASSED [ 72%]
+ship_annotation/tests/test_yolo_detector.py::TestRealInference::test_load_best_model SKIPPED [ 81%]
+ship_annotation/tests/test_yolo_detector.py::TestRealInference::test_detect_generates_results SKIPPED [ 90%]
+ship_annotation/tests/test_yolo_detector.py::TestRealInference::test_class_names_from_checkpoint SKIPPED [100%]
+
+=================================== FAILURES ===================================
+____________ TestModelDiscovery.test_discover_returns_sorted_models ____________
+
+self = <tests.test_yolo_detector.TestModelDiscovery object at 0x70cf518f7d90>
+
+    def test_discover_returns_sorted_models(self):
+        models = _core.discover_models()
+>       assert len(models) > 0, "runs/detect/ship-detection 下应存在 best.pt"
+E       AssertionError: runs/detect/ship-detection 下应存在 best.pt
+E       assert 0 > 0
+E        +  where 0 = len([])
+
+ship_annotation/tests/test_yolo_detector.py:41: AssertionError
+=============================== warnings summary ===============================
+ship_annotation/tests/test_yolo_detector.py:100
+  /home/ws/code/ship/ship_annotation/tests/test_yolo_detector.py:100: PytestUnknownMarkWarning: Unknown pytest.mark.slow - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.slow
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED ship_annotation/tests/test_yolo_detector.py::TestModelDiscovery::test_discover_returns_sorted_models
+============== 1 failed, 5 passed, 5 skipped, 1 warning in 0.09s ===============
+EXIT: 1
+END: 2026-10-13 10:47:21

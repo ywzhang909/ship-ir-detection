@@ -1,0 +1,76 @@
+==== A-03_NSLSR数据集完整性 ====
+CWD: /home/ws/code/ship/yolo-training
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest tests/test_nslsr_data.py -v
+START: 2026-10-13 10:46:30
+============================= test session starts ==============================
+platform linux -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- /home/ws/code/ship/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ws/code/ship/yolo-training
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... collected 60 items
+
+tests/test_nslsr_data.py::TestNslsrDataExists::test_nslsr_root_exists SKIPPED [  1%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_modality_dir_exists[swir] SKIPPED [  3%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_modality_dir_exists[lwir] SKIPPED [  5%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_split_dir_exists[swir-train] SKIPPED [  6%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_split_dir_exists[swir-val] SKIPPED [  8%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_split_dir_exists[swir-test] SKIPPED [ 10%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_split_dir_exists[lwir-train] SKIPPED [ 11%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_split_dir_exists[lwir-val] SKIPPED [ 13%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_split_dir_exists[lwir-test] SKIPPED [ 15%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_images_dir_exists[swir-train] SKIPPED [ 16%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_images_dir_exists[swir-val] SKIPPED [ 18%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_images_dir_exists[swir-test] SKIPPED [ 20%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_images_dir_exists[lwir-train] SKIPPED [ 21%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_images_dir_exists[lwir-val] SKIPPED [ 23%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_images_dir_exists[lwir-test] SKIPPED [ 25%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_labels_dir_exists[swir-train] SKIPPED [ 26%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_labels_dir_exists[swir-val] SKIPPED [ 28%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_labels_dir_exists[swir-test] SKIPPED [ 30%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_labels_dir_exists[lwir-train] SKIPPED [ 31%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_labels_dir_exists[lwir-val] SKIPPED [ 33%]
+tests/test_nslsr_data.py::TestNslsrDataExists::test_labels_dir_exists[lwir-test] SKIPPED [ 35%]
+tests/test_nslsr_data.py::TestImageLabelPairing::test_every_image_has_label[swir-train] SKIPPED [ 36%]
+tests/test_nslsr_data.py::TestImageLabelPairing::test_every_image_has_label[swir-val] SKIPPED [ 38%]
+tests/test_nslsr_data.py::TestImageLabelPairing::test_every_image_has_label[swir-test] SKIPPED [ 40%]
+tests/test_nslsr_data.py::TestImageLabelPairing::test_every_image_has_label[lwir-train] SKIPPED [ 41%]
+tests/test_nslsr_data.py::TestImageLabelPairing::test_every_image_has_label[lwir-val] SKIPPED [ 43%]
+tests/test_nslsr_data.py::TestImageLabelPairing::test_every_image_has_label[lwir-test] SKIPPED [ 45%]
+tests/test_nslsr_data.py::TestImageLabelPairing::test_every_label_has_image[swir-train] SKIPPED [ 46%]
+tests/test_nslsr_data.py::TestImageLabelPairing::test_every_label_has_image[swir-val] SKIPPED [ 48%]
+tests/test_nslsr_data.py::TestImageLabelPairing::test_every_label_has_image[swir-test] SKIPPED [ 50%]
+tests/test_nslsr_data.py::TestImageLabelPairing::test_every_label_has_image[lwir-train] SKIPPED [ 51%]
+tests/test_nslsr_data.py::TestImageLabelPairing::test_every_label_has_image[lwir-val] SKIPPED [ 53%]
+tests/test_nslsr_data.py::TestImageLabelPairing::test_every_label_has_image[lwir-test] SKIPPED [ 55%]
+tests/test_nslsr_data.py::TestSplitDisjointness::test_no_overlap_train_val[swir] SKIPPED [ 56%]
+tests/test_nslsr_data.py::TestSplitDisjointness::test_no_overlap_train_val[lwir] SKIPPED [ 58%]
+tests/test_nslsr_data.py::TestSplitDisjointness::test_no_overlap_train_test[swir] SKIPPED [ 60%]
+tests/test_nslsr_data.py::TestSplitDisjointness::test_no_overlap_train_test[lwir] SKIPPED [ 61%]
+tests/test_nslsr_data.py::TestSplitDisjointness::test_no_overlap_val_test[swir] SKIPPED [ 63%]
+tests/test_nslsr_data.py::TestSplitDisjointness::test_no_overlap_val_test[lwir] SKIPPED [ 65%]
+tests/test_nslsr_data.py::TestSplitCounts::test_image_count[train-swir] SKIPPED [ 66%]
+tests/test_nslsr_data.py::TestSplitCounts::test_image_count[train-lwir] SKIPPED [ 68%]
+tests/test_nslsr_data.py::TestSplitCounts::test_image_count[val-swir] SKIPPED [ 70%]
+tests/test_nslsr_data.py::TestSplitCounts::test_image_count[val-lwir] SKIPPED [ 71%]
+tests/test_nslsr_data.py::TestSplitCounts::test_image_count[test-swir] SKIPPED [ 73%]
+tests/test_nslsr_data.py::TestSplitCounts::test_image_count[test-lwir] SKIPPED [ 75%]
+tests/test_nslsr_data.py::TestSplitCounts::test_label_count[train-swir] SKIPPED [ 76%]
+tests/test_nslsr_data.py::TestSplitCounts::test_label_count[train-lwir] SKIPPED [ 78%]
+tests/test_nslsr_data.py::TestSplitCounts::test_label_count[val-swir] SKIPPED [ 80%]
+tests/test_nslsr_data.py::TestSplitCounts::test_label_count[val-lwir] SKIPPED [ 81%]
+tests/test_nslsr_data.py::TestSplitCounts::test_label_count[test-swir] SKIPPED [ 83%]
+tests/test_nslsr_data.py::TestSplitCounts::test_label_count[test-lwir] SKIPPED [ 85%]
+tests/test_nslsr_data.py::TestModalityCountsMatch::test_modality_counts_match[train] SKIPPED [ 86%]
+tests/test_nslsr_data.py::TestModalityCountsMatch::test_modality_counts_match[val] SKIPPED [ 88%]
+tests/test_nslsr_data.py::TestModalityCountsMatch::test_modality_counts_match[test] SKIPPED [ 90%]
+tests/test_nslsr_data.py::TestLabelFormat::test_label_format[train-swir] SKIPPED [ 91%]
+tests/test_nslsr_data.py::TestLabelFormat::test_label_format[train-lwir] SKIPPED [ 93%]
+tests/test_nslsr_data.py::TestLabelFormat::test_label_format[val-swir] SKIPPED [ 95%]
+tests/test_nslsr_data.py::TestLabelFormat::test_label_format[val-lwir] SKIPPED [ 96%]
+tests/test_nslsr_data.py::TestLabelFormat::test_label_format[test-swir] SKIPPED [ 98%]
+tests/test_nslsr_data.py::TestLabelFormat::test_label_format[test-lwir] SKIPPED [100%]
+
+============================= 60 skipped in 0.04s ==============================
+EXIT: 0
+END: 2026-10-13 10:46:30

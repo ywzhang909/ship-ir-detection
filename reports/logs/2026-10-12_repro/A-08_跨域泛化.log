@@ -1,0 +1,496 @@
+==== A-08_跨域泛化 ====
+CWD: /home/ws/code/ship/ship_detector
+CMD: export_results.py --video ../dataset/mmexport1790781113092.mp4 --out-dir /tmp/opencode/repro/a08 --weights ../data/weights_staging/weights/T5_yolo11l_fusion_best.pt --sahi --conf 0.25 --stride 5 --model-name T5_yolo11l_fusion --preprocess raw
+START: 2026-10-13 10:52:18
+2026-10-13 10:52:20,698 [INFO] 模型加载成功: ../data/weights_staging/weights/T5_yolo11l_fusion_best.pt
+2026-10-13 10:52:21,042 [INFO] SAHI 模型初始化完成 (device=cuda:0)
+2026-10-13 10:52:21,649 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:21,729 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:21,816 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:21,893 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:21,969 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:22,044 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:22,120 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:22,197 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:22,273 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:22,349 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:22,426 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:22,501 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:22,577 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:22,654 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:22,730 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:22,805 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:22,881 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:22,957 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:23,033 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:23,109 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:23,186 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:23,261 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:23,337 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:23,412 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:23,488 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:23,565 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:23,641 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:23,717 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:23,792 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:23,868 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:23,944 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:24,020 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:24,096 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:24,171 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:24,247 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:24,323 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:24,405 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:24,483 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:24,559 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:24,635 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:24,711 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:24,786 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:24,862 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:24,942 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:25,019 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:25,094 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:25,170 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:25,246 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:25,322 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:25,398 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:25,483 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:25,559 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:25,636 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:25,711 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:25,787 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:25,863 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:25,941 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:26,017 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:26,093 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:26,168 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:26,244 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:26,320 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:26,396 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:26,472 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:26,547 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:26,623 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:26,699 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:26,774 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:26,850 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:26,926 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:27,002 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:27,078 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:27,153 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:27,230 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:27,306 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:27,382 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:27,458 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:27,533 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:27,609 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:27,686 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:27,761 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:27,837 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:27,912 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:27,988 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:28,065 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:28,141 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:28,218 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:28,293 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:28,368 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:28,444 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:28,519 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:28,594 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:28,670 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:28,745 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:28,820 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:28,898 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:28,974 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:29,051 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:29,126 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:29,202 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:29,277 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:29,354 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:29,431 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:29,507 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:29,582 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:29,658 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:29,733 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:29,809 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:29,885 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:29,961 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:30,037 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:30,114 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:30,190 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:30,265 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:30,350 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:30,428 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:30,505 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:30,582 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:30,658 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:30,733 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:30,809 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:30,889 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:30,964 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:31,041 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:31,116 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:31,192 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:31,267 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:31,343 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:31,421 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:31,496 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:31,571 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:31,647 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:31,724 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:31,800 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:31,876 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:31,952 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:32,028 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:32,104 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:32,179 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:32,270 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:32,349 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:32,425 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:32,501 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:32,577 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:32,652 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:32,728 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:32,806 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:32,881 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:32,957 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:33,034 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:33,112 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:33,188 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:33,263 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:33,340 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:33,416 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:33,491 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:33,568 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:33,645 [INFO] SAHI 推理完成: 1 个目标
+2026-10-13 10:52:33,723 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:33,800 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:33,876 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:33,952 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:34,029 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:34,104 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:34,182 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:34,257 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:34,334 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:34,411 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:34,488 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:34,564 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:34,640 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:34,716 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:34,791 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:34,867 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:34,944 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:35,032 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:35,110 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:35,188 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:35,263 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:35,340 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:35,416 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:35,493 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:35,568 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:35,645 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:35,721 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:35,797 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:35,872 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:35,949 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:36,026 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:36,106 [INFO] SAHI 推理完成: 1 个目标
+2026-10-13 10:52:36,185 [INFO] SAHI 推理完成: 1 个目标
+2026-10-13 10:52:36,264 [INFO] SAHI 推理完成: 1 个目标
+2026-10-13 10:52:36,343 [INFO] SAHI 推理完成: 1 个目标
+2026-10-13 10:52:36,422 [INFO] SAHI 推理完成: 1 个目标
+2026-10-13 10:52:36,502 [INFO] SAHI 推理完成: 2 个目标
+2026-10-13 10:52:36,580 [INFO] SAHI 推理完成: 1 个目标
+2026-10-13 10:52:36,659 [INFO] SAHI 推理完成: 1 个目标
+2026-10-13 10:52:36,737 [INFO] SAHI 推理完成: 1 个目标
+2026-10-13 10:52:36,815 [INFO] SAHI 推理完成: 1 个目标
+2026-10-13 10:52:36,894 [INFO] SAHI 推理完成: 1 个目标
+2026-10-13 10:52:36,971 [INFO] SAHI 推理完成: 1 个目标
+2026-10-13 10:52:37,048 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:37,124 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:37,200 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:37,277 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:37,352 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:37,427 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:37,503 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:37,579 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:37,655 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:37,730 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:37,805 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:37,880 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:37,957 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:38,032 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:38,107 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:38,183 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:38,259 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:38,333 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:38,409 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:38,485 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:38,561 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:38,636 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:38,711 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:38,786 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:38,862 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:38,938 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:39,013 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:39,089 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:39,164 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:39,241 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:39,316 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:39,392 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:39,467 [INFO] SAHI 推理完成: 0 个目标
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.2026-10-13 10:52:39,542 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:39,617 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:39,692 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:39,767 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:39,842 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:39,917 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:39,993 [INFO] SAHI 推理完成: 0 个目标
+2026-10-13 10:52:40,001 [INFO] mmexport1790781113092.mp4: 处理 241 帧, 含目标 13 帧, 共 14 个目标, 平均置信度 0.504
+2026-10-13 10:52:40,001 [INFO] 报告已写出: report_mmexport1790781113092.json / report_mmexport1790781113092.md
+
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+Performing prediction on 6 slices.
+[mmexport1790781113092.mp4] 处理 241 帧, 含目标 13 帧, 共 14 个目标, 平均置信度 0.504
+  标注视频: /tmp/opencode/repro/a08/annotated_mmexport1790781113092.mp4
+  报告: /tmp/opencode/repro/a08/report_mmexport1790781113092.json
+  报告: /tmp/opencode/repro/a08/report_mmexport1790781113092.md
+EXIT: 0
+END: 2026-10-13 10:52:40

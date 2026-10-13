@@ -1,0 +1,38 @@
+==== S-05_视频检测线程 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest ship_detector/tests/test_video_detect.py -v
+START: 2026-10-13 10:46:52
+============================= test session starts ==============================
+platform linux -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- /home/ws/code/ship/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ws/code/ship
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... collected 22 items
+
+ship_detector/tests/test_video_detect.py::test_worker_detects_submitted_frame_and_emits_result PASSED [  4%]
+ship_detector/tests/test_video_detect.py::test_worker_latest_slot_wins_over_older_frames PASSED [  9%]
+ship_detector/tests/test_video_detect.py::test_worker_does_not_hold_a_reference_to_a_mutated_frame PASSED [ 13%]
+ship_detector/tests/test_video_detect.py::test_worker_conf_change_is_picked_up PASSED [ 18%]
+ship_detector/tests/test_video_detect.py::test_worker_result_carries_generation_so_stale_sources_can_be_dropped PASSED [ 22%]
+ship_detector/tests/test_video_detect.py::test_worker_survives_a_raising_detector PASSED [ 27%]
+ship_detector/tests/test_video_detect.py::test_worker_shutdown_is_prompt PASSED [ 31%]
+ship_detector/tests/test_video_detect.py::test_worker_never_runs_two_inferences_concurrently PASSED [ 36%]
+ship_detector/tests/test_video_detect.py::test_canvas_emits_frame_captured_with_a_copy PASSED [ 40%]
+ship_detector/tests/test_video_detect.py::test_canvas_frame_capture_is_opt_in PASSED [ 45%]
+ship_detector/tests/test_video_detect.py::test_canvas_set_ships_reports_the_count PASSED [ 50%]
+ship_detector/tests/test_video_detect.py::test_main_window_continuous_toggle_drives_worker_and_canvas PASSED [ 54%]
+ship_detector/tests/test_video_detect.py::test_main_window_ignores_results_from_a_previous_source PASSED [ 59%]
+ship_detector/tests/test_video_detect.py::test_main_window_manual_detection_is_blocked_during_continuous PASSED [ 63%]
+ship_detector/tests/test_video_detect.py::test_continuous_detection_refused_while_manual_detection_running PASSED [ 68%]
+ship_detector/tests/test_video_detect.py::test_manual_detection_refused_while_continuous_worker_busy PASSED [ 72%]
+ship_detector/tests/test_video_detect.py::test_continuous_detection_reports_worker_errors PASSED [ 77%]
+ship_detector/tests/test_video_detect.py::test_renderer_resolves_repo_paths PASSED [ 81%]
+ship_detector/tests/test_video_detect.py::test_renderer_picks_spread_out_frames PASSED [ 86%]
+ship_detector/tests/test_video_detect.py::test_renderer_handles_a_degenerate_video_length PASSED [ 90%]
+ship_detector/tests/test_video_detect.py::test_renderer_rejects_an_unreadable_video PASSED [ 95%]
+ship_detector/tests/test_video_detect.py::test_renderer_draws_a_confidence_box_for_a_video_frame PASSED [100%]
+
+============================== 22 passed in 7.59s ==============================
+EXIT: 0
+END: 2026-10-13 10:47:01

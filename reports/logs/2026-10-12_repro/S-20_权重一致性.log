@@ -1,0 +1,30 @@
+==== S-20_权重一致性 ====
+CWD: /home/ws/code/ship
+CMD: bash -c 
+echo '--- staging ---'; ls -1 /home/ws/code/ship/data/weights_staging/weights/*.pt 2>&1
+echo '--- runs/detect/ship-detection ---'; ls -1 /home/ws/code/ship/runs/detect/ship-detection/*/weights/best.pt 2>&1 || echo '(none)'
+echo '--- runs/detect/train*/weights ---'; ls -1 /home/ws/code/ship/runs/detect/train*/weights/*.pt 2>&1 || echo '(none)'
+echo '--- detector expected dir ---'; grep -rn 'ship-detection' /home/ws/code/ship/detector.py | head -5
+
+START: 2026-10-13 10:47:44
+--- staging ---
+/home/ws/code/ship/data/weights_staging/weights/baseline_yolo11m_best.pt
+/home/ws/code/ship/data/weights_staging/weights/starnet_s1_best.pt
+/home/ws/code/ship/data/weights_staging/weights/T16_crrp_best.pt
+/home/ws/code/ship/data/weights_staging/weights/T1_fusion_h32_l3_cbam_best.pt
+/home/ws/code/ship/data/weights_staging/weights/T20_dynamic_head_best.pt
+/home/ws/code/ship/data/weights_staging/weights/T22_large_best.pt
+/home/ws/code/ship/data/weights_staging/weights/T2_fusion_residual07_best.pt
+/home/ws/code/ship/data/weights_staging/weights/T4_wavelet_dual_best.pt
+/home/ws/code/ship/data/weights_staging/weights/T5_yolo11l_fusion_best.pt
+/home/ws/code/ship/data/weights_staging/weights/T7_augment_jitter_best.pt
+--- runs/detect/ship-detection ---
+ls: 无法访问 '/home/ws/code/ship/runs/detect/ship-detection/*/weights/best.pt': 没有那个文件或目录
+(none)
+--- runs/detect/train*/weights ---
+ls: 无法访问 '/home/ws/code/ship/runs/detect/train*/weights/*.pt': 没有那个文件或目录
+(none)
+--- detector expected dir ---
+29:RUNS_DIR = _REPO_ROOT / "runs" / "detect" / "ship-detection"
+EXIT: 0
+END: 2026-10-13 10:47:44

@@ -1,0 +1,86 @@
+==== S-02_Streamlit_AppTest ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest tests/test_app_apptest.py -v
+START: 2026-10-13 10:46:38
+============================= test session starts ==============================
+platform linux -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- /home/ws/code/ship/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ws/code/ship
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... collected 5 items
+
+tests/test_app_apptest.py::test_app_boots_without_exception PASSED       [ 20%]
+tests/test_app_apptest.py::test_model_selectbox_defaults_to_best_model FAILED [ 40%]
+tests/test_app_apptest.py::test_gpu_badge_shows_cuda FAILED              [ 60%]
+tests/test_app_apptest.py::test_conf_and_imgsz_defaults FAILED           [ 80%]
+tests/test_app_apptest.py::test_rerun_after_model_switch SKIPPED (sm...) [100%]
+
+=================================== FAILURES ===================================
+_________________ test_model_selectbox_defaults_to_best_model __________________
+
+    def test_model_selectbox_defaults_to_best_model() -> None:
+        at = _boot_app()
+>       model_box = at.sidebar.selectbox[0]
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_app_apptest.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = WidgetList(), idx = 0
+
+    def __getitem__(self, idx: int | slice) -> El_co | ElementList[El_co]:
+        if isinstance(idx, slice):
+            return ElementList(self._list[idx])
+>       return self._list[idx]
+               ^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+.venv/lib/python3.13/site-packages/streamlit/testing/v1/element_tree.py:254: IndexError
+----------------------------- Captured stderr call -----------------------------
+2026-10-13 10:46:39.853 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+__________________________ test_gpu_badge_shows_cuda ___________________________
+
+    @_requires_cuda
+    def test_gpu_badge_shows_cuda() -> None:
+        at = _boot_app()
+        texts = [el.value for el in at.sidebar.success] + [el.value for el in at.success]
+>       assert "cuda" in "\n".join(texts).lower()
+E       AssertionError: assert 'cuda' in ''
+E        +  where '' = <built-in method lower of str object at 0x6086be6bb5e0>()
+E        +    where <built-in method lower of str object at 0x6086be6bb5e0> = ''.lower
+E        +      where '' = <built-in method join of str object at 0x6086be6c4eb0>([])
+E        +        where <built-in method join of str object at 0x6086be6c4eb0> = '\n'.join
+
+tests/test_app_apptest.py:59: AssertionError
+----------------------------- Captured stderr call -----------------------------
+2026-10-13 10:46:40.029 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+_________________________ test_conf_and_imgsz_defaults _________________________
+
+    def test_conf_and_imgsz_defaults() -> None:
+        at = _boot_app()
+>       assert at.sidebar.slider[0].value == pytest.approx(0.25)
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/test_app_apptest.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = WidgetList(), idx = 0
+
+    def __getitem__(self, idx: int | slice) -> El_co | ElementList[El_co]:
+        if isinstance(idx, slice):
+            return ElementList(self._list[idx])
+>       return self._list[idx]
+               ^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+.venv/lib/python3.13/site-packages/streamlit/testing/v1/element_tree.py:254: IndexError
+----------------------------- Captured stderr call -----------------------------
+2026-10-13 10:46:40.152 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+=========================== short test summary info ============================
+FAILED tests/test_app_apptest.py::test_model_selectbox_defaults_to_best_model
+FAILED tests/test_app_apptest.py::test_gpu_badge_shows_cuda - AssertionError:...
+FAILED tests/test_app_apptest.py::test_conf_and_imgsz_defaults - IndexError: ...
+==================== 3 failed, 1 passed, 1 skipped in 1.95s ====================
+EXIT: 1
+END: 2026-10-13 10:46:40

@@ -1,0 +1,25 @@
+==== S-17_标注数据模型 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest ship_annotation/tests/test_models.py -v
+START: 2026-10-13 10:47:20
+============================= test session starts ==============================
+platform linux -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- /home/ws/code/ship/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ws/code/ship
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... collected 9 items
+
+ship_annotation/tests/test_models.py::TestBoundingBox::test_creation PASSED [ 11%]
+ship_annotation/tests/test_models.py::TestBoundingBox::test_to_pixels PASSED [ 22%]
+ship_annotation/tests/test_models.py::TestBoundingBox::test_to_pixels_full_image PASSED [ 33%]
+ship_annotation/tests/test_models.py::TestTargetObject::test_creation PASSED [ 44%]
+ship_annotation/tests/test_models.py::TestTargetObject::test_manual_annotation PASSED [ 55%]
+ship_annotation/tests/test_models.py::TestSourceType::test_enum_values PASSED [ 66%]
+ship_annotation/tests/test_models.py::TestAnnotationTool::test_enum_values PASSED [ 77%]
+ship_annotation/tests/test_models.py::TestProjectConfig::test_default_config PASSED [ 88%]
+ship_annotation/tests/test_models.py::TestProjectConfig::test_custom_config PASSED [100%]
+
+============================== 9 passed in 0.02s ===============================
+EXIT: 0
+END: 2026-10-13 10:47:20

@@ -1,0 +1,8 @@
+==== NF-07_并发安全 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest ship_detector/tests/test_video_detect.py -q
+START: 2026-10-13 10:47:11
+......................                                                   [100%]
+22 passed in 7.64s
+EXIT: 0
+END: 2026-10-13 10:47:20

@@ -1,0 +1,12 @@
+==== NF-05_模块解耦 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -c 
+import sys; sys.path.insert(0,'/home/ws/code/ship')
+import detector
+bad=[m for m in ('streamlit','PySide6') if m in sys.modules]
+print('UI modules loaded on detector import:', bad if bad else 'NONE (decoupled OK)')
+
+START: 2026-10-13 10:47:44
+UI modules loaded on detector import: NONE (decoupled OK)
+EXIT: 0
+END: 2026-10-13 10:47:44

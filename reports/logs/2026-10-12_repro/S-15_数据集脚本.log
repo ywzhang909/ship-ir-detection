@@ -1,0 +1,19 @@
+==== S-15_数据集脚本 ====
+CWD: /home/ws/code/ship/yolo-training
+CMD: /home/ws/code/ship/.venv/bin/python scripts/generate_labels.py --help
+START: 2026-10-13 10:47:44
+usage: generate_labels.py [-h] [--raw-dir RAW_DIR] [--output-dir OUTPUT_DIR]
+                          [--dry-run]
+
+Generate YOLO pseudo-labels for synthetic ship dataset
+
+options:
+  -h, --help            show this help message and exit
+  --raw-dir RAW_DIR     Path to extracted nor_irship dataset (default:
+                        data/raw/nor_irship)
+  --output-dir OUTPUT_DIR
+                        Output directory for .txt labels. Default: same as
+                        raw-dir (alongside images)
+  --dry-run             Scan and report without writing labels
+EXIT: 0
+END: 2026-10-13 10:47:44

@@ -1,0 +1,13 @@
+==== S-14_PySide6启动 ====
+CWD: /home/ws/code/ship/ship_detector
+CMD: bash -c QT_QPA_PLATFORM=offscreen /home/ws/code/ship/.venv/bin/python -c "
+import sys; sys.path.insert(0,'/home/ws/code/ship/ship_detector')
+from PySide6.QtWidgets import QApplication
+from ui.main_window import MainWindow
+app=QApplication([])
+w=MainWindow(); print('MainWindow constructed OK', w.windowTitle())
+"
+START: 2026-10-13 10:47:44
+MainWindow constructed OK 舰船识别系统
+EXIT: 0
+END: 2026-10-13 10:47:47

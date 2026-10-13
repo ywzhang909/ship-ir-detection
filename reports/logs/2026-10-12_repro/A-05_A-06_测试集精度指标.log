@@ -1,0 +1,15 @@
+==== A-05_A-06_测试集精度指标 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -c 
+import json
+j=json.load(open('/home/ws/code/ship/yolo-training/test_set_results.json'))
+for k in ['T5_yolo11l_fusion','T7_augment_jitter','T16_crrp_best']:
+    if k in j: print(k, json.dumps(j[k],ensure_ascii=False))
+print('ALL_KEYS', list(j.keys()))
+
+START: 2026-10-13 10:47:41
+T5_yolo11l_fusion {"description": "T5: YOLO11l + Fusion (h=16, l=2, SE)", "metrics": {"mAP50-95": 68.02, "mAP50": 97.87, "Precision": 97.07, "Recall": 94.58}}
+T7_augment_jitter {"description": "T7: Augment jitter 0.3 + Fusion", "metrics": {"mAP50-95": 65.46, "mAP50": 96.63, "Precision": 97.76, "Recall": 94.36}}
+ALL_KEYS ['Run1_tophat', 'Run2_butterworth', 'Run3_fusion_base', 'T1_fusion_h32_cbam', 'T2_residual07', 'T4_wavelet_dual', 'T8_shape_iou', 'T5_yolo11l_fusion', 'T7_augment_jitter', 'T9_wiou_fusion']
+EXIT: 0
+END: 2026-10-13 10:47:41

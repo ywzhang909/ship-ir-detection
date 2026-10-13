@@ -1,0 +1,16 @@
+==== A-09 SAHI vs 标准推理对比 ====
+CWD: /home/ws/code/ship
+标准推理结果: 58 检出
+SAHI 推理结果: 101 检出
+数据集: dataset/simple/LWIR (50 张)
+判定: SAHI(101) >= standard(58) -> PASS
+--- standard head ---
+filename,class_id,class_name,confidence,x1,y1,x2,y2
+1030.jpg,0,Ada,0.874,258,172,347,283
+1030.jpg,0,Ada,0.837,571,207,593,233
+0440.jpg,0,Ada,0.851,325,233,623,500
+--- sahi head ---
+filename,class_id,class_name,confidence,x1,y1,x2,y2
+0050.jpg,0,Ada,0.806,71,144,340,236
+0050.jpg,0,Ada,0.608,382,148,639,228
+0050.jpg,0,Ada,0.476,304,175,416,232

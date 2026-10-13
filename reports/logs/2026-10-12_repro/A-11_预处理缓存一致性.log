@@ -1,0 +1,4 @@
+==== A-11 预处理缓存一致性 [SKIP] ====
+原因: 原始数据集 yolo-training/data/processed* 缺失，无法生成预处理缓存。
+前置: 需先运行 scripts/prepare_yolo_data.py 或 prepare_nslsr_data.py。
+判定: SKIP（数据缺失，如实记录）

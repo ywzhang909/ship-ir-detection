@@ -1,0 +1,27 @@
+==== A-04_Shape-IoU损失函数 ====
+CWD: /home/ws/code/ship/yolo-training
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest tests/test_shape_iou_loss.py -v
+START: 2026-10-13 10:46:30
+============================= test session starts ==============================
+platform linux -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- /home/ws/code/ship/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ws/code/ship/yolo-training
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... collected 11 items
+
+tests/test_shape_iou_loss.py::test_perfect_prediction PASSED             [  9%]
+tests/test_shape_iou_loss.py::test_complete_miss PASSED                  [ 18%]
+tests/test_shape_iou_loss.py::test_shape_penalty PASSED                  [ 27%]
+tests/test_shape_iou_loss.py::test_scale_zero PASSED                     [ 36%]
+tests/test_shape_iou_loss.py::test_shape_iou_loss_module PASSED          [ 45%]
+tests/test_shape_iou_loss.py::test_iou_ratio_blending PASSED             [ 54%]
+tests/test_shape_iou_loss.py::test_shape_iou_bbox_loss_backward PASSED   [ 63%]
+tests/test_shape_iou_loss.py::test_zero_size_box PASSED                  [ 72%]
+tests/test_shape_iou_loss.py::test_extreme_aspect_ratio PASSED           [ 81%]
+tests/test_shape_iou_loss.py::test_empty_fg_mask PASSED                  [ 90%]
+tests/test_shape_iou_loss.py::test_scale_zero_weight_values PASSED       [100%]
+
+============================== 11 passed in 1.14s ==============================
+EXIT: 0
+END: 2026-10-13 10:46:32

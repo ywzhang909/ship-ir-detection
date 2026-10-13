@@ -1,0 +1,18 @@
+==== S-13_Streamlit启动 ====
+CWD: /home/ws/code/ship
+CMD: bash -c timeout 25 /home/ws/code/ship/.venv/bin/python -m streamlit run app.py --server.headless true --server.port 8502 2>&1 & SP=$!; sleep 15; echo '--- checking port ---'; (curl -s -o /dev/null -w '%{http_code}' http://localhost:8502 || echo 'curl-fail'); echo; kill $SP 2>/dev/null; wait $SP 2>/dev/null; echo 'streamlit stopped'
+START: 2026-10-13 10:47:47
+2026-10-13 10:47:48.293 Uvicorn server started on :::8502
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8502
+  Network URL: http://192.168.202.13:8502
+  External URL: http://159.226.167.17:8502
+
+--- checking port ---
+200
+  Stopping...
+streamlit stopped
+EXIT: 0
+END: 2026-10-13 10:48:03

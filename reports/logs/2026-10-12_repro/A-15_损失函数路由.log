@@ -1,0 +1,17 @@
+==== A-15_损失函数路由 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -c 
+import sys; sys.path.insert(0,'/home/ws/code/ship/yolo-training')
+import custom_loss as c
+names=[n for n in dir(c) if any(t in n for t in ('IoU','iou','NWD','nwd','WIoU','Shape'))]
+print('custom_loss symbols:', names)
+print('HAS ShapeIoULoss', hasattr(c,'ShapeIoULoss'))
+import inspect
+
+START: 2026-10-13 10:47:41
+custom_loss symbols: ['NWDBboxLoss', 'NWDLoss', 'ShapeIoUBboxLoss', 'ShapeIoUDetectionLoss', 'ShapeIoULoss', 'WIoUBboxLoss', 'WIoUDetectionLoss', 'WIoULoss', 'WIoU_Scale', 'shape_iou_loss', 'wiou_loss']
+HAS ShapeIoULoss True
+EXIT: 0
+END: 2026-10-13 10:47:43
+==== A-15b_损失类清单 ====
+['F', 'NWDBboxLoss', 'NWDLoss', 'ShapeIoUBboxLoss', 'ShapeIoUDetectionLoss', 'ShapeIoULoss', 'TinyObjectDetectionLoss', 'WIoUBboxLoss', 'WIoUDetectionLoss', 'WIoULoss', 'WIoU_Scale', 'math', 'nn', 'shape_iou_loss', 'torch', 'wasserstein_loss', 'wiou_loss']

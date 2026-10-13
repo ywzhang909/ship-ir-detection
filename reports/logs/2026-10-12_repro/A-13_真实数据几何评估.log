@@ -1,0 +1,106 @@
+==== A-13_真实数据几何评估 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest ship_detector/tests/test_eval_real.py -v
+START: 2026-10-13 10:46:47
+============================= test session starts ==============================
+platform linux -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- /home/ws/code/ship/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ws/code/ship
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... collected 24 items
+
+ship_detector/tests/test_eval_real.py::test_box_iou_identical_is_one PASSED [  4%]
+ship_detector/tests/test_eval_real.py::test_box_iou_disjoint_is_zero PASSED [  8%]
+ship_detector/tests/test_eval_real.py::test_box_iou_half_overlap PASSED  [ 12%]
+ship_detector/tests/test_eval_real.py::test_box_iou_is_symmetric PASSED  [ 16%]
+ship_detector/tests/test_eval_real.py::test_box_iou_degenerate_box_is_zero PASSED [ 20%]
+ship_detector/tests/test_eval_real.py::test_iou_matrix_shape_and_values PASSED [ 25%]
+ship_detector/tests/test_eval_real.py::test_iou_matrix_handles_empty_inputs PASSED [ 29%]
+ship_detector/tests/test_eval_real.py::test_greedy_match_marks_true_positive PASSED [ 33%]
+ship_detector/tests/test_eval_real.py::test_greedy_match_rejects_below_threshold PASSED [ 37%]
+ship_detector/tests/test_eval_real.py::test_greedy_match_gives_each_gt_to_best_prediction FAILED [ 41%]
+ship_detector/tests/test_eval_real.py::test_greedy_match_allows_different_gts PASSED [ 45%]
+ship_detector/tests/test_eval_real.py::test_greedy_match_empty_predictions PASSED [ 50%]
+ship_detector/tests/test_eval_real.py::test_average_precision_no_predictions_is_zero PASSED [ 54%]
+ship_detector/tests/test_eval_real.py::test_average_precision_perfect_is_one PASSED [ 58%]
+ship_detector/tests/test_eval_real.py::test_average_precision_is_lower_with_false_positives FAILED [ 62%]
+ship_detector/tests/test_eval_real.py::test_average_precision_half_recall PASSED [ 66%]
+ship_detector/tests/test_eval_real.py::test_average_precision_ranks_by_score_not_input_order PASSED [ 70%]
+ship_detector/tests/test_eval_real.py::test_compute_metrics_perfect_detector PASSED [ 75%]
+ship_detector/tests/test_eval_real.py::test_compute_metrics_missed_target FAILED [ 79%]
+ship_detector/tests/test_eval_real.py::test_compute_metrics_false_positive PASSED [ 83%]
+ship_detector/tests/test_eval_real.py::test_compute_metrics_conf_threshold_filters_low_scores PASSED [ 87%]
+ship_detector/tests/test_eval_real.py::test_compute_metrics_duplicate_prediction_is_one_fp PASSED [ 91%]
+ship_detector/tests/test_eval_real.py::test_compute_metrics_empty_everything_is_safe PASSED [ 95%]
+ship_detector/tests/test_eval_real.py::test_compute_metrics_multi_threshold_mean FAILED [100%]
+
+=================================== FAILURES ===================================
+______________ test_greedy_match_gives_each_gt_to_best_prediction ______________
+
+    def test_greedy_match_gives_each_gt_to_best_prediction():
+        # 2 predictions, 1 gt; first overlaps well, second overlaps better
+        ious = np.array([[0.6], [0.95]])
+        # both >= thr, but the GT can only be consumed once
+        flags = greedy_match(ious, 0.5)
+>       assert flags.tolist() == [False, True]
+E       assert [True, False] == [False, True]
+E         
+E         At index 0 diff: True != False
+E         
+E         Full diff:
+E           [
+E         +     True,
+E               False,
+E         -     True,
+E           ]
+
+ship_detector/tests/test_eval_real.py:89: AssertionError
+_____________ test_average_precision_is_lower_with_false_positives _____________
+
+    def test_average_precision_is_lower_with_false_positives():
+        """An extra FP appended below the TPs must reduce precision, not AP to zero."""
+        tp = np.array([True, True, True, False])
+        scores = np.array([0.9, 0.8, 0.7, 0.6])
+        ap = average_precision(tp, scores, n_gt=3)
+>       assert 0.0 < ap < 1.0
+E       assert 1.0000000000000007 < 1.0
+
+ship_detector/tests/test_eval_real.py:121: AssertionError
+______________________ test_compute_metrics_missed_target ______________________
+
+    def test_compute_metrics_missed_target():
+        preds = []
+        gts = [np.array([_b(0, 0, 10, 10)])]
+        m = compute_metrics(preds, gts, conf_thr=0.25, iou_thresholds=(0.5,))
+        assert m["recall"] == pytest.approx(0.0)
+        assert m["precision"] == pytest.approx(0.0)  # defined as 0 when nothing predicted
+>       assert m["fn"] == 1
+E       assert 0 == 1
+
+ship_detector/tests/test_eval_real.py:163: AssertionError
+__________________ test_compute_metrics_multi_threshold_mean ___________________
+
+    def test_compute_metrics_multi_threshold_mean():
+        """map50_95 averages AP across the IoU threshold sweep."""
+        preds = [(np.array([_b(0, 0, 10, 10)]), np.array([0.9]))]
+        gts = [np.array([_b(0, 0, 10, 10)])]
+        # tight at 0.5 and 0.75 -> both 1.0; miss at 0.9 -> 0.0; mean 0.666
+        m = compute_metrics(preds, gts, conf_thr=0.25, iou_thresholds=(0.5, 0.75, 0.9))
+        assert m["map50"] == pytest.approx(1.0)
+>       assert m["map50_95"] == pytest.approx((1.0 + 1.0 + 0.0) / 3, abs=1e-6)
+E       assert 1.0000000000000007 == 0.6666666666666666 ± 1.0e-06
+E         
+E         comparison failed
+E         Obtained: 1.0000000000000007
+E         Expected: 0.6666666666666666 ± 1.0e-06
+
+ship_detector/tests/test_eval_real.py:208: AssertionError
+=========================== short test summary info ============================
+FAILED ship_detector/tests/test_eval_real.py::test_greedy_match_gives_each_gt_to_best_prediction
+FAILED ship_detector/tests/test_eval_real.py::test_average_precision_is_lower_with_false_positives
+FAILED ship_detector/tests/test_eval_real.py::test_compute_metrics_missed_target
+FAILED ship_detector/tests/test_eval_real.py::test_compute_metrics_multi_threshold_mean
+========================= 4 failed, 20 passed in 0.09s =========================
+EXIT: 1
+END: 2026-10-13 10:46:48

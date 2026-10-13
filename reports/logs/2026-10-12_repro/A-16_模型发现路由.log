@@ -1,0 +1,17 @@
+==== A-16_模型发现路由 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest tests/test_detector.py -k discover_models_classifies_prep -v
+START: 2026-10-13 10:46:42
+============================= test session starts ==============================
+platform linux -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- /home/ws/code/ship/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ws/code/ship
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... collected 18 items / 17 deselected / 1 selected
+
+tests/test_detector.py::test_discover_models_classifies_prep PASSED      [100%]
+
+======================= 1 passed, 17 deselected in 1.04s =======================
+EXIT: 0
+END: 2026-10-13 10:46:44

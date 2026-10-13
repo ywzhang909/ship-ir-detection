@@ -1,0 +1,19 @@
+==== S-04_PySide6主窗口 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest ship_detector/tests/test_app_entry.py -v
+START: 2026-10-13 10:46:48
+============================= test session starts ==============================
+platform linux -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- /home/ws/code/ship/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ws/code/ship
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... collected 3 items
+
+ship_detector/tests/test_app_entry.py::test_main_qss_stylesheet_exists_and_is_non_trivial PASSED [ 33%]
+ship_detector/tests/test_app_entry.py::test_entry_path_builds_a_window_with_the_expected_toolbar PASSED [ 66%]
+ship_detector/tests/test_app_entry.py::test_closing_a_window_with_a_running_worker_does_not_hang PASSED [100%]
+
+============================== 3 passed in 2.52s ===============================
+EXIT: 0
+END: 2026-10-13 10:46:52

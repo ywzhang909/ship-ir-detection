@@ -1,0 +1,247 @@
+==== S-01_Detector核心 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest tests/test_detector.py -v
+START: 2026-10-13 10:46:32
+============================= test session starts ==============================
+platform linux -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- /home/ws/code/ship/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ws/code/ship
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... collected 18 items
+
+tests/test_detector.py::test_discover_models_defaults_to_t5 FAILED       [  5%]
+tests/test_detector.py::test_resolve_device_is_cuda PASSED               [ 11%]
+tests/test_detector.py::test_gpu_display_name_never_empty PASSED         [ 16%]
+tests/test_detector.py::test_load_smoke_model_is_raw FAILED              [ 22%]
+tests/test_detector.py::test_load_t5_routes_dual FAILED                  [ 27%]
+tests/test_detector.py::test_load_wavelet_run_routes_wavelet FAILED      [ 33%]
+tests/test_detector.py::test_discover_models_classifies_prep PASSED      [ 38%]
+tests/test_detector.py::test_predict_smoke_on_synthetic_image FAILED     [ 44%]
+tests/test_detector.py::test_read_image_bgr_unicode_safe PASSED          [ 50%]
+tests/test_detector.py::test_read_image_bgr_rejects_garbage PASSED       [ 55%]
+tests/test_detector.py::test_read_image_bgr_collapses_channels PASSED    [ 61%]
+tests/test_detector.py::test_compute_and_aggregate_metrics PASSED        [ 66%]
+tests/test_detector.py::test_preprocess_for_returns_3ch[dual] PASSED     [ 72%]
+tests/test_detector.py::test_preprocess_for_returns_3ch[wavelet] PASSED  [ 77%]
+tests/test_detector.py::test_preprocess_for_returns_3ch[rpca] PASSED     [ 83%]
+tests/test_detector.py::test_preprocess_for_returns_3ch[tophat] PASSED   [ 88%]
+tests/test_detector.py::test_preprocess_for_returns_3ch[butterworth] PASSED [ 94%]
+tests/test_detector.py::test_preprocess_for_raw_passthrough PASSED       [100%]
+
+=================================== FAILURES ===================================
+_____________________ test_discover_models_defaults_to_t5 ______________________
+
+    def test_discover_models_defaults_to_t5():
+        models = discover_models()
+>       assert models, "discover_models() returned no models"
+E       AssertionError: discover_models() returned no models
+E       assert []
+
+tests/test_detector.py:43: AssertionError
+_________________________ test_load_smoke_model_is_raw _________________________
+
+    def test_load_smoke_model_is_raw():
+>       loaded = load_model(RUNS_DIR / "smoke_shape_iou" / "weights" / "best.pt")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_detector.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+detector.py:181: in load_model
+    model = YOLO(str(model_path))
+            ^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/models/yolo/model.py:77: in __init__
+    super().__init__(model=model, task=task, verbose=verbose)
+.venv/lib/python3.13/site-packages/ultralytics/engine/model.py:144: in __init__
+    self._load(model, task=task)
+.venv/lib/python3.13/site-packages/ultralytics/engine/model.py:283: in _load
+    self.model, self.ckpt = load_checkpoint(weights)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/nn/tasks.py:1615: in load_checkpoint
+    ckpt, weight = torch_safe_load(weight)  # load ckpt
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/nn/tasks.py:1544: in torch_safe_load
+    ckpt = _load()
+           ^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/nn/tasks.py:1541: in _load
+    return torch_load(file, map_location="cpu")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/utils/patches.py:181: in torch_load
+    return torch.load(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/serialization.py:1530: in load
+    with _open_file_like(f, "rb") as opened_file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/serialization.py:795: in _open_file_like
+    return _open_file(name_or_buffer, mode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <torch.serialization._open_file object at 0x7fbc3d31b620>
+name = '/home/ws/code/ship/runs/detect/ship-detection/smoke_shape_iou/weights/best.pt'
+mode = 'rb'
+
+    def __init__(self, name: str | os.PathLike[str], mode: str) -> None:
+>       super().__init__(open(name, mode))  # noqa: SIM115
+                         ^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/ws/code/ship/runs/detect/ship-detection/smoke_shape_iou/weights/best.pt'
+
+.venv/lib/python3.13/site-packages/torch/serialization.py:776: FileNotFoundError
+___________________________ test_load_t5_routes_dual ___________________________
+
+    def test_load_t5_routes_dual():
+>       loaded = load_model(RUNS_DIR / "T5_yolo11l_fusion" / "weights" / "best.pt")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_detector.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+detector.py:181: in load_model
+    model = YOLO(str(model_path))
+            ^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/models/yolo/model.py:77: in __init__
+    super().__init__(model=model, task=task, verbose=verbose)
+.venv/lib/python3.13/site-packages/ultralytics/engine/model.py:144: in __init__
+    self._load(model, task=task)
+.venv/lib/python3.13/site-packages/ultralytics/engine/model.py:283: in _load
+    self.model, self.ckpt = load_checkpoint(weights)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/nn/tasks.py:1615: in load_checkpoint
+    ckpt, weight = torch_safe_load(weight)  # load ckpt
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/nn/tasks.py:1544: in torch_safe_load
+    ckpt = _load()
+           ^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/nn/tasks.py:1541: in _load
+    return torch_load(file, map_location="cpu")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/utils/patches.py:181: in torch_load
+    return torch.load(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/serialization.py:1530: in load
+    with _open_file_like(f, "rb") as opened_file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/serialization.py:795: in _open_file_like
+    return _open_file(name_or_buffer, mode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <torch.serialization._open_file object at 0x7fbc3d125090>
+name = '/home/ws/code/ship/runs/detect/ship-detection/T5_yolo11l_fusion/weights/best.pt'
+mode = 'rb'
+
+    def __init__(self, name: str | os.PathLike[str], mode: str) -> None:
+>       super().__init__(open(name, mode))  # noqa: SIM115
+                         ^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/ws/code/ship/runs/detect/ship-detection/T5_yolo11l_fusion/weights/best.pt'
+
+.venv/lib/python3.13/site-packages/torch/serialization.py:776: FileNotFoundError
+_____________________ test_load_wavelet_run_routes_wavelet _____________________
+
+    def test_load_wavelet_run_routes_wavelet():
+>       loaded = load_model(RUNS_DIR / "T4_wavelet_dual" / "weights" / "best.pt")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_detector.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+detector.py:181: in load_model
+    model = YOLO(str(model_path))
+            ^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/models/yolo/model.py:77: in __init__
+    super().__init__(model=model, task=task, verbose=verbose)
+.venv/lib/python3.13/site-packages/ultralytics/engine/model.py:144: in __init__
+    self._load(model, task=task)
+.venv/lib/python3.13/site-packages/ultralytics/engine/model.py:283: in _load
+    self.model, self.ckpt = load_checkpoint(weights)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/nn/tasks.py:1615: in load_checkpoint
+    ckpt, weight = torch_safe_load(weight)  # load ckpt
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/nn/tasks.py:1544: in torch_safe_load
+    ckpt = _load()
+           ^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/nn/tasks.py:1541: in _load
+    return torch_load(file, map_location="cpu")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/utils/patches.py:181: in torch_load
+    return torch.load(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/serialization.py:1530: in load
+    with _open_file_like(f, "rb") as opened_file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/serialization.py:795: in _open_file_like
+    return _open_file(name_or_buffer, mode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <torch.serialization._open_file object at 0x7fbc3d125810>
+name = '/home/ws/code/ship/runs/detect/ship-detection/T4_wavelet_dual/weights/best.pt'
+mode = 'rb'
+
+    def __init__(self, name: str | os.PathLike[str], mode: str) -> None:
+>       super().__init__(open(name, mode))  # noqa: SIM115
+                         ^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/ws/code/ship/runs/detect/ship-detection/T4_wavelet_dual/weights/best.pt'
+
+.venv/lib/python3.13/site-packages/torch/serialization.py:776: FileNotFoundError
+____________________ test_predict_smoke_on_synthetic_image _____________________
+
+    @requires_cuda
+    def test_predict_smoke_on_synthetic_image():
+        img = np.zeros((640, 640, 3), dtype=np.uint8)
+        # Bright white blob (~60x20 px), center-ish.
+        img[300:320, 290:350] = 255
+    
+>       loaded = load_model(RUNS_DIR / "smoke_shape_iou" / "weights" / "best.pt")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_detector.py:141: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+detector.py:181: in load_model
+    model = YOLO(str(model_path))
+            ^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/models/yolo/model.py:77: in __init__
+    super().__init__(model=model, task=task, verbose=verbose)
+.venv/lib/python3.13/site-packages/ultralytics/engine/model.py:144: in __init__
+    self._load(model, task=task)
+.venv/lib/python3.13/site-packages/ultralytics/engine/model.py:283: in _load
+    self.model, self.ckpt = load_checkpoint(weights)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/nn/tasks.py:1615: in load_checkpoint
+    ckpt, weight = torch_safe_load(weight)  # load ckpt
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/nn/tasks.py:1544: in torch_safe_load
+    ckpt = _load()
+           ^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/nn/tasks.py:1541: in _load
+    return torch_load(file, map_location="cpu")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/ultralytics/utils/patches.py:181: in torch_load
+    return torch.load(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/serialization.py:1530: in load
+    with _open_file_like(f, "rb") as opened_file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/serialization.py:795: in _open_file_like
+    return _open_file(name_or_buffer, mode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <torch.serialization._open_file object at 0x7fbc3d111cd0>
+name = '/home/ws/code/ship/runs/detect/ship-detection/smoke_shape_iou/weights/best.pt'
+mode = 'rb'
+
+    def __init__(self, name: str | os.PathLike[str], mode: str) -> None:
+>       super().__init__(open(name, mode))  # noqa: SIM115
+                         ^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/ws/code/ship/runs/detect/ship-detection/smoke_shape_iou/weights/best.pt'
+
+.venv/lib/python3.13/site-packages/torch/serialization.py:776: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_detector.py::test_discover_models_defaults_to_t5 - Assertio...
+FAILED tests/test_detector.py::test_load_smoke_model_is_raw - FileNotFoundErr...
+FAILED tests/test_detector.py::test_load_t5_routes_dual - FileNotFoundError: ...
+FAILED tests/test_detector.py::test_load_wavelet_run_routes_wavelet - FileNot...
+FAILED tests/test_detector.py::test_predict_smoke_on_synthetic_image - FileNo...
+========================= 5 failed, 13 passed in 4.82s =========================
+EXIT: 1
+END: 2026-10-13 10:46:38

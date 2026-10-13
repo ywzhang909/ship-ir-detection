@@ -1,0 +1,28 @@
+==== A-02_合成数据集完整性 ====
+CWD: /home/ws/code/ship/yolo-training
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest tests/test_dataset.py -v
+START: 2026-10-13 10:46:29
+============================= test session starts ==============================
+platform linux -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- /home/ws/code/ship/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ws/code/ship/yolo-training
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... collected 12 items
+
+tests/test_dataset.py::TestImageLabelPairing::test_every_image_has_label[train] SKIPPED [  8%]
+tests/test_dataset.py::TestImageLabelPairing::test_every_image_has_label[val] SKIPPED [ 16%]
+tests/test_dataset.py::TestImageLabelPairing::test_every_label_has_image[train] SKIPPED [ 25%]
+tests/test_dataset.py::TestImageLabelPairing::test_every_label_has_image[val] SKIPPED [ 33%]
+tests/test_dataset.py::TestImageLabelPairing::test_test_set_may_have_unlabeled_images SKIPPED [ 41%]
+tests/test_dataset.py::TestSplitDisjointness::test_no_overlap_train_val SKIPPED [ 50%]
+tests/test_dataset.py::TestSplitDisjointness::test_no_overlap_train_test SKIPPED [ 58%]
+tests/test_dataset.py::TestSplitDisjointness::test_no_overlap_val_test SKIPPED [ 66%]
+tests/test_dataset.py::TestSplitRatio::test_split_ratios SKIPPED (Pr...) [ 75%]
+tests/test_dataset.py::TestLabelFormat::test_label_format[train] SKIPPED [ 83%]
+tests/test_dataset.py::TestLabelFormat::test_label_format[val] SKIPPED   [ 91%]
+tests/test_dataset.py::TestLabelFormat::test_test_labels_if_exist SKIPPED [100%]
+
+============================= 12 skipped in 0.02s ==============================
+EXIT: 0
+END: 2026-10-13 10:46:30

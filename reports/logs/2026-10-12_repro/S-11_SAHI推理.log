@@ -1,0 +1,315 @@
+==== S-11_SAHI推理 ====
+CWD: /home/ws/code/ship/yolo-training
+CMD: timeout 900 /home/ws/code/ship/.venv/bin/python predict.py --mode sahi --source ../dataset/simple/LWIR --weights ../data/weights_staging/weights/T5_yolo11l_fusion_best.pt --conf 0.25 --slice-size 512 --overlap 0.2 --output-csv /tmp/opencode/repro/sahi_simple.csv
+START: 2026-10-13 10:50:47
+2026-10-13 10:50:47,159 [INFO] Dataset: ship (9 classes)
+2026-10-13 10:50:47,159 [INFO] Mode: sahi
+2026-10-13 10:50:47,159 [INFO] Preprocessing: disabled
+2026-10-13 10:50:47,159 [INFO] SAHI: slice=512, overlap=0.20, metric=IOS, threshold=0.50
+2026-10-13 10:50:48,073 [INFO] Loading detection model from ../data/weights_staging/weights/T5_yolo11l_fusion_best.pt ...
+2026-10-13 10:50:49,470 [INFO] Processing 0030.jpg ...
+2026-10-13 10:50:50,007 [INFO]   no detections
+2026-10-13 10:50:50,009 [INFO]   Saved visualization to runs/predict_sahi/pred_0030.jpg
+2026-10-13 10:50:50,009 [INFO] Processing 0050.jpg ...
+2026-10-13 10:50:50,061 [INFO]   Detected 3 objects
+2026-10-13 10:50:50,061 [INFO]   ship: conf=0.806, bbox=[71,144,341,236]
+2026-10-13 10:50:50,061 [INFO]   ship: conf=0.608, bbox=[382,149,640,228]
+2026-10-13 10:50:50,061 [INFO]   ship: conf=0.476, bbox=[304,175,416,232]
+2026-10-13 10:50:50,063 [INFO]   Saved visualization to runs/predict_sahi/pred_0050.jpg
+2026-10-13 10:50:50,063 [INFO] Processing 0070.jpg ...
+2026-10-13 10:50:50,099 [INFO]   Detected 2 objects
+2026-10-13 10:50:50,099 [INFO]   ship: conf=0.807, bbox=[344,215,603,287]
+2026-10-13 10:50:50,099 [INFO]   ship: conf=0.740, bbox=[98,219,389,303]
+2026-10-13 10:50:50,101 [INFO]   Saved visualization to runs/predict_sahi/pred_0070.jpg
+2026-10-13 10:50:50,101 [INFO] Processing 0090.jpg ...
+2026-10-13 10:50:50,134 [INFO]   no detections
+2026-10-13 10:50:50,136 [INFO]   Saved visualization to runs/predict_sahi/pred_0090.jpg
+2026-10-13 10:50:50,136 [INFO] Processing 0110.jpg ...
+2026-10-13 10:50:50,171 [INFO]   Detected 1 objects
+2026-10-13 10:50:50,171 [INFO]   ship: conf=0.406, bbox=[48,149,599,326]
+2026-10-13 10:50:50,173 [INFO]   Saved visualization to runs/predict_sahi/pred_0110.jpg
+2026-10-13 10:50:50,173 [INFO] Processing 0120.jpg ...
+2026-10-13 10:50:50,209 [INFO]   Detected 2 objects
+2026-10-13 10:50:50,209 [INFO]   ship: conf=0.873, bbox=[349,179,551,265]
+2026-10-13 10:50:50,209 [INFO]   ship: conf=0.840, bbox=[236,228,307,264]
+2026-10-13 10:50:50,211 [INFO]   Saved visualization to runs/predict_sahi/pred_0120.jpg
+2026-10-13 10:50:50,211 [INFO] Processing 0140.jpg ...
+2026-10-13 10:50:50,248 [INFO]   Detected 3 objects
+2026-10-13 10:50:50,248 [INFO]   ship: conf=0.890, bbox=[331,222,460,274]
+2026-10-13 10:50:50,248 [INFO]   ship: conf=0.873, bbox=[402,191,512,255]
+2026-10-13 10:50:50,248 [INFO]   ship: conf=0.714, bbox=[4,152,293,270]
+2026-10-13 10:50:50,250 [INFO]   Saved visualization to runs/predict_sahi/pred_0140.jpg
+2026-10-13 10:50:50,250 [INFO] Processing 0170.jpg ...
+2026-10-13 10:50:50,285 [INFO]   Detected 1 objects
+2026-10-13 10:50:50,285 [INFO]   ship: conf=0.889, bbox=[8,157,586,327]
+2026-10-13 10:50:50,287 [INFO]   Saved visualization to runs/predict_sahi/pred_0170.jpg
+2026-10-13 10:50:50,287 [INFO] Processing 0180.jpg ...
+2026-10-13 10:50:50,321 [INFO]   Detected 1 objects
+2026-10-13 10:50:50,321 [INFO]   ship: conf=0.870, bbox=[263,241,405,299]
+2026-10-13 10:50:50,323 [INFO]   Saved visualization to runs/predict_sahi/pred_0180.jpg
+2026-10-13 10:50:50,323 [INFO] Processing 0190.jpg ...
+2026-10-13 10:50:50,358 [INFO]   Detected 2 objects
+2026-10-13 10:50:50,358 [INFO]   ship: conf=0.894, bbox=[224,286,419,361]
+2026-10-13 10:50:50,358 [INFO]   ship: conf=0.826, bbox=[459,276,640,352]
+2026-10-13 10:50:50,360 [INFO]   Saved visualization to runs/predict_sahi/pred_0190.jpg
+2026-10-13 10:50:50,360 [INFO] Processing 0250.jpg ...
+2026-10-13 10:50:50,394 [INFO]   Detected 2 objects
+2026-10-13 10:50:50,394 [INFO]   ship: conf=0.799, bbox=[1,196,143,253]
+2026-10-13 10:50:50,394 [INFO]   ship: conf=0.713, bbox=[368,159,573,247]
+2026-10-13 10:50:50,396 [INFO]   Saved visualization to runs/predict_sahi/pred_0250.jpg
+2026-10-13 10:50:50,396 [INFO] Processing 0260.jpg ...
+2026-10-13 10:50:50,431 [INFO]   Detected 1 objects
+2026-10-13 10:50:50,431 [INFO]   ship: conf=0.901, bbox=[107,53,640,384]
+2026-10-13 10:50:50,433 [INFO]   Saved visualization to runs/predict_sahi/pred_0260.jpg
+2026-10-13 10:50:50,433 [INFO] Processing 0310.jpg ...
+2026-10-13 10:50:50,468 [INFO]   Detected 1 objects
+2026-10-13 10:50:50,468 [INFO]   ship: conf=0.805, bbox=[357,316,441,352]
+2026-10-13 10:50:50,470 [INFO]   Saved visualization to runs/predict_sahi/pred_0310.jpg
+2026-10-13 10:50:50,470 [INFO] Processing 0320.jpg ...
+2026-10-13 10:50:50,506 [INFO]   Detected 1 objects
+2026-10-13 10:50:50,506 [INFO]   ship: conf=0.852, bbox=[446,334,511,362]
+2026-10-13 10:50:50,507 [INFO]   Saved visualization to runs/predict_sahi/pred_0320.jpg
+2026-10-13 10:50:50,508 [INFO] Processing 0330.jpg ...
+2026-10-13 10:50:50,542 [INFO]   Detected 1 objects
+2026-10-13 10:50:50,542 [INFO]   ship: conf=0.828, bbox=[263,343,321,399]
+2026-10-13 10:50:50,544 [INFO]   Saved visualization to runs/predict_sahi/pred_0330.jpg
+2026-10-13 10:50:50,544 [INFO] Processing 0360.jpg ...
+2026-10-13 10:50:50,590 [INFO]   Detected 4 objects
+2026-10-13 10:50:50,590 [INFO]   ship: conf=0.924, bbox=[0,170,271,479]
+2026-10-13 10:50:50,590 [INFO]   ship: conf=0.853, bbox=[275,0,577,383]
+2026-10-13 10:50:50,590 [INFO]   ship: conf=0.429, bbox=[542,28,640,232]
+2026-10-13 10:50:50,590 [INFO]   ship: conf=0.346, bbox=[586,230,640,511]
+2026-10-13 10:50:50,592 [INFO]   Saved visualization to runs/predict_sahi/pred_0360.jpg
+2026-10-13 10:50:50,592 [INFO] Processing 0410.jpg ...
+2026-10-13 10:50:50,627 [INFO]   Detected 2 objects
+2026-10-13 10:50:50,627 [INFO]   ship: conf=0.670, bbox=[339,387,401,416]
+2026-10-13 10:50:50,627 [INFO]   ship: conf=0.645, bbox=[57,380,122,404]
+2026-10-13 10:50:50,629 [INFO]   Saved visualization to runs/predict_sahi/pred_0410.jpg
+2026-10-13 10:50:50,629 [INFO] Processing 0440.jpg ...
+2026-10-13 10:50:50,663 [INFO]   Detected 2 objects
+2026-10-13 10:50:50,664 [INFO]   ship: conf=0.926, bbox=[323,183,616,500]
+2026-10-13 10:50:50,664 [INFO]   ship: conf=0.763, bbox=[176,201,286,270]
+2026-10-13 10:50:50,665 [INFO]   Saved visualization to runs/predict_sahi/pred_0440.jpg
+2026-10-13 10:50:50,665 [INFO] Processing 0470.jpg ...
+2026-10-13 10:50:50,700 [INFO]   Detected 2 objects
+2026-10-13 10:50:50,700 [INFO]   ship: conf=0.924, bbox=[374,192,640,509]
+2026-10-13 10:50:50,700 [INFO]   ship: conf=0.622, bbox=[183,205,360,274]
+2026-10-13 10:50:50,702 [INFO]   Saved visualization to runs/predict_sahi/pred_0470.jpg
+2026-10-13 10:50:50,702 [INFO] Processing 0490.jpg ...
+2026-10-13 10:50:50,738 [INFO]   Detected 2 objects
+2026-10-13 10:50:50,738 [INFO]   ship: conf=0.862, bbox=[237,210,282,250]
+2026-10-13 10:50:50,738 [INFO]   ship: conf=0.715, bbox=[599,210,622,245]
+2026-10-13 10:50:50,740 [INFO]   Saved visualization to runs/predict_sahi/pred_0490.jpg
+2026-10-13 10:50:50,740 [INFO] Processing 0500.jpg ...
+2026-10-13 10:50:50,775 [INFO]   Detected 3 objects
+2026-10-13 10:50:50,775 [INFO]   ship: conf=0.866, bbox=[61,196,110,237]
+2026-10-13 10:50:50,775 [INFO]   ship: conf=0.751, bbox=[381,202,404,237]
+2026-10-13 10:50:50,775 [INFO]   ship: conf=0.440, bbox=[545,219,561,237]
+2026-10-13 10:50:50,777 [INFO]   Saved visualization to runs/predict_sahi/pred_0500.jpg
+2026-10-13 10:50:50,777 [INFO] Processing 0530.jpg ...
+2026-10-13 10:50:50,813 [INFO]   Detected 4 objects
+2026-10-13 10:50:50,813 [INFO]   ship: conf=0.854, bbox=[214,237,269,270]
+2026-10-13 10:50:50,813 [INFO]   ship: conf=0.800, bbox=[96,190,165,237]
+2026-10-13 10:50:50,813 [INFO]   ship: conf=0.785, bbox=[0,184,56,232]
+2026-10-13 10:50:50,813 [INFO]   ship: conf=0.750, bbox=[45,180,107,236]
+2026-10-13 10:50:50,815 [INFO]   Saved visualization to runs/predict_sahi/pred_0530.jpg
+2026-10-13 10:50:50,815 [INFO] Processing 0580.jpg ...
+2026-10-13 10:50:50,850 [INFO]   Detected 2 objects
+2026-10-13 10:50:50,850 [INFO]   ship: conf=0.837, bbox=[187,364,221,388]
+2026-10-13 10:50:50,850 [INFO]   ship: conf=0.364, bbox=[82,365,99,383]
+2026-10-13 10:50:50,852 [INFO]   Saved visualization to runs/predict_sahi/pred_0580.jpg
+2026-10-13 10:50:50,852 [INFO] Processing 0600.jpg ...
+2026-10-13 10:50:50,887 [INFO]   Detected 3 objects
+2026-10-13 10:50:50,887 [INFO]   ship: conf=0.825, bbox=[380,252,419,275]
+2026-10-13 10:50:50,887 [INFO]   ship: conf=0.758, bbox=[94,240,117,275]
+2026-10-13 10:50:50,887 [INFO]   ship: conf=0.647, bbox=[230,255,246,272]
+2026-10-13 10:50:50,889 [INFO]   Saved visualization to runs/predict_sahi/pred_0600.jpg
+2026-10-13 10:50:50,889 [INFO] Processing 0610.jpg ...
+2026-10-13 10:50:50,924 [INFO]   Detected 1 objects
+2026-10-13 10:50:50,924 [INFO]   ship: conf=0.763, bbox=[280,257,322,280]
+2026-10-13 10:50:50,927 [INFO]   Saved visualization to runs/predict_sahi/pred_0610.jpg
+2026-10-13 10:50:50,927 [INFO] Processing 0670.jpg ...
+2026-10-13 10:50:50,962 [INFO]   Detected 3 objects
+2026-10-13 10:50:50,962 [INFO]   ship: conf=0.830, bbox=[353,265,409,319]
+2026-10-13 10:50:50,962 [INFO]   ship: conf=0.805, bbox=[402,266,472,319]
+2026-10-13 10:50:50,962 [INFO]   ship: conf=0.609, bbox=[305,274,362,320]
+2026-10-13 10:50:50,964 [INFO]   Saved visualization to runs/predict_sahi/pred_0670.jpg
+2026-10-13 10:50:50,964 [INFO] Processing 0710.jpg ...
+2026-10-13 10:50:50,998 [INFO]   Detected 1 objects
+2026-10-13 10:50:50,999 [INFO]   ship: conf=0.900, bbox=[313,258,370,329]
+2026-10-13 10:50:51,001 [INFO]   Saved visualization to runs/predict_sahi/pred_0710.jpg
+2026-10-13 10:50:51,001 [INFO] Processing 0720.jpg ...
+2026-10-13 10:50:51,035 [INFO]   Detected 2 objects
+2026-10-13 10:50:51,035 [INFO]   ship: conf=0.890, bbox=[324,272,387,359]
+2026-10-13 10:50:51,035 [INFO]   ship: conf=0.615, bbox=[505,292,539,315]
+2026-10-13 10:50:51,037 [INFO]   Saved visualization to runs/predict_sahi/pred_0720.jpg
+2026-10-13 10:50:51,037 [INFO] Processing 0740.jpg ...
+2026-10-13 10:50:51,073 [INFO]   Detected 1 objects
+2026-10-13 10:50:51,073 [INFO]   ship: conf=0.909, bbox=[251,191,333,314]
+2026-10-13 10:50:51,075 [INFO]   Saved visualization to runs/predict_sahi/pred_0740.jpg
+2026-10-13 10:50:51,075 [INFO] Processing 0780.jpg ...
+2026-10-13 10:50:51,108 [INFO]   no detections
+2026-10-13 10:50:51,110 [INFO]   Saved visualization to runs/predict_sahi/pred_0780.jpg
+2026-10-13 10:50:51,110 [INFO] Processing 0790.jpg ...
+2026-10-13 10:50:51,145 [INFO]   Detected 2 objects
+2026-10-13 10:50:51,145 [INFO]   ship: conf=0.867, bbox=[280,287,349,334]
+2026-10-13 10:50:51,146 [INFO]   ship: conf=0.772, bbox=[220,280,277,316]
+2026-10-13 10:50:51,147 [INFO]   Saved visualization to runs/predict_sahi/pred_0790.jpg
+2026-10-13 10:50:51,147 [INFO] Processing 0850.jpg ...
+2026-10-13 10:50:51,182 [INFO]   Detected 2 objects
+2026-10-13 10:50:51,182 [INFO]   ship: conf=0.885, bbox=[340,246,396,317]
+2026-10-13 10:50:51,182 [INFO]   ship: conf=0.695, bbox=[296,247,320,282]
+2026-10-13 10:50:51,184 [INFO]   Saved visualization to runs/predict_sahi/pred_0850.jpg
+2026-10-13 10:50:51,184 [INFO] Processing 0860.jpg ...
+2026-10-13 10:50:51,219 [INFO]   Detected 2 objects
+2026-10-13 10:50:51,219 [INFO]   ship: conf=0.879, bbox=[313,290,352,341]
+2026-10-13 10:50:51,219 [INFO]   ship: conf=0.752, bbox=[231,289,255,322]
+2026-10-13 10:50:51,221 [INFO]   Saved visualization to runs/predict_sahi/pred_0860.jpg
+2026-10-13 10:50:51,221 [INFO] Processing 0884.jpg ...
+2026-10-13 10:50:51,256 [INFO]   Detected 2 objects
+2026-10-13 10:50:51,256 [INFO]   ship: conf=0.907, bbox=[358,200,453,258]
+2026-10-13 10:50:51,256 [INFO]   ship: conf=0.904, bbox=[164,196,287,254]
+2026-10-13 10:50:51,257 [INFO]   Saved visualization to runs/predict_sahi/pred_0884.jpg
+2026-10-13 10:50:51,257 [INFO] Processing 0890.jpg ...
+2026-10-13 10:50:51,292 [INFO]   Detected 4 objects
+2026-10-13 10:50:51,292 [INFO]   ship: conf=0.899, bbox=[287,251,371,299]
+2026-10-13 10:50:51,292 [INFO]   ship: conf=0.855, bbox=[222,253,283,291]
+2026-10-13 10:50:51,292 [INFO]   ship: conf=0.583, bbox=[498,251,531,276]
+2026-10-13 10:50:51,292 [INFO]   ship: conf=0.497, bbox=[463,253,486,274]
+2026-10-13 10:50:51,294 [INFO]   Saved visualization to runs/predict_sahi/pred_0890.jpg
+2026-10-13 10:50:51,294 [INFO] Processing 0900.jpg ...
+2026-10-13 10:50:51,328 [INFO]   Detected 3 objects
+2026-10-13 10:50:51,328 [INFO]   ship: conf=0.882, bbox=[56,213,108,256]
+2026-10-13 10:50:51,328 [INFO]   ship: conf=0.653, bbox=[313,192,383,259]
+2026-10-13 10:50:51,328 [INFO]   ship: conf=0.453, bbox=[371,196,448,260]
+2026-10-13 10:50:51,330 [INFO]   Saved visualization to runs/predict_sahi/pred_0900.jpg
+2026-10-13 10:50:51,330 [INFO] Processing 0930.jpg ...
+2026-10-13 10:50:51,364 [INFO]   Detected 1 objects
+2026-10-13 10:50:51,364 [INFO]   ship: conf=0.889, bbox=[349,231,405,266]
+2026-10-13 10:50:51,366 [INFO]   Saved visualization to runs/predict_sahi/pred_0930.jpg
+2026-10-13 10:50:51,366 [INFO] Processing 0940.jpg ...
+2026-10-13 10:50:51,401 [INFO]   Detected 5 objects
+2026-10-13 10:50:51,401 [INFO]   ship: conf=0.868, bbox=[320,230,370,264]
+2026-10-13 10:50:51,401 [INFO]   ship: conf=0.699, bbox=[554,236,595,265]
+2026-10-13 10:50:51,401 [INFO]   ship: conf=0.309, bbox=[585,240,624,268]
+2026-10-13 10:50:51,401 [INFO]   ship: conf=0.306, bbox=[0,185,82,248]
+2026-10-13 10:50:51,401 [INFO]   ship: conf=0.258, bbox=[528,236,565,264]
+2026-10-13 10:50:51,403 [INFO]   Saved visualization to runs/predict_sahi/pred_0940.jpg
+2026-10-13 10:50:51,403 [INFO] Processing 0950.jpg ...
+2026-10-13 10:50:51,437 [INFO]   Detected 1 objects
+2026-10-13 10:50:51,437 [INFO]   ship: conf=0.834, bbox=[104,311,189,364]
+2026-10-13 10:50:51,439 [INFO]   Saved visualization to runs/predict_sahi/pred_0950.jpg
+2026-10-13 10:50:51,439 [INFO] Processing 0960.jpg ...
+2026-10-13 10:50:51,473 [INFO]   Detected 1 objects
+2026-10-13 10:50:51,473 [INFO]   ship: conf=0.920, bbox=[175,307,337,386]
+2026-10-13 10:50:51,475 [INFO]   Saved visualization to runs/predict_sahi/pred_0960.jpg
+2026-10-13 10:50:51,475 [INFO] Processing 1000.jpg ...
+2026-10-13 10:50:51,510 [INFO]   Detected 3 objects
+2026-10-13 10:50:51,510 [INFO]   ship: conf=0.873, bbox=[351,275,387,321]
+2026-10-13 10:50:51,510 [INFO]   ship: conf=0.742, bbox=[201,273,224,305]
+2026-10-13 10:50:51,510 [INFO]   ship: conf=0.623, bbox=[458,286,477,306]
+2026-10-13 10:50:51,512 [INFO]   Saved visualization to runs/predict_sahi/pred_1000.jpg
+2026-10-13 10:50:51,512 [INFO] Processing 1010.jpg ...
+2026-10-13 10:50:51,547 [INFO]   Detected 3 objects
+2026-10-13 10:50:51,547 [INFO]   ship: conf=0.888, bbox=[254,203,300,262]
+2026-10-13 10:50:51,547 [INFO]   ship: conf=0.714, bbox=[121,206,146,238]
+2026-10-13 10:50:51,547 [INFO]   ship: conf=0.703, bbox=[394,217,417,242]
+2026-10-13 10:50:51,549 [INFO]   Saved visualization to runs/predict_sahi/pred_1010.jpg
+2026-10-13 10:50:51,549 [INFO] Processing 1030.jpg ...
+2026-10-13 10:50:51,584 [INFO]   Detected 4 objects
+2026-10-13 10:50:51,584 [INFO]   ship: conf=0.913, bbox=[257,171,349,283]
+2026-10-13 10:50:51,584 [INFO]   ship: conf=0.788, bbox=[569,207,594,236]
+2026-10-13 10:50:51,584 [INFO]   ship: conf=0.537, bbox=[34,193,60,217]
+2026-10-13 10:50:51,584 [INFO]   ship: conf=0.383, bbox=[57,194,94,218]
+2026-10-13 10:50:51,586 [INFO]   Saved visualization to runs/predict_sahi/pred_1030.jpg
+2026-10-13 10:50:51,586 [INFO] Processing 1050.jpg ...
+2026-10-13 10:50:51,621 [INFO]   Detected 2 objects
+2026-10-13 10:50:51,621 [INFO]   ship: conf=0.872, bbox=[356,271,387,313]
+2026-10-13 10:50:51,621 [INFO]   ship: conf=0.724, bbox=[38,273,62,308]
+2026-10-13 10:50:51,623 [INFO]   Saved visualization to runs/predict_sahi/pred_1050.jpg
+2026-10-13 10:50:51,623 [INFO] Processing 1060.jpg ...
+2026-10-13 10:50:51,658 [INFO]   Detected 2 objects
+2026-10-13 10:50:51,658 [INFO]   ship: conf=0.877, bbox=[428,326,469,380]
+2026-10-13 10:50:51,658 [INFO]   ship: conf=0.793, bbox=[88,331,114,362]
+2026-10-13 10:50:51,660 [INFO]   Saved visualization to runs/predict_sahi/pred_1060.jpg
+2026-10-13 10:50:51,660 [INFO] Processing 1080.jpg ...
+2026-10-13 10:50:51,695 [INFO]   Detected 2 objects
+2026-10-13 10:50:51,695 [INFO]   ship: conf=0.915, bbox=[316,261,423,401]
+2026-10-13 10:50:51,695 [INFO]   ship: conf=0.794, bbox=[88,287,113,318]
+2026-10-13 10:50:51,697 [INFO]   Saved visualization to runs/predict_sahi/pred_1080.jpg
+2026-10-13 10:50:51,697 [INFO] Processing 1090.jpg ...
+2026-10-13 10:50:51,732 [INFO]   Detected 2 objects
+2026-10-13 10:50:51,732 [INFO]   ship: conf=0.901, bbox=[207,260,367,389]
+2026-10-13 10:50:51,732 [INFO]   ship: conf=0.754, bbox=[176,244,198,272]
+2026-10-13 10:50:51,734 [INFO]   Saved visualization to runs/predict_sahi/pred_1090.jpg
+2026-10-13 10:50:51,734 [INFO] Processing 1120.jpg ...
+2026-10-13 10:50:51,769 [INFO]   Detected 3 objects
+2026-10-13 10:50:51,769 [INFO]   ship: conf=0.855, bbox=[337,250,374,285]
+2026-10-13 10:50:51,769 [INFO]   ship: conf=0.650, bbox=[69,234,124,283]
+2026-10-13 10:50:51,769 [INFO]   ship: conf=0.494, bbox=[118,233,180,283]
+2026-10-13 10:50:51,771 [INFO]   Saved visualization to runs/predict_sahi/pred_1120.jpg
+2026-10-13 10:50:51,771 [INFO] Processing 1140.jpg ...
+2026-10-13 10:50:51,806 [INFO]   Detected 1 objects
+2026-10-13 10:50:51,806 [INFO]   ship: conf=0.884, bbox=[189,312,247,355]
+2026-10-13 10:50:51,808 [INFO]   Saved visualization to runs/predict_sahi/pred_1140.jpg
+2026-10-13 10:50:51,808 [INFO] Processing 1160.jpg ...
+2026-10-13 10:50:51,843 [INFO]   Detected 3 objects
+2026-10-13 10:50:51,843 [INFO]   ship: conf=0.912, bbox=[134,318,274,379]
+2026-10-13 10:50:51,843 [INFO]   ship: conf=0.896, bbox=[28,318,118,374]
+2026-10-13 10:50:51,843 [INFO]   ship: conf=0.867, bbox=[513,328,577,362]
+2026-10-13 10:50:51,845 [INFO]   Saved visualization to runs/predict_sahi/pred_1160.jpg
+2026-10-13 10:50:51,845 [INFO] All SAHI predictions: 101 objects across 50 images
+2026-10-13 10:50:51,845 [INFO] Results saved in runs/predict_sahi
+2026-10-13 10:50:51,845 [INFO] CSV saved to /tmp/opencode/repro/sahi_simple.csv
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+Performing prediction on 2 slices.
+EXIT: 0
+END: 2026-10-13 10:50:52

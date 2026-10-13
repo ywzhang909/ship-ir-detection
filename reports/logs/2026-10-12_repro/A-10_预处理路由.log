@@ -1,0 +1,22 @@
+==== A-10_预处理路由 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -m pytest tests/test_detector.py -k preprocess_for -v
+START: 2026-10-13 10:46:40
+============================= test session starts ==============================
+platform linux -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- /home/ws/code/ship/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ws/code/ship
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... collected 18 items / 12 deselected / 6 selected
+
+tests/test_detector.py::test_preprocess_for_returns_3ch[dual] PASSED     [ 16%]
+tests/test_detector.py::test_preprocess_for_returns_3ch[wavelet] PASSED  [ 33%]
+tests/test_detector.py::test_preprocess_for_returns_3ch[rpca] PASSED     [ 50%]
+tests/test_detector.py::test_preprocess_for_returns_3ch[tophat] PASSED   [ 66%]
+tests/test_detector.py::test_preprocess_for_returns_3ch[butterworth] PASSED [ 83%]
+tests/test_detector.py::test_preprocess_for_raw_passthrough PASSED       [100%]
+
+======================= 6 passed, 12 deselected in 1.09s =======================
+EXIT: 0
+END: 2026-10-13 10:46:42

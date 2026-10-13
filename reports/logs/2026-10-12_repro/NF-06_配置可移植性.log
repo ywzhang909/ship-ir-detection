@@ -1,0 +1,8 @@
+==== NF-06_配置可移植性 ====
+CWD: /home/ws/code/ship
+CMD: grep -rn 'D:/Projects' yolo-training/configs/
+/home/ws/code/ship/yolo-training/configs/data_crrp_augmented.yaml:2:path: D:/Projects/AUVDect/data/ship/yolo-training/data/crrp_augmented
+/home/ws/code/ship/yolo-training/configs/data_nslsr_lwir.yaml:5:path: D:/Projects/AUVDect/data/ship/yolo-training/data/processed_nslsr/lwir
+/home/ws/code/ship/yolo-training/configs/data_nslsr_swir.yaml:5:path: D:/Projects/AUVDect/data/ship/yolo-training/data/processed_nslsr/swir
+/home/ws/code/ship/yolo-training/configs/data.yaml:5:path: D:/Projects/AUVDect/data/ship/yolo-training/data/processed
+EXIT: 0

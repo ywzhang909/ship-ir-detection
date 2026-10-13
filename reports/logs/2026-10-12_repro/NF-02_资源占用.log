@@ -1,0 +1,20 @@
+==== NF-02_资源占用 ====
+CWD: /home/ws/code/ship
+CMD: bash -c 
+echo '--- nvidia-smi snapshot ---'; nvidia-smi --query-gpu=index,name,memory.total,memory.used,utilization.gpu --format=csv
+echo '--- free -h ---'; free -h
+echo '--- torch cuda mem ---'; /home/ws/code/ship/.venv/bin/python -c "import torch;print('allocated MB', round(torch.cuda.memory_allocated()/1e6,2) if torch.cuda.is_available() else 'n/a')"
+
+START: 2026-10-13 10:48:03
+--- nvidia-smi snapshot ---
+index, name, memory.total [MiB], memory.used [MiB], utilization.gpu [%]
+0, NVIDIA GeForce RTX 4090, 24564 MiB, 17210 MiB, 27 %
+1, NVIDIA GeForce RTX 4090, 24564 MiB, 16430 MiB, 0 %
+--- free -h ---
+               total        used        free      shared  buff/cache   available
+内存：         755Gi       113Gi       447Gi       3.4Gi       228Gi       641Gi
+交换：         8.0Gi          0B       8.0Gi
+--- torch cuda mem ---
+allocated MB 0.0
+EXIT: 0
+END: 2026-10-13 10:48:04

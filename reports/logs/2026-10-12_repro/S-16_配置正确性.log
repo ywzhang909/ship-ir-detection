@@ -1,0 +1,26 @@
+==== S-16_配置正确性 ====
+CWD: /home/ws/code/ship
+CMD: /home/ws/code/ship/.venv/bin/python -c 
+import yaml, glob
+files=sorted(glob.glob('/home/ws/code/ship/yolo-training/configs/*.yaml'))
+for f in files:
+    try:
+        yaml.safe_load(open(f, encoding='utf-8')); print('OK ', f)
+    except Exception as e:
+        print('FAIL', f, type(e).__name__, e)
+print('total', len(files))
+
+START: 2026-10-13 10:47:44
+OK  /home/ws/code/ship/yolo-training/configs/data.yaml
+OK  /home/ws/code/ship/yolo-training/configs/data_crrp_augmented.yaml
+OK  /home/ws/code/ship/yolo-training/configs/data_nslsr_lwir.yaml
+OK  /home/ws/code/ship/yolo-training/configs/data_nslsr_swir.yaml
+OK  /home/ws/code/ship/yolo-training/configs/sweep_nslsr.yaml
+OK  /home/ws/code/ship/yolo-training/configs/train.yaml
+OK  /home/ws/code/ship/yolo-training/configs/train_nslsr.yaml
+OK  /home/ws/code/ship/yolo-training/configs/train_nslsr_optimized.yaml
+OK  /home/ws/code/ship/yolo-training/configs/train_ship_optimized.yaml
+OK  /home/ws/code/ship/yolo-training/configs/yolo11m_p2.yaml
+total 10
+EXIT: 0
+END: 2026-10-13 10:47:44

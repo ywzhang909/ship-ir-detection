@@ -1,0 +1,63 @@
+==== S-09_训练冒烟 ====
+CWD: /home/ws/code/ship/yolo-training
+CMD: timeout 300 /home/ws/code/ship/.venv/bin/python train.py --model /home/ws/code/ship/yolo11n.pt --epochs 1 --batch 4
+START: 2026-10-13 10:51:07
+2026-10-13 10:51:09,377 [WARNING] Data path not found: D:/Projects/AUVDect/data/ship/yolo-training/data/processed
+2026-10-13 10:51:09,377 [INFO] ============================================================
+2026-10-13 10:51:09,377 [INFO] SHIP IDENTIFICATION YOLO TRAINING
+2026-10-13 10:51:09,377 [INFO] ============================================================
+2026-10-13 10:51:09,377 [INFO] Dataset:    ship
+2026-10-13 10:51:09,377 [INFO] Data path:  D:/Projects/AUVDect/data/ship/yolo-training/data/processed
+2026-10-13 10:51:09,377 [INFO] Model:      /home/ws/code/ship/yolo11n.pt
+2026-10-13 10:51:09,377 [INFO] Config:     /home/ws/code/ship/yolo-training/configs/train_ship_optimized.yaml
+2026-10-13 10:51:09,377 [INFO] Epochs:     1
+2026-10-13 10:51:09,377 [INFO] Batch:      4
+2026-10-13 10:51:09,377 [INFO] Image size: 1280
+2026-10-13 10:51:09,377 [INFO] Preprocess: disabled
+2026-10-13 10:51:09,377 [INFO] Fusion:     disabled
+2026-10-13 10:51:09,377 [INFO] Attention:  disabled
+2026-10-13 10:51:09,377 [INFO] Neck:       YOLO default
+2026-10-13 10:51:09,377 [INFO] Backbone:   YOLO default
+2026-10-13 10:51:09,377 [INFO] Head:       YOLO default
+2026-10-13 10:51:09,377 [INFO] Wandb:      disabled
+2026-10-13 10:51:09,377 [INFO] Device:     auto
+2026-10-13 10:51:09,377 [INFO] ============================================================
+New https://pypi.org/project/ultralytics/8.4.176 available 😃 Update with 'pip install -U ultralytics'
+Ultralytics 8.4.53 🚀 Python-3.13.13 torch-2.11.0+cu128 CUDA:0 (NVIDIA GeForce RTX 4090, 24080MiB)
+[34m[1mengine/trainer: [0magnostic_nms=False, amp=True, angle=1.0, augment=False, auto_augment=randaugment, batch=4, bgr=0.0, box=5.0, cache=False, cfg=None, classes=None, close_mosaic=15, cls=0.5, cls_pw=0.0, compile=False, conf=None, copy_paste=0.1, copy_paste_mode=flip, cos_lr=True, cutmix=0.0, data=/home/ws/code/ship/yolo-training/configs/data.yaml, degrees=5.0, deterministic=True, device=None, dfl=1.0, dnn=False, dropout=0.0, dynamic=False, embed=None, end2end=None, epochs=1, erasing=0.0, exist_ok=True, fliplr=0.5, flipud=0.0, format=torchscript, fraction=1.0, freeze=None, half=False, hsv_h=0.03, hsv_s=0.4, hsv_v=0.3, imgsz=1280, int8=False, iou=0.2, keras=False, kobj=1.0, line_width=None, lr0=0.001, lrf=0.01, mask_ratio=4, max_det=300, mixup=0.1, mode=train, model=/home/ws/code/ship/yolo11n.pt, momentum=0.937, mosaic=1.0, multi_scale=0.0, name=ship-yolo11n, nbs=64, nms=False, opset=None, optimize=False, optimizer=AdamW, overlap_mask=True, patience=30, perspective=0.0, plots=True, pose=12.0, pretrained=True, profile=False, project=ship-detection, rect=False, resume=False, retina_masks=False, rle=1.0, save=True, save_conf=False, save_crop=False, save_dir=/home/ws/code/ship/runs/detect/ship-detection/ship-yolo11n, save_frames=False, save_json=False, save_period=10, save_txt=False, scale=0.5, seed=0, shear=3.0, show=False, show_boxes=True, show_conf=True, show_labels=True, simplify=True, single_cls=False, source=None, split=val, stream_buffer=False, task=detect, time=None, tracker=botsort.yaml, translate=0.2, val=True, verbose=True, vid_stride=1, visualize=False, warmup_bias_lr=0.1, warmup_epochs=3.0, warmup_momentum=0.8, weight_decay=0.0005, workers=8, workspace=None
+
+Traceback (most recent call last):
+  File "/home/ws/code/ship/.venv/lib/python3.13/site-packages/ultralytics/engine/trainer.py", line 714, in get_dataset
+    data = check_det_dataset(self.args.data)
+  File "/home/ws/code/ship/.venv/lib/python3.13/site-packages/ultralytics/data/utils.py", line 531, in check_det_dataset
+    raise FileNotFoundError(m)
+FileNotFoundError: Dataset '/home/ws/code/ship/yolo-training/configs/data.yaml' images not found, missing path '/home/ws/code/datasets/D:/Projects/AUVDect/data/ship/yolo-training/data/processed/val/images'
+Note dataset download directory is '/home/ws/code/datasets'. You can update this in '/home/ws/.config/Ultralytics/settings.json'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ws/code/ship/yolo-training/train.py", line 1262, in <module>
+    main()
+    ~~~~^^
+  File "/home/ws/code/ship/yolo-training/train.py", line 1213, in main
+    results = model.train(
+        data=data_arg,
+        device=args.device,
+        **filtered,
+    )
+  File "/home/ws/code/ship/.venv/lib/python3.13/site-packages/ultralytics/engine/model.py", line 783, in train
+    self.trainer = (trainer or self._smart_load("trainer"))(overrides=args, _callbacks=self.callbacks)
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/code/ship/.venv/lib/python3.13/site-packages/ultralytics/models/yolo/detect/train.py", line 63, in __init__
+    super().__init__(cfg, overrides, _callbacks)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/code/ship/.venv/lib/python3.13/site-packages/ultralytics/engine/trainer.py", line 186, in __init__
+    self.data = self.get_dataset()
+                ~~~~~~~~~~~~~~~~^^
+  File "/home/ws/code/ship/.venv/lib/python3.13/site-packages/ultralytics/engine/trainer.py", line 718, in get_dataset
+    raise RuntimeError(emojis(f"Dataset '{clean_url(self.args.data)}' error ❌ {e}")) from e
+RuntimeError: Dataset '/home/ws/code/ship/yolo-training/configs/data.yaml' error ❌ Dataset '/home/ws/code/ship/yolo-training/configs/data.yaml' images not found, missing path '/home/ws/code/datasets/D:/Projects/AUVDect/data/ship/yolo-training/data/processed/val/images'
+Note dataset download directory is '/home/ws/code/datasets'. You can update this in '/home/ws/.config/Ultralytics/settings.json'
+EXIT: 1
+END: 2026-10-13 10:51:11
